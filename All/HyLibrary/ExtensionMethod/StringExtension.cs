@@ -5,6 +5,7 @@
     using System.Linq;
     using System.Text;
     using System.Threading.Tasks;
+    using HyLibrary.Reflection;
 
     public static class StringExtension
     {
@@ -64,6 +65,11 @@
         public static byte[] ToBytes(this string input)
         {
             return ToBytes(input, Encoding.UTF8);
+        }
+
+        public static Type ToType(this string typeName)
+        {
+            return ReflectionHelper.Instance.GetType(typeName);
         }
     }
 }
