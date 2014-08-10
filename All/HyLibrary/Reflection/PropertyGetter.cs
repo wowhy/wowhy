@@ -6,5 +6,5 @@ using System.Threading.Tasks;
 
 namespace HyLibrary.Reflection
 {
-    public delegate object ObjectGetter(object property);
+    public delegate object PropertyGetter(object property);
 }
