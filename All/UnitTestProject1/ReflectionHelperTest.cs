@@ -30,5 +30,10 @@ namespace UnitTestProject1
             Assert.IsNotNull(ReflectionHelper.Instance.FastCreateInstance<B>());
             Assert.IsNotNull(ReflectionHelper.Instance.FastCreateInstance(typeof(B)));
         }
+
+        [TestMethod]
+        public void TestMethod2()
+        {
+        }
     }
 }

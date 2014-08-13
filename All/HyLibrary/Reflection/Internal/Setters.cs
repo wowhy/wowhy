@@ -5,7 +5,7 @@
     internal class Setters
     {
         public string Name;
-        public PropertyGetter Getter;
+        public MemberGetter Getter;
         public Type propertyType;
     }
 }

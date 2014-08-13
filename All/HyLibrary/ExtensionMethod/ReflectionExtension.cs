@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Reflection;
     using System.Text;
     using System.Threading.Tasks;
     using HyLibrary.Reflection;
@@ -22,6 +23,21 @@
         public static string GetAssemblyName(this Type type)
         {
             return ReflectionHelper.Instance.GetTypeAssemblyName(type);
+        }
+
+        public static MemberSetter GetMemberSetter(this MemberInfo member)
+        {
+            return ReflectionHelper.Instance.GetMemberSetter(member);
+        }
+
+        public static MemberSetter GetProperySetter(this Type type, string propName)
+        {
+            return ReflectionHelper.Instance.GetMemberSetter(type.GetProperty(propName));
+        }
+
+        public static MemberSetter GetFieldSetter(this Type type, string fieldName)
+        {
+            return ReflectionHelper.Instance.GetMemberSetter(type.GetField(fieldName));
         }
     }
 }

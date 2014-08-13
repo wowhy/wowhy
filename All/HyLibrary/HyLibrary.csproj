@@ -47,8 +47,8 @@
     <Compile Include="Reflection\Internal\Getters.cs" />
     <Compile Include="Reflection\Internal\Setters.cs" />
     <Compile Include="Reflection\ObjectCreater.cs" />
-    <Compile Include="Reflection\PropertyGetter.cs" />
-    <Compile Include="Reflection\PropertySetter.cs" />
+    <Compile Include="Reflection\MemberGetter.cs" />
+    <Compile Include="Reflection\MemberSetter.cs" />
     <Compile Include="Reflection\ReflectionHelper.cs" />
     <Compile Include="Reflection\Types.cs" />
   </ItemGroup>

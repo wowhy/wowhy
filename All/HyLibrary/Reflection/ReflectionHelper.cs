@@ -7,6 +7,7 @@
     using System.Text;
     using System.Threading.Tasks;
     using System.Reflection.Emit;
+    using System.Reflection;
 
     public class ReflectionHelper
     {
@@ -26,6 +27,8 @@
         /// 类型的构造函数缓存
         /// </summary>
         private ConcurrentDictionary<Type, ObjectCreater> createrCaches = new ConcurrentDictionary<Type, ObjectCreater>();
+
+        private ConcurrentDictionary<MemberInfo, MemberSetter> setterCaches = new ConcurrentDictionary<MemberInfo, MemberSetter>();
 
         public string GetTypeAssemblyName(Type type)
         {
@@ -76,6 +79,26 @@
                 CreateCreater);
         }
 
+        public MemberSetter GetMemberSetter(MemberInfo member)
+        {
+            if (setterCaches.ContainsKey(member))
+            {
+                return setterCaches[member];
+            }
+
+            if (member is PropertyInfo)
+            {
+                return CreatePropertySetter((PropertyInfo)member);
+            }
+
+            if (member is FieldInfo)
+            {
+                return CreateFieldSetter((FieldInfo)member);
+            }
+
+            throw new NotSupportedException(member.GetType().FullName);
+        }
+
         private static ObjectCreater CreateCreater(Type type)
         {
             var method = default(DynamicMethod);
@@ -103,6 +126,106 @@
             }
 
             return (ObjectCreater)method.CreateDelegate(typeof(ObjectCreater));
+        }
+
+        private MemberSetter CreatePropertySetter(PropertyInfo prop)
+        {
+            return this.setterCaches.GetOrAdd(
+                prop,
+                (key) =>
+                {
+                    var ownerType = prop.DeclaringType;
+                    var method = prop.GetSetMethod();
+                    if (method == null)
+                        return null;
+
+                    var dm = new DynamicMethod(prop.Name, null, new Type[] { Types.ObjectRef, Types.Object });
+                    var il = dm.GetILGenerator();
+
+                    if (ownerType.IsClass)
+                    {
+                        il.Emit(OpCodes.Ldarg_0);
+                        il.Emit(OpCodes.Ldind_Ref);
+                        il.Emit(OpCodes.Castclass, ownerType);
+                        il.Emit(OpCodes.Ldarg_1);
+                        if (!prop.PropertyType.IsClass)
+                            il.Emit(OpCodes.Unbox_Any, prop.PropertyType);
+                        else
+                            il.Emit(OpCodes.Castclass, prop.PropertyType);
+                        il.Emit(OpCodes.Callvirt, method);
+                    }
+                    else
+                    {
+                        // 结构体
+                        var local = il.DeclareLocal(ownerType);  // 声明变量
+                        il.Emit(OpCodes.Ldarg_0);           // 压栈
+                        il.Emit(OpCodes.Ldind_Ref);         // ref
+                        il.Emit(OpCodes.Unbox_Any, ownerType);   // 拆箱
+                        il.Emit(OpCodes.Stloc_0);           // 保存到局部变量
+                        il.Emit(OpCodes.Ldloca_S, local);
+                        il.Emit(OpCodes.Ldarg_1);
+                        if (!prop.PropertyType.IsClass)
+                            il.Emit(OpCodes.Unbox_Any, prop.PropertyType);
+                        else
+                            il.Emit(OpCodes.Castclass, prop.PropertyType);
+                        il.Emit(OpCodes.Call, method);
+                        il.Emit(OpCodes.Ldarg_0);
+                        il.Emit(OpCodes.Ldloc_0);
+                        il.Emit(OpCodes.Box, ownerType);
+                        il.Emit(OpCodes.Stind_Ref);
+                    }
+
+                    il.Emit(OpCodes.Ret);
+                    return (MemberSetter)method.CreateDelegate(typeof(MemberSetter));
+                });
+        }
+
+        private MemberSetter CreateFieldSetter(FieldInfo field)
+        {
+            return this.setterCaches.GetOrAdd(
+                field,
+                (key) =>
+                {
+                    var ownerType = field.DeclaringType;
+                    var dm = new DynamicMethod(field.Name, null, new Type[] { Types.ObjectRef, Types.Object });
+                    var il = dm.GetILGenerator();
+
+                    if (ownerType.IsClass)
+                    {
+                        il.Emit(OpCodes.Ldarg_0);
+                        il.Emit(OpCodes.Ldind_Ref);
+                        il.Emit(OpCodes.Castclass, ownerType);
+                        il.Emit(OpCodes.Ldarg_1);
+                        if (!field.FieldType.IsClass)
+                            il.Emit(OpCodes.Unbox_Any, field.FieldType);
+                        else
+                            il.Emit(OpCodes.Castclass, field.FieldType);
+                        il.Emit(OpCodes.Stfld, field);
+                    }
+                    else
+                    {
+                        // 结构体
+                        var local = il.DeclareLocal(ownerType);  // 声明变量
+                        il.Emit(OpCodes.Ldarg_0);           // 压栈
+                        il.Emit(OpCodes.Ldind_Ref);         // ref
+                        il.Emit(OpCodes.Unbox_Any, ownerType);   // 拆箱
+                        il.Emit(OpCodes.Stloc_0);           // 保存到局部变量
+                        il.Emit(OpCodes.Ldloca_S, local);
+                        il.Emit(OpCodes.Ldarg_1);
+                        if (!field.FieldType.IsClass)
+                            il.Emit(OpCodes.Unbox_Any, field.FieldType);
+                        else
+                            il.Emit(OpCodes.Castclass, field.FieldType);
+                        il.Emit(OpCodes.Stfld, field);
+                        il.Emit(OpCodes.Ldarg_0);
+                        il.Emit(OpCodes.Ldloc_0);
+                        il.Emit(OpCodes.Box, ownerType);
+                        il.Emit(OpCodes.Stind_Ref);
+                    }
+
+                    il.Emit(OpCodes.Ret);
+                    return (MemberSetter)dm.CreateDelegate(typeof(MemberSetter));
+                });
         }
     }
 }

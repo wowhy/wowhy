@@ -18,6 +18,8 @@
         /// </summary>
         public static readonly Type Object = typeof(Object);
 
+        public static readonly Type ObjectRef = Type.GetType("System.Object&");
+
         /// <summary>
         /// Type 类型
         /// </summary>

@@ -54,6 +54,12 @@
             return new string(chars);
         }
 
+        /// <summary>
+        /// 将字符串转换成字节
+        /// </summary>
+        /// <param name="input">字符串</param>
+        /// <param name="encoding">编码格式</param>
+        /// <returns>字节数组</returns>
         public static byte[] ToBytes(this string input, Encoding encoding)
         {
             if (input == null)
@@ -62,11 +68,21 @@
             return encoding.GetBytes(input);
         }
 
+        /// <summary>
+        /// 使用UTF8格式转换字符串
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns>字节数组</returns>
         public static byte[] ToBytes(this string input)
         {
             return ToBytes(input, Encoding.UTF8);
         }
 
+        /// <summary>
+        /// 按照类型名称创建Type对象（缓存）
+        /// </summary>
+        /// <param name="typeName">类型名称</param>
+        /// <returns>Type对象</returns>
         public static Type ToType(this string typeName)
         {
             return ReflectionHelper.Instance.GetType(typeName);
