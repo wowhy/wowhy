@@ -18,5 +18,10 @@
         {
             Contract.Assert(!string.IsNullOrWhiteSpace(value), userMessage);
         }
+
+        public static void IsTrue(bool condition, string userMessage)
+        {
+            Contract.Assert(condition, userMessage);
+        }
     }
 }

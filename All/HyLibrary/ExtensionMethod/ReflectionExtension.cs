@@ -27,17 +27,17 @@
 
         public static MemberSetter GetMemberSetter(this MemberInfo member)
         {
-            return ReflectionHelper.Instance.GetMemberSetter(member);
+            return ReflectionHelper.Instance.GetOrCreateMember(member);
         }
 
         public static MemberSetter GetProperySetter(this Type type, string propName)
         {
-            return ReflectionHelper.Instance.GetMemberSetter(type.GetProperty(propName));
+            return ReflectionHelper.Instance.GetOrCreateMember(type.GetProperty(propName));
         }
 
         public static MemberSetter GetFieldSetter(this Type type, string fieldName)
         {
-            return ReflectionHelper.Instance.GetMemberSetter(type.GetField(fieldName));
+            return ReflectionHelper.Instance.GetOrCreateMember(type.GetField(fieldName));
         }
     }
 }
