@@ -11,21 +11,22 @@ namespace Program01
     public class A
     {
         public int Id { get; set; }
-        public string Name { get; set; }
+        public string Name;
     }
 
     public struct B
     {
-        public int Id;
-        public string Name { get; set; }
+        public int Id { get; set; }
+        public string Name;
     }
 
     class Program
     {
-        public static object SetA(object x, object v)
+        public static object Set(object x, object v)
         {
-            ((A)x).Id = (int)v;
-            return x;
+            B b = (B)x;
+            b.Id = (int)v;
+            return b;
         }
 
         public static A StrongSetA(A x, string v)
@@ -46,12 +47,12 @@ namespace Program01
             //    setter(list[i], i);
             //}
 
-            var setter = ReflectionHelper.Instance.CreateMemberSetter<A, string>(typeof(A).GetProperty("Name"));
-            var a = new A();
+            //var setter = ReflectionHelper.Instance.CreateMemberSetter<A, string>(typeof(A).GetField("Name"));
+            //var a = new A();
 
-            setter(a, "Hello, World!");
+            //setter(a, "Hello, World!");
 
-            Console.WriteLine(a.Name);
+            //Console.WriteLine(a.Name);
 
             Console.ReadKey();
         }

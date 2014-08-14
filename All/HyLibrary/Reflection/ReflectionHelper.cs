@@ -213,22 +213,25 @@
             }
             else
             {
-                // 结构体
                 var local = il.DeclareLocal(ownerType);  // 声明变量
-                il.Emit(OpCodes.Ldarg_0);           // 压栈
-                il.Emit(OpCodes.Unbox_Any, ownerType);   // 拆箱
-                il.Emit(OpCodes.Stloc_0);           // 保存到局部变量
-                il.Emit(OpCodes.Ldloca_S, local);
+                il.Emit(OpCodes.Ldarg_0);                // 压栈
+                il.Emit(OpCodes.Unbox, ownerType);       // 拆箱
+                il.Emit(OpCodes.Ldobj, ownerType);
+                il.Emit(OpCodes.Stloc_0);
+                il.Emit(OpCodes.Ldloca_S, local);        // 保存到局部变量
                 il.Emit(OpCodes.Ldarg_1);
-                if (!prop.PropertyType.IsClass)
-                    il.Emit(OpCodes.Unbox_Any, prop.PropertyType);
-                else
+                if (prop.PropertyType.IsClass)
+                {
                     il.Emit(OpCodes.Castclass, prop.PropertyType);
+                }
+                else
+                {
+                    il.Emit(OpCodes.Unbox_Any, prop.PropertyType);
+                }
+
                 il.Emit(OpCodes.Call, method);
-                il.Emit(OpCodes.Ldarg_0);
                 il.Emit(OpCodes.Ldloc_0);
                 il.Emit(OpCodes.Box, ownerType);
-                il.Emit(OpCodes.Stind_Ref);
             }
 
             il.Emit(OpCodes.Ret);
@@ -264,22 +267,49 @@
         private MemberSetter CreateFieldSetter(FieldInfo field)
         {
             var ownerType = field.DeclaringType;
-            var dm = new DynamicMethod(field.Name, null, new Type[] { Types.Object, Types.Object });
+            var dm = new DynamicMethod(field.Name, Types.Object, new Type[] { Types.Object, Types.Object });
             var il = dm.GetILGenerator();
 
-            il.Emit(OpCodes.Ldarg_0);
-            il.Emit(OpCodes.Castclass, ownerType);
-            if (ownerType.IsValueType)
+            if (ownerType.IsClass)
             {
-                il.Emit(OpCodes.Unbox, ownerType);
+                il.Emit(OpCodes.Ldarg_0);
+                il.Emit(OpCodes.Castclass, ownerType);
+                il.Emit(OpCodes.Ldarg_1);
+                if (field.FieldType.IsClass)
+                {
+                    il.Emit(OpCodes.Castclass, field.FieldType);
+                }
+                else
+                {
+                    il.Emit(OpCodes.Unbox_Any, field.FieldType);
+                }
+
+                il.Emit(OpCodes.Stfld, field);
+                il.Emit(OpCodes.Ldarg_0);
+            }
+            else
+            {
+                var local = il.DeclareLocal(ownerType);  // 声明变量
+                il.Emit(OpCodes.Ldarg_0);                // 压栈
+                il.Emit(OpCodes.Unbox, ownerType);       // 拆箱
+                il.Emit(OpCodes.Ldobj, ownerType);
+                il.Emit(OpCodes.Stloc_0);
+                il.Emit(OpCodes.Ldloca_S, local);        // 保存到局部变量
+                il.Emit(OpCodes.Ldarg_1);
+                if (field.FieldType.IsClass)
+                {
+                    il.Emit(OpCodes.Castclass, field.FieldType);
+                }
+                else
+                {
+                    il.Emit(OpCodes.Unbox_Any, field.FieldType);
+                }
+
+                il.Emit(OpCodes.Stfld, field);
+                il.Emit(OpCodes.Ldloc_0);
+                il.Emit(OpCodes.Box, ownerType);
             }
 
-            il.Emit(OpCodes.Ldarg_1);
-            if (field.FieldType.IsClass)
-                il.Emit(OpCodes.Castclass, field.FieldType);
-            else
-                il.Emit(OpCodes.Unbox_Any, field.FieldType);
-            il.Emit(OpCodes.Stfld, field);
             il.Emit(OpCodes.Ret);
 
             return (MemberSetter)dm.CreateDelegate(memberSetterType);

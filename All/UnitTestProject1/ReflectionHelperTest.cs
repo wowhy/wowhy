@@ -12,10 +12,12 @@ namespace UnitTestProject1
     public class A
     {
         public int Id { get; set; }
+        public string Name;
     }
 
-    public class B
+    public struct B
     {
+        public int Id { get; set; }
         public string Name;
     }
 
@@ -56,15 +58,59 @@ namespace UnitTestProject1
         [TestMethod]
         public void TestMethod3()
         {
-            var list = new List<B>();
+            var list = new List<A>();
             var count = 10000;
-            var type = typeof(B);
+            var type = typeof(A);
             var setter = type.GetFieldSetter("Name");
             for (int i = 0; i < count; i++)
             {
-                var b = type.FastCreateInstance<B>();
-                setter(b, (i.ToString()));
+                var a = type.FastCreateInstance<A>();
+                setter(a, (i.ToString()));
+                list.Add(a);
+            }
+
+            Assert.IsTrue(list.Count == count);
+
+            for (int i = 0; i < count; i++)
+            {
+                Assert.IsTrue(i.ToString() == list[i].Name);
+            }
+        }
+
+        [TestMethod]
+        public void TestMethod4()
+        {
+            var list = new List<B>();
+            var count = 10000;
+            var type = typeof(B);
+            var setter = type.GetProperySetter("Id");
+            for (int i = 0; i < count; i++)
+            {
+                B b = type.FastCreateInstance<B>();
+                b = (B)setter(b, i);
                 list.Add(b);
+            }
+
+            Assert.IsTrue(list.Count == count);
+
+            for (int i = 0; i < count; i++)
+            {
+                Assert.IsTrue(i == list[i].Id);
+            }
+        }
+
+        [TestMethod]
+        public void TestMethod5()
+        {
+            var list = new List<A>();
+            var count = 10000;
+            var type = typeof(A);
+            var setter = type.GetFieldSetter("Name");
+            for (int i = 0; i < count; i++)
+            {
+                var a = type.FastCreateInstance<A>();
+                setter(a, (i.ToString()));
+                list.Add(a);
             }
 
             Assert.IsTrue(list.Count == count);

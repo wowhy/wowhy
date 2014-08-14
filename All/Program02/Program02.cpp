@@ -4,17 +4,16 @@
 
 using namespace System;
 
-value struct B
+ref class B
 {
 public:
     String^ Name;
 };
 
-void Set(Object^ &x, Object^ v)
+Object^ Set(Object^ x, Object^ v)
 {
-    B b = (B)x;
-    b.Name = (String^)v;
-    x = b;
+    ((B^) x)->Name = (String^) v;
+    return x;
 }
 
 int main(array<System::String ^> ^args)
