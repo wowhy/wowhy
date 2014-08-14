@@ -4,23 +4,24 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using HyLibrary.Reflection;
+using HyLibrary.ExtensionMethod;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace UnitTestProject1
 {
+    public class A
+    {
+        public int Id { get; set; }
+    }
+
+    public class B
+    {
+        public string Name;
+    }
+
     [TestClass]
     public class ReflectionHelperTest
     {
-        public class A
-        {
-            public int Id { get; set; }
-        }
-
-        public struct B
-        {
-            public string Name;
-        }
-
         [TestMethod]
         public void TestMethod1()
         {
@@ -34,6 +35,44 @@ namespace UnitTestProject1
         [TestMethod]
         public void TestMethod2()
         {
+            var list = new List<A>();
+            var count = 10000;
+            var type = typeof(A);
+            var setter = type.GetProperySetter("Id");
+            for (int i = 0; i < count; i++)
+            {
+                list.Add(type.FastCreateInstance<A>());
+                setter(list[i], i);
+            }
+
+            Assert.IsTrue(list.Count == count);
+
+            for (int i = 0; i < count; i++) 
+            {
+                Assert.IsTrue(i == list[i].Id);
+            }
+        }
+
+        [TestMethod]
+        public void TestMethod3()
+        {
+            var list = new List<B>();
+            var count = 10000;
+            var type = typeof(B);
+            var setter = type.GetFieldSetter("Name");
+            for (int i = 0; i < count; i++)
+            {
+                var b = type.FastCreateInstance<B>();
+                setter(b, (i.ToString()));
+                list.Add(b);
+            }
+
+            Assert.IsTrue(list.Count == count);
+
+            for (int i = 0; i < count; i++)
+            {
+                Assert.IsTrue(i.ToString() == list[i].Name);
+            }
         }
     }
 }

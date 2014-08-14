@@ -13,6 +13,8 @@
     {
         public readonly static ReflectionHelper Instance = new ReflectionHelper();
 
+        private static Type memberSetterType = typeof(MemberSetter);
+
         /// <summary>
         /// 程序集名称缓存
         /// </summary>
@@ -88,12 +90,12 @@
 
             if (member is PropertyInfo)
             {
-                return CreatePropertySetter((PropertyInfo)member);
+                return GetOrCreatePropertySetter((PropertyInfo)member);
             }
 
             if (member is FieldInfo)
             {
-                return CreateFieldSetter((FieldInfo)member);
+                return GetOrCreateFieldSetter((FieldInfo)member);
             }
 
             throw new NotSupportedException(member.GetType().FullName);
@@ -101,20 +103,20 @@
 
         private static ObjectCreater CreateCreater(Type type)
         {
-            var method = default(DynamicMethod);
+            var dm = default(DynamicMethod);
             var il = default(ILGenerator);
             if (type.IsClass)
             {
-                method = new DynamicMethod("test", type, null);
-                il = method.GetILGenerator();
+                dm = new DynamicMethod("test", type, null);
+                il = dm.GetILGenerator();
 
                 il.Emit(OpCodes.Newobj, type.GetConstructor(Type.EmptyTypes));
                 il.Emit(OpCodes.Ret);
             }
             else
             {
-                method = new DynamicMethod("test", Types.Object, null);
-                il = method.GetILGenerator();
+                dm = new DynamicMethod("test", Types.Object, null);
+                il = dm.GetILGenerator();
 
                 var local = il.DeclareLocal(type);
 
@@ -125,10 +127,10 @@
                 il.Emit(OpCodes.Ret);
             }
 
-            return (ObjectCreater)method.CreateDelegate(typeof(ObjectCreater));
+            return (ObjectCreater)dm.CreateDelegate(typeof(ObjectCreater));
         }
 
-        private MemberSetter CreatePropertySetter(PropertyInfo prop)
+        private MemberSetter GetOrCreatePropertySetter(PropertyInfo prop)
         {
             return this.setterCaches.GetOrAdd(
                 prop,
@@ -139,13 +141,12 @@
                     if (method == null)
                         return null;
 
-                    var dm = new DynamicMethod(prop.Name, null, new Type[] { Types.ObjectRef, Types.Object });
+                    var dm = new DynamicMethod(prop.Name, null, new Type[] { Types.Object, Types.Object });
                     var il = dm.GetILGenerator();
 
                     if (ownerType.IsClass)
                     {
                         il.Emit(OpCodes.Ldarg_0);
-                        il.Emit(OpCodes.Ldind_Ref);
                         il.Emit(OpCodes.Castclass, ownerType);
                         il.Emit(OpCodes.Ldarg_1);
                         if (!prop.PropertyType.IsClass)
@@ -159,7 +160,6 @@
                         // 结构体
                         var local = il.DeclareLocal(ownerType);  // 声明变量
                         il.Emit(OpCodes.Ldarg_0);           // 压栈
-                        il.Emit(OpCodes.Ldind_Ref);         // ref
                         il.Emit(OpCodes.Unbox_Any, ownerType);   // 拆箱
                         il.Emit(OpCodes.Stloc_0);           // 保存到局部变量
                         il.Emit(OpCodes.Ldloca_S, local);
@@ -176,55 +176,36 @@
                     }
 
                     il.Emit(OpCodes.Ret);
-                    return (MemberSetter)method.CreateDelegate(typeof(MemberSetter));
+                    return (MemberSetter)dm.CreateDelegate(memberSetterType);
                 });
         }
 
-        private MemberSetter CreateFieldSetter(FieldInfo field)
+        private MemberSetter GetOrCreateFieldSetter(FieldInfo field)
         {
             return this.setterCaches.GetOrAdd(
                 field,
                 (key) =>
                 {
                     var ownerType = field.DeclaringType;
-                    var dm = new DynamicMethod(field.Name, null, new Type[] { Types.ObjectRef, Types.Object });
+                    var dm = new DynamicMethod(field.Name, null, new Type[] { Types.Object, Types.Object });
                     var il = dm.GetILGenerator();
 
-                    if (ownerType.IsClass)
+                    il.Emit(OpCodes.Ldarg_0);
+                    il.Emit(OpCodes.Castclass, ownerType);
+                    if (ownerType.IsValueType)
                     {
-                        il.Emit(OpCodes.Ldarg_0);
-                        il.Emit(OpCodes.Ldind_Ref);
-                        il.Emit(OpCodes.Castclass, ownerType);
-                        il.Emit(OpCodes.Ldarg_1);
-                        if (!field.FieldType.IsClass)
-                            il.Emit(OpCodes.Unbox_Any, field.FieldType);
-                        else
-                            il.Emit(OpCodes.Castclass, field.FieldType);
-                        il.Emit(OpCodes.Stfld, field);
-                    }
-                    else
-                    {
-                        // 结构体
-                        var local = il.DeclareLocal(ownerType);  // 声明变量
-                        il.Emit(OpCodes.Ldarg_0);           // 压栈
-                        il.Emit(OpCodes.Ldind_Ref);         // ref
-                        il.Emit(OpCodes.Unbox_Any, ownerType);   // 拆箱
-                        il.Emit(OpCodes.Stloc_0);           // 保存到局部变量
-                        il.Emit(OpCodes.Ldloca_S, local);
-                        il.Emit(OpCodes.Ldarg_1);
-                        if (!field.FieldType.IsClass)
-                            il.Emit(OpCodes.Unbox_Any, field.FieldType);
-                        else
-                            il.Emit(OpCodes.Castclass, field.FieldType);
-                        il.Emit(OpCodes.Stfld, field);
-                        il.Emit(OpCodes.Ldarg_0);
-                        il.Emit(OpCodes.Ldloc_0);
-                        il.Emit(OpCodes.Box, ownerType);
-                        il.Emit(OpCodes.Stind_Ref);
+                        il.Emit(OpCodes.Unbox, ownerType);
                     }
 
+                    il.Emit(OpCodes.Ldarg_1);
+                    if (field.FieldType.IsClass)
+                        il.Emit(OpCodes.Castclass, field.FieldType);
+                    else
+                        il.Emit(OpCodes.Unbox_Any, field.FieldType);
+                    il.Emit(OpCodes.Stfld, field);
                     il.Emit(OpCodes.Ret);
-                    return (MemberSetter)dm.CreateDelegate(typeof(MemberSetter));
+
+                    return (MemberSetter)dm.CreateDelegate(memberSetterType);
                 });
         }
     }

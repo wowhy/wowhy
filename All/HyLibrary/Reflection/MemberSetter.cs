@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace HyLibrary.Reflection
+﻿namespace HyLibrary.Reflection
 {
-    public delegate void MemberSetter(ref object obj, object value);
+    using System.Security;
+
+    public delegate void MemberSetter(object obj, object value);
 }
