@@ -2,6 +2,9 @@
 {
     using System.Diagnostics.Contracts;
 
+    /// <summary>
+    /// 检查代码
+    /// </summary>
     public static class CodeCheck
     {
         public static void Null<TValue>(TValue value, string userMessage)
