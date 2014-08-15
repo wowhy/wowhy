@@ -29,7 +29,13 @@ namespace Program01
             return b;
         }
 
-        public static A StrongSetA(A x, string v)
+        public static A StrongSetA(A x, int v)
+        {
+            x.Id = v;
+            return x;
+        }
+
+        public static B StrongSetB(B x, string v)
         {
             x.Name = v;
             return x;
@@ -47,12 +53,12 @@ namespace Program01
             //    setter(list[i], i);
             //}
 
-            //var setter = ReflectionHelper.Instance.CreateMemberSetter<A, string>(typeof(A).GetField("Name"));
-            //var a = new A();
+            //var setter = ReflectionHelper.Instance.CreateMemberSetter<A, int>(typeof(A).GetProperty("Id"));
+            //var obj = new A();
 
-            //setter(a, "Hello, World!");
+            //obj = setter(obj, 10);
 
-            //Console.WriteLine(a.Name);
+            //Console.WriteLine(obj.Id);
 
             Console.ReadKey();
         }

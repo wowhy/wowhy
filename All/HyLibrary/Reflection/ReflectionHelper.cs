@@ -1,13 +1,9 @@
 ﻿namespace HyLibrary.Reflection
 {
     using System;
-    using System.Collections.Generic;
     using System.Collections.Concurrent;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
-    using System.Reflection.Emit;
     using System.Reflection;
+    using System.Reflection.Emit;
 
     public class ReflectionHelper
     {
@@ -32,6 +28,8 @@
 
         private ConcurrentDictionary<MemberInfo, MemberSetter> setterCaches = new ConcurrentDictionary<MemberInfo, MemberSetter>();
 
+        private ConcurrentDictionary<MemberInfo, MemberGetter> getterCaches = new ConcurrentDictionary<MemberInfo, MemberGetter>();
+
         public string GetTypeAssemblyName(Type type)
         {
             var val = string.Empty;
@@ -52,7 +50,7 @@
             return this.typeCaches.GetOrAdd(typeName, (key) => { return Type.GetType(key); });
         }
 
-#region 快速实例化对象
+        #region 快速实例化对象
         public T FastCreateInstance<T>()
         {
             return (T)FastCreateInstance(typeof(T));
@@ -81,10 +79,10 @@
                 type,
                 CreateCreater);
         }
-#endregion
+        #endregion
 
-#region 快速对属性、字段赋值
-        public MemberSetter GetOrCreateMember(MemberInfo member)
+        #region 快速对属性、字段赋值
+        public MemberSetter GetOrCreateMemberSetter(MemberInfo member)
         {
             CodeCheck.NotNull(member, "member");
 
@@ -104,11 +102,6 @@
             }
 
             throw new NotSupportedException(member.GetType().FullName);
-        }
-
-        public MemberSetter GetOrCreateMemberSetter(MemberInfo member)
-        {
-            throw new NotImplementedException();
         }
 
         public MemberSetter<TType, TMember> CreateMemberSetter<TType, TMember>(MemberInfo member)
@@ -132,7 +125,7 @@
 
             return null;
         }
-#endregion
+        #endregion
 
         private static ObjectCreater CreateCreater(Type type)
         {
@@ -256,11 +249,17 @@
                 il.Emit(OpCodes.Ldarg_0);
                 il.Emit(OpCodes.Ldarg_1);
                 il.Emit(OpCodes.Callvirt, method);
-                il.Emit(OpCodes.Ldarg_0);
+            }
+            else
+            {
+                var local = il.DeclareLocal(ownerType);
+                il.Emit(OpCodes.Ldarga_S, local);
+                il.Emit(OpCodes.Ldarg_1);
+                il.Emit(OpCodes.Call, method);
             }
 
+            il.Emit(OpCodes.Ldarg_0);
             il.Emit(OpCodes.Ret);
-
             return (MemberSetter<TType, TProperty>)dm.CreateDelegate(typeof(MemberSetter<TType, TProperty>));
         }
 
@@ -317,8 +316,60 @@
 
         private MemberSetter<TType, TField> CreateFieldSetter<TType, TField>(FieldInfo field)
         {
+            var ownerType = field.DeclaringType;
+            var dm = new DynamicMethod(field.Name, ownerType, new Type[] { ownerType, field.FieldType });
+            var il = dm.GetILGenerator();
+
+            if (ownerType.IsClass)
+            {
+                il.Emit(OpCodes.Ldarg_0);
+                il.Emit(OpCodes.Ldarg_1);
+                il.Emit(OpCodes.Stfld, field);
+            }
+            else
+            {
+                var local = il.DeclareLocal(ownerType);
+                il.Emit(OpCodes.Ldarga_S, local);
+                il.Emit(OpCodes.Ldarg_1);
+                il.Emit(OpCodes.Stfld, field);
+            }
+
+            il.Emit(OpCodes.Ldarg_0);
+            il.Emit(OpCodes.Ret);
+            return (MemberSetter<TType, TField>)dm.CreateDelegate(typeof(MemberSetter<TType, TField>));
+        }
+        #endregion
+
+        #region 创建MemberGetter
+        private MemberGetter GetOrCreatePropertyGetter(PropertyInfo porp)
+        {
             throw new NotImplementedException();
         }
-#endregion
+
+        private MemberGetter GetOrCreateFieldGetter(FieldInfo field)
+        {
+            throw new NotImplementedException();
+        }
+
+        private MemberGetter CreateProperyGetter(PropertyInfo porp)
+        {
+            throw new NotImplementedException();
+        }
+
+        private MemberGetter<TType, TProperty> CreateProperyGetter<TType, TProperty>(PropertyInfo porp)
+        {
+            throw new NotImplementedException();
+        }
+
+        private MemberGetter CreateFieldGetter(FieldInfo field)
+        {
+            throw new NotImplementedException();
+        }
+
+        private MemberGetter<TType, TField> CreateFieldGetter<TType, TField>(FieldInfo field)
+        {
+            throw new NotImplementedException();
+        }
+        #endregion
     }
 }
