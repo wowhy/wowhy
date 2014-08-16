@@ -26,5 +26,10 @@
         {
             Contract.Assert(condition, userMessage);
         }
+
+        public static void IsFalse(bool condition, string userMessage)
+        {
+            Contract.Assert(!condition, userMessage);
+        }
     }
 }
