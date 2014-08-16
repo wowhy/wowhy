@@ -51,6 +51,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="FlagExtensionTest.cs" />
+    <Compile Include="LambdaTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReflectionHelperTest.cs" />
   </ItemGroup>

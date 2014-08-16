@@ -43,6 +43,7 @@
     <Compile Include="ExtensionMethod\FlagExtension.cs" />
     <Compile Include="ExtensionMethod\ReflectionExtension.cs" />
     <Compile Include="ExtensionMethod\StringExtension.cs" />
+    <Compile Include="Lambda\Recursion.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Reflection\Internal\Getters.cs" />
     <Compile Include="Reflection\Internal\Setters.cs" />

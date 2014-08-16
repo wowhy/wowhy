@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using HyLibrary.ExtensionMethod;
 using HyLibrary.Reflection;
+using HyLibrary.Lambda;
 
 namespace Program01
 {
@@ -60,7 +61,13 @@ namespace Program01
 
             //Console.WriteLine(obj.Id);
 
-            Console.ReadKey();
+            var fab = Recursion.R<int, int>((self, n) => n <= 2 ? 1 : self(n - 1) + self(n - 2));
+            for (int i = 1; i <= 10; i++)
+            {
+                Console.Write(fab(i) + " ");
+            }
+
+            Console.ReadLine();
         }
     }
 }
