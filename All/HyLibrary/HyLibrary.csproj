@@ -45,6 +45,7 @@
     <Compile Include="ExtensionMethod\FlagExtension.cs" />
     <Compile Include="ExtensionMethod\ReflectionExtension.cs" />
     <Compile Include="ExtensionMethod\StringExtension.cs" />
+    <Compile Include="ExtensionMethod\TypeExtension.cs" />
     <Compile Include="Lambda\Recursion.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Reflection\ObjectCreater.cs" />
