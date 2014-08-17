@@ -1,42 +1,126 @@
 // Program02.cpp: 主项目文件。
 
-#include "stdafx.h"
-
 using namespace System;
+using namespace System::Threading;
+using namespace System::Reflection;
+using namespace System::Runtime::Remoting;
 
-template<int N>
-struct Fab
-{
-    static int const value = Fab<N - 1>::value + Fab<N - 2>::value;
-};
+#define OUTPUT_APPDOMAIN() Console::WriteLine("Executing in " + Thread::GetDomain()->FriendlyName);
 
-template<>
-struct Fab<0>
-{
-    static int const value = 0;
-};
-
-template<>
-struct Fab<1>
-{
-    static int const value = 1;
-};
-
-value struct A
+[Serializable]
+public ref class MarshalByValType : public Object
 {
 public:
-    String^ Name;
+    MarshalByValType() :m_creationTime(DateTime::Now)
+    {
+        Console::WriteLine(
+            "{0} ctor running in {1}, Created on {2:D}",
+            this->GetType()->ToString(),
+            Thread::GetDomain()->FriendlyName,
+            m_creationTime);
+    }
+
+    String^ ToString() override
+    {
+        return m_creationTime.ToLongDateString();
+    }
+
+private:
+    DateTime m_creationTime;
 };
 
-A Set(A a, String^ v)
+public ref class MarshalByRefType : public MarshalByRefObject
 {
-    a.Name = v;
-    return a;
+public:
+    MarshalByRefType()
+    {
+        Console::WriteLine(
+            "{0} ctor running in {1}",
+            this->GetType()->ToString(),
+            Thread::GetDomain()->FriendlyName);
+    }
+
+    void SomeMethod()
+    {
+        OUTPUT_APPDOMAIN();
+    }
+
+    MarshalByValType^ MethodWithReturn()
+    {
+        OUTPUT_APPDOMAIN();
+
+        return gcnew MarshalByValType();
+    }
+};
+
+public ref class NonMarshalableType :public Object
+{
+public:
+    NonMarshalableType()
+    {
+        OUTPUT_APPDOMAIN();
+    }
+};
+
+void Marshalling()
+{
+    auto adCallingThreadDomain = Thread::GetDomain();
+
+    auto callingDomainName = adCallingThreadDomain->FriendlyName;
+    Console::WriteLine("Default AppDomain's friendly name={0}", callingDomainName);
+
+    auto exeAssembly = Assembly::GetEntryAssembly()->FullName;
+    Console::WriteLine("Main assembly={0}", exeAssembly);
+
+    Console::WriteLine();
+    Console::WriteLine();
+
+    Console::WriteLine("Demo #1");
+    auto ad2 = AppDomain::CreateDomain("AD #2", nullptr, nullptr);
+    auto mbrt = dynamic_cast<MarshalByRefType^>(ad2->CreateInstanceAndUnwrap(exeAssembly, "MarshalByRefType"));
+
+    Console::WriteLine("Type={0}", mbrt->GetType());
+    Console::WriteLine("Is Proxy={0}", RemotingServices::IsTransparentProxy(mbrt));
+
+    mbrt->SomeMethod();
+
+    AppDomain::Unload(ad2);
+
+    try
+    {
+        mbrt->SomeMethod();
+    }
+    catch (AppDomainUnloadedException^)
+    {
+        Console::WriteLine("Failed call.");
+    }
+
+    Console::WriteLine();
+    Console::WriteLine("Demo #2");
+
+    ad2 = AppDomain::CreateDomain("AD #2", nullptr, nullptr);
+    mbrt = dynamic_cast<MarshalByRefType^>(ad2->CreateInstanceAndUnwrap(exeAssembly, "MarshalByRefType"));
+
+    auto mbvt = mbrt->MethodWithReturn();
+
+    Console::WriteLine("Is Proxy={0}", RemotingServices::IsTransparentProxy(mbvt));
+    Console::WriteLine("Returned object created " + mbvt->ToString());
+
+    AppDomain::Unload(ad2);
+
+    try
+    {
+        Console::WriteLine("Returned object created " + mbvt->ToString());
+        Console::WriteLine("Successful call.");
+    }
+    catch (AppDomainUnloadedException^)
+    {
+        Console::WriteLine("Failed call.");
+    }
 }
 
 int main(array<System::String ^> ^args)
 {
-    int fab = Fab<5>::value;
-    Console::WriteLine(fab);
+    Marshalling();
     return 0;
 }
