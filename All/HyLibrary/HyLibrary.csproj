@@ -42,11 +42,15 @@
     <Compile Include="CodeCheck.cs" />
     <Compile Include="Common\IOperable.cs" />
     <Compile Include="Common\Operator.cs" />
+    <Compile Include="ExtensionMethod\BytesExtension.cs" />
     <Compile Include="ExtensionMethod\FlagExtension.cs" />
     <Compile Include="ExtensionMethod\ReflectionExtension.cs" />
     <Compile Include="ExtensionMethod\StringExtension.cs" />
     <Compile Include="ExtensionMethod\TypeExtension.cs" />
     <Compile Include="Lambda\Recursion.cs" />
+    <Compile Include="Language\Pinyin\Internal\PyCode.cs" />
+    <Compile Include="Language\Pinyin\Internal\PyHash.cs" />
+    <Compile Include="Language\Pinyin\PinyinHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Reflection\ObjectCreater.cs" />
     <Compile Include="Reflection\MemberGetter.cs" />

@@ -6,6 +6,7 @@
     using System.Text;
     using System.Threading.Tasks;
     using HyLibrary.Reflection;
+    using System.Text.RegularExpressions;
 
     public static class StringExtension
     {
@@ -87,5 +88,51 @@
         {
             return ReflectionHelper.Instance.GetType(typeName);
         }
+
+        public static string Join(this IEnumerable<string> values, string separator)
+        {
+            return string.Join<string>(separator, values);
+        }
+
+        #region Format
+        public static string Format(this string format, params object[] args)
+        {
+            return string.Format(format, args);
+        }
+
+        public static string Format(this string format, object arg0)
+        {
+            return string.Format(format, arg0);
+        }
+
+        public static string Format(this string format, object arg0, object arg1)
+        {
+            return string.Format(format, arg0, arg1);
+        }
+
+        public static string Format(this string format, object arg0, object arg1, object arg2)
+        {
+            return string.Format(format, arg0, arg1, arg2);
+        }
+
+        #endregion
+
+        #region Regex
+        public static bool IsMatch(this string input, string pattern)
+        {
+            return IsMatch(input, new Regex(pattern));
+        }
+
+        public static bool IsMatch(this string input, Regex regex)
+        {
+            return regex.IsMatch(input);
+        }
+
+        public static bool MatchTo(this string pattern, string input)
+        {
+            return Regex.IsMatch(input, pattern);
+        }
+        #endregion
+
     }
 }
