@@ -1,4 +1,5 @@
 REFERENCE = System.Data.dll
+EF = packages/EntityFramework.6.1.1/lib/net45/EntityFramework.dll,packages/EntityFramework.6.1.1/lib/net45/EntityFramework.SqlServer.dll
 BIN = bin
 
 all:HyLibrary.dll Program01.exe
@@ -13,7 +14,7 @@ HyLibrary.dll: test
 Program01.exe: test
 	test -d $(BIN) || mkdir $(BIN)
 	mcs -t:exe -o+ -out:bin/Program01.exe -langversion:Future -sdk:4.5 \
-		-r:bin/HyLibrary.dll \
+		-r:bin/HyLibrary.dll,$(EF) \
 		-recurse:Program01/*.cs
 
 test:
