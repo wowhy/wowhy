@@ -94,6 +94,11 @@
             return string.Join<string>(separator, values);
         }
 
+        public static string Join(this IEnumerable<string> values, char separator)
+        {
+            return string.Join<string>(separator.ToString(), values);
+        }
+
         #region Format
         public static string Format(this string format, params object[] args)
         {

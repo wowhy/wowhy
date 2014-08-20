@@ -16,7 +16,7 @@
 
             return _IsDerivedFromType(objectType, type);
         }
-
+        
         public static bool IsNullableType(this Type type)
         {
             CodeCheck.NotNull(type, "type");

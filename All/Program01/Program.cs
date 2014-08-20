@@ -9,63 +9,48 @@ using HyLibrary.Lambda;
 
 namespace Program01
 {
-    public class A
-    {
-        public int Id { get; set; }
-        public string Name;
-    }
+    public interface IA { }
+    public interface IB : IA { }
+    public interface IC : IB { }
 
-    public struct B
+    public class Test : IC
     {
-        public int Id { get; set; }
-        public string Name;
     }
 
     class Program
     {
-        public static object Set(object x, object v)
-        {
-            B b = (B)x;
-            b.Id = (int)v;
-            return b;
-        }
+        private static readonly Dictionary<string, Type> _cache = new Dictionary<string, Type>();
 
-        public static A StrongSetA(A x, int v)
+        internal static Type GetAppServiceInterfaceType(Type typeAppService)
         {
-            x.Id = v;
-            return x;
-        }
-
-        public static B StrongSetB(B x, string v)
-        {
-            x.Name = v;
-            return x;
+            string typeName = typeAppService.FullName;
+            Type typeInterface = null;
+            if (_cache.ContainsKey(typeName))
+            {
+                typeInterface = _cache[typeName];
+            }
+            else
+            {
+                foreach (Type type in typeAppService.GetInterfaces())
+                {
+                    Type t = type.GetInterface("IA");
+                    if (t != null)
+                    {
+                        _cache.Add(typeName, type);
+                        typeInterface = type;
+                        break;
+                    }
+                }
+            }
+            return typeInterface;
         }
 
         static void Main(string[] args)
         {
-            //var list = new List<A>();
-            //var count = 10000;
-            //var type = typeof(A);
-            //var setter = type.GetProperySetter("Id");
-            //for (int i = 0; i < count; i++)
-            //{
-            //    list.Add(type.FastCreateInstance<A>());
-            //    setter(list[i], i);
-            //}
+            var type = typeof(Test);
+            var interfaces = type.GetInterfaces();
 
-            //var setter = ReflectionHelper.Instance.CreateMemberSetter<A, int>(typeof(A).GetProperty("Id"));
-            //var obj = new A();
-
-            //obj = setter(obj, 10);
-
-            //Console.WriteLine(obj.Id);
-
-            var fab = Recursion.R<int, int>((self, n) => n <= 2 ? 1 : self(n - 1) + self(n - 2));
-            for (int i = 1; i <= 10; i++)
-            {
-                Console.Write(fab(i) + " ");
-            }
+            Console.WriteLine(GetAppServiceInterfaceType(type));
 
             Console.ReadLine();
         }
