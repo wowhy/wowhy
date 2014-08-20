@@ -22,11 +22,22 @@ using System.Linq.Expressions;
 
     public static class Functions
     {
+        /// <summary>
+        /// 准备一个标量函数， 判断是否是父级的后代（只检查一级）
+        /// </summary>
+        /// <param name="hierarchy"></param>
+        /// <param name="match"></param>
+        /// <returns></returns>
         public static bool IsChild(string hierarchy, string match)
         {
             return hierarchy.StartsWith(match) && hierarchy != match;
         }
 
+        /// <summary>
+        /// 准备一个聚集函数， 获取最大HierarchyId
+        /// </summary>
+        /// <param name="hierarchy"></param>
+        /// <returns></returns>
         public static string MaxHierarchy(string hierarchy)
         {
             return hierarchy;
@@ -49,6 +60,11 @@ using System.Linq.Expressions;
             };
         }
 
+        /// <summary>
+        /// 原始查询语句
+        /// </summary>
+        /// <param name="hierarchy"></param>
+        /// <returns></returns>
         public string GetMaxChildOrigin(string hierarchy)
         {
             return this.tables.Where(k => Functions.IsChild(k.HierarchyId, hierarchy))
@@ -74,9 +90,15 @@ using System.Linq.Expressions;
 
             var selectExp = Expression.Lambda<Func<Tree, string>>(prop, param);
 
+            // 测试
             return this.tables.Where(whereExp.Compile())
                        .Select(selectExp.Compile())
                        .ToList().Join(",");
+
+            // 真实查询语句
+            //return this.tables.Where(whereExp.Compile())
+            //           .Select(selectExp.Compile())
+            //           .FirstOrDefault();
         }
 
         public string GetMaxChild(Expression<Func<Tree, string>> propertyExp, string hierarchy)
@@ -95,6 +117,11 @@ using System.Linq.Expressions;
             return this.tables.Where(whereExp.Compile())
                        .Select(propertyExp.Compile())
                        .ToList().Join(",");
+
+            // 真实查询语句
+            //return this.tables.Where(whereExp.Compile())
+            //           .Select(propertyExp.Compile())
+            //           .FirstOrDefault();
         }
     }
 
