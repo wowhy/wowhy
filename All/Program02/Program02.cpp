@@ -1,5 +1,8 @@
 // Program02.cpp: 主项目文件。
 
+#include <iostream>
+#include <string>
+
 using namespace System;
 using namespace System::Threading;
 using namespace System::Reflection;
@@ -119,8 +122,32 @@ void Marshalling()
     }
 }
 
+class NativeClass
+{
+public:
+    NativeClass():name("")
+    {
+    }
+
+    std::string getName() const { return this->name; }
+    void setName(std::string name)
+    {
+        this->name = name;
+    }
+
+private:
+    std::string name;
+};
+
 int main(array<System::String ^> ^args)
 {
     Marshalling();
+
+    auto p = new NativeClass();
+    p->setName("test");
+
+    std::cout << p->getName() << std::endl;
+
+    delete p;
     return 0;
 }
