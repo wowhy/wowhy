@@ -22,7 +22,7 @@
             this.il = il;
         }
 
-        public ILGenerator IL 
+        public ILGenerator IL
         {
             get { return this.il; }
         }
@@ -915,6 +915,11 @@
             this.il.Emit(OpCodes.Ldarga_S, index); return this;
         }
 
+        public EmitHelper ldarga_s(LocalBuilder local)
+        {
+            this.il.Emit(OpCodes.Ldarga_S, local); return this;
+        }
+
         /// <summary>
         /// Load an argument address onto the evaluation stack.
         /// </summary>
@@ -1605,6 +1610,19 @@
         {
             this.il.Emit(OpCodes.Ldloca_S, index); return this;
         }
+
+        /// <summary>
+        /// Calls ILGenerator.Emit(<see cref="OpCodes.Ldloca_S"/>, <see cref="LocalBuilder"/>) that
+        /// loads the address of the local variable at a specific index onto the evaluation stack.
+        /// </summary>
+        /// <param name="local">A <see cref="LocalBuilder"/> representing the local variable.</param>
+        /// <seealso cref="OpCodes.Ldloca_S">OpCodes.Ldloca</seealso>
+        /// <seealso cref="System.Reflection.Emit.ILGenerator.Emit(OpCode,LocalBuilder)">ILGenerator.Emit</seealso>
+        public EmitHelper ldloca_s(LocalBuilder local)
+        {
+            this.il.Emit(OpCodes.Ldloca_S, local); return this;
+        }
+
 
         /// <summary>
         /// Calls ILGenerator.Emit(<see cref="OpCodes.Ldloca"/>, <see cref="LocalBuilder"/>) that
@@ -2655,6 +2673,13 @@
             if (type == null) throw new ArgumentNullException("type");
 
             return type.IsValueType ? unbox_any(type) : this;
+        }
+
+        public EmitHelper unbox_or_castclass(Type type)
+        {
+            if (type == null) throw new ArgumentNullException("type");
+
+            return type.IsValueType ? unbox_any(type) : castclass(type);
         }
 
         /// <summary>
