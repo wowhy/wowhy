@@ -1,5 +1,5 @@
 REFERENCE = System.Data.dll
-EF = packages/EntityFramework.6.1.1/lib/net45/EntityFramework.dll,packages/EntityFramework.6.1.1/lib/net45/EntityFramework.SqlServer.dll
+#EF = packages/EntityFramework.6.1.1/lib/net45/EntityFramework.dll,packages/EntityFramework.6.1.1/lib/net45/EntityFramework.SqlServer.dll
 BIN = bin
 
 all:HyLibrary.dll Program01.exe

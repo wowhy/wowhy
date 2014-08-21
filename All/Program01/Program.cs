@@ -1,16 +1,10 @@
 ﻿namespace Program01
 {
+    using HyLibrary.ExtensionMethod;
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
-    using HyLibrary.ExtensionMethod;
-    using HyLibrary.Reflection;
-    using HyLibrary.Lambda;
-    using System.Data.Entity;
     using System.Linq.Expressions;
-    using System.Data.Entity.SqlServer;
 
     public class Tree
     {
