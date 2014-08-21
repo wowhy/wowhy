@@ -8,8 +8,8 @@
     using HyLibrary.ExtensionMethod;
     using HyLibrary.Reflection;
     using HyLibrary.Lambda;
-using System.Data.Entity;
-using System.Linq.Expressions;
+    using System.Data.Entity;
+    using System.Linq.Expressions;
     using System.Data.Entity.SqlServer;
 
     public class Tree
@@ -88,7 +88,10 @@ using System.Linq.Expressions;
                 ischild,
                 param);
 
-            var selectExp = Expression.Lambda<Func<Tree, string>>(prop, param);
+            var max = Expression.Call(
+                typeof(Functions).GetMethod("MaxHierarchy"),
+                prop);
+            var selectExp = Expression.Lambda<Func<Tree, string>>(max, param);
 
             // 测试
             return this.tables.Where(whereExp.Compile())
@@ -135,7 +138,7 @@ using System.Linq.Expressions;
 
             Console.WriteLine(repository.GetMaxChild("HierarchyId", "/1/"));
 
-            Console.WriteLine(repository.GetMaxChild(k => k.HierarchyId, "/1/"));
+            Console.WriteLine(repository.GetMaxChild(k => Functions.MaxHierarchy(k.HierarchyId), "/1/"));
         }
     }
 }
