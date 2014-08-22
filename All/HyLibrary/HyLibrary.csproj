@@ -52,7 +52,9 @@
     <Compile Include="Language\Pinyin\Internal\PyHash.cs" />
     <Compile Include="Language\Pinyin\PinyinHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Reflection\Emit\AssemblyBuilderHelper.cs" />
     <Compile Include="Reflection\Emit\EmitHelper.cs" />
+    <Compile Include="Reflection\Emit\TypeBuilderHelper.cs" />
     <Compile Include="Reflection\GenericBinder.cs" />
     <Compile Include="Reflection\ObjectCreater.cs" />
     <Compile Include="Reflection\MemberGetter.cs" />
