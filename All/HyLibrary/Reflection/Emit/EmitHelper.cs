@@ -1174,7 +1174,6 @@
         /// <param name="num">The value pushed onto the stack.</param>
         /// <seealso cref="OpCodes.Ldc_I4_S">OpCodes.Ldc_I4_S</seealso>
         /// <seealso cref="System.Reflection.Emit.ILGenerator.Emit(OpCode,byte)">ILGenerator.Emit</seealso>
-        [CLSCompliant(false)]
         public EmitHelper ldc_i4_s(sbyte num)
         {
             this.il.Emit(OpCodes.Ldc_I4_S, num); return this;

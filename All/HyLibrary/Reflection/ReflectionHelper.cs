@@ -194,6 +194,7 @@
                   .ldarg_1
                   .unbox_or_castclass(prop.PropertyType)
                   .callvirt(method)
+                  .ldarg_0
                   .ret()
                   .end();
             }
