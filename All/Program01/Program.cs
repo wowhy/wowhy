@@ -12,7 +12,7 @@
         static void Main(string[] args)
         {
             var builder = new AssemblyBuilderHelper(@"test.dll");
-            builder.DefineType("Test");
+            builder.DefineType("Test").Create();
             builder.Save();
         }
     }
