@@ -12,8 +12,9 @@
         static void Main(string[] args)
         {
             var builder = new AssemblyBuilderHelper(@"test.dll");
-            builder.DefineType("Test").Create();
-            builder.Save();
+            var type = builder.DefineType("Test").Create();
+            dynamic test = Activator.CreateInstance(type);
+            Console.WriteLine(test.ToString());
         }
     }
 }
