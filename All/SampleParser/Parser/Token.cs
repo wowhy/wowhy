@@ -15,12 +15,21 @@ namespace SampleParser.Parser
     /// <summary>
     /// 
     /// </summary>
-    public enum Operator
+    public enum Token
     {
+        End = 0,
+        Name,
+        Number,
+
         Plus = '+',
         Minus = '-',
-        Multi = '*',
+        Mul = '*',
         Div = '/',
         Mod = '%',
+
+        Print = ';',
+        Assign = '=',
+        LP = '(',
+        RP = ')'
     }
 }

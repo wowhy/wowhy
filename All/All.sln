@@ -24,6 +24,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Client", "Client", "{515A6B
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{769B7576-19F9-48E0-A4F4-96782813A443}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleParser", "SampleParser\SampleParser.csproj", "{C959F40F-6399-4701-9210-5350F1EC572D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -74,6 +76,16 @@ Global
 		{490D07DE-9D88-45A6-949C-03CC211BC5D3}.Release|Mixed Platforms.Build.0 = Release|Win32
 		{490D07DE-9D88-45A6-949C-03CC211BC5D3}.Release|Win32.ActiveCfg = Release|Win32
 		{490D07DE-9D88-45A6-949C-03CC211BC5D3}.Release|Win32.Build.0 = Release|Win32
+		{C959F40F-6399-4701-9210-5350F1EC572D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C959F40F-6399-4701-9210-5350F1EC572D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C959F40F-6399-4701-9210-5350F1EC572D}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{C959F40F-6399-4701-9210-5350F1EC572D}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{C959F40F-6399-4701-9210-5350F1EC572D}.Debug|Win32.ActiveCfg = Debug|Any CPU
+		{C959F40F-6399-4701-9210-5350F1EC572D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C959F40F-6399-4701-9210-5350F1EC572D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C959F40F-6399-4701-9210-5350F1EC572D}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{C959F40F-6399-4701-9210-5350F1EC572D}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{C959F40F-6399-4701-9210-5350F1EC572D}.Release|Win32.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -83,5 +95,6 @@ Global
 		{36AC7BDB-E140-4982-859D-3254590F2F27} = {769B7576-19F9-48E0-A4F4-96782813A443}
 		{7BA7C02A-3436-4720-BF1B-F9EAB1804590} = {515A6BC5-51DF-44FC-933A-FF162B35945F}
 		{490D07DE-9D88-45A6-949C-03CC211BC5D3} = {515A6BC5-51DF-44FC-933A-FF162B35945F}
+		{C959F40F-6399-4701-9210-5350F1EC572D} = {515A6BC5-51DF-44FC-933A-FF162B35945F}
 	EndGlobalSection
 EndGlobal

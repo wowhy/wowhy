@@ -11,6 +11,6 @@
     /// </summary>
     public interface IResult<out T>
     { 
-        T Value { get; }        
+        T Value { get; }
     }
 } 
