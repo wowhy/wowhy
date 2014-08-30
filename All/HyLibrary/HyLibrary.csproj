@@ -40,6 +40,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CodeCheck.cs" />
+    <Compile Include="Common\ArraryT.cs" />
     <Compile Include="Common\IOperable.cs" />
     <Compile Include="Common\Operator.cs" />
     <Compile Include="ExtensionMethod\BytesExtension.cs" />
