@@ -43,6 +43,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Parser\Calc.cs" />
+    <Compile Include="Parser\ExprParser.cs" />
     <Compile Include="Parser\IResult.cs" />
     <Compile Include="Parser\Token.cs" />
     <Compile Include="Program.cs" />
