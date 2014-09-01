@@ -1,22 +1,14 @@
-﻿using System;
-using System.Text;
-using System.Collections;
-using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.Reflection;
-using System.Linq.Expressions;
-
-
-/* Supported by Simpro.Expr but not lambda
- *      - "**" power operator
- *      - 'xxxx' same with "xxxx"
- *      - implicit conversion for string add with non-string object: s+num => s+num.ToString()
- *      - implicit conversion for string compare with non-string object : s>num => s>num.ToString()
- * */
-namespace SampleParser.Parser
+﻿namespace SampleParser.Parser
 {
+    using System;
+    using System.Text;
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.Collections.Specialized;
+    using System.Reflection;
+    using System.Linq.Expressions;
+
     #region enums
-    internal enum TOKEN_TYPE { NONE, COMMENT, COMMENT_BLOCK, TEXT, INT, UINT, LONG, ULONG, FLOAT, DOUBLE, DECIMAL, BOOL, IDENTIFIER, OPERATOR }
     public enum OPERATOR_TYPE
     {
         UNKNOWN,
@@ -29,7 +21,25 @@ namespace SampleParser.Parser
         ASSIGN, // =, +=
         PRIMARY   // , ;
     }
+
+    internal enum RequiredOperandType { NONE, SAME }
+
+    internal enum TOKEN_TYPE { NONE, COMMENT, COMMENT_BLOCK, TEXT, INT, UINT, LONG, ULONG, FLOAT, DOUBLE, DECIMAL, BOOL, IDENTIFIER, OPERATOR }
     #endregion enums
+
+    public interface IParser
+    {
+        void Parse();
+    }
+
+    //public class ExprHelper
+    //{
+    //    public static Expression<TFunc> Parser<TFunc>(string expression)
+    //    {
+    //        var parser = new ExprParser(expression);
+    //        return parser.Parse<TFunc>();
+    //    }
+    //}
 
     /// <summary>
     /// ExprParser has 3 naming scope
@@ -246,7 +256,29 @@ namespace SampleParser.Parser
                 foreach (string name in lv.Keys)
                     inlineParameterType.Add(name, lv[name].Type);
             }
+
             return Expression.Lambda(ParseStatementBlock(ts, parseInfo, false), parseInfo.referredParameterList.ToArray());
+        }
+
+        public Expression<TFunc> Parse<TFunc>(string expression)
+        { 
+            caller_assembly = Assembly.GetCallingAssembly();       // need to reset by every parsing
+            inlineParameterType = new Dictionary<string, Type>();   // need to reset by every parsing
+            TokenStore declare_ts;
+            ParseInfo parseInfo = new ParseInfo();
+
+            TokenStore ts = TokenStore.Parse(expression, out declare_ts);
+            if (declare_ts != null)
+            {
+                //ParseDeclaration(declare_ts);
+                parseInfo.localVariableStack.Push(new Dictionary<string, ParameterExpression>());
+                Assert(ParseNextExpression(declare_ts, null, parseInfo) == null, "Incorrect parameter declaration.");
+                var lv = parseInfo.localVariableStack.Pop();
+                foreach (string name in lv.Keys)
+                    inlineParameterType.Add(name, lv[name].Type);
+            }
+
+            return Expression.Lambda<TFunc>(ParseStatementBlock(ts, parseInfo, false), parseInfo.referredParameterList.ToArray());
         }
 
         internal Expression ParseStatementBlock(TokenStore ts, ParseInfo parseInfo, bool isVoid)
@@ -1115,39 +1147,9 @@ namespace SampleParser.Parser
         }
     }
 
-    internal class ParseInfo
+    public class ExprException : ApplicationException
     {
-        public LabelExpression returnLabel = null;
-        public List<ParameterExpression> referredParameterList = new List<ParameterExpression>();
-        public Stack<Dictionary<string, ParameterExpression>> localVariableStack = new Stack<Dictionary<string, ParameterExpression>>();   // local variables in every statement block
-        public Stack<JumpInfo> jumpInfoStack = new Stack<JumpInfo>();
-
-        public Expression GetReferredVariable(string var_name)
-        {
-            foreach (Dictionary<string, ParameterExpression> dic in localVariableStack)
-                if (dic.ContainsKey(var_name)) return dic[var_name];
-            return null;
-        }
-        public Expression GetReferredParameter(Type t, string name)
-        {
-            Expression exp = null;
-            // Parameter reference
-            foreach (ParameterExpression pe in referredParameterList)
-            {
-                if (pe.Type == t && pe.Name == name) { exp = pe; break; }
-            }
-            if (exp == null)
-            {
-                exp = Expression.Parameter(t, name);
-                referredParameterList.Add((ParameterExpression)exp);
-            }
-            return exp;
-        }
-    }
-    internal class JumpInfo
-    {
-        public LabelExpression breakLabel;
-        public LabelExpression continueLabel;
+        public ExprException(string message) : base(message) { }
     }
 
     public class Using
@@ -1179,6 +1181,42 @@ namespace SampleParser.Parser
             }
             throw new ExprException("Can't find assembly.");
         }
+    }
+
+    internal class ParseInfo
+    {
+        public LabelExpression returnLabel = null;
+        public List<ParameterExpression> referredParameterList = new List<ParameterExpression>();
+        public Stack<Dictionary<string, ParameterExpression>> localVariableStack = new Stack<Dictionary<string, ParameterExpression>>();   // local variables in every statement block
+        public Stack<JumpInfo> jumpInfoStack = new Stack<JumpInfo>();
+
+        public Expression GetReferredVariable(string var_name)
+        {
+            foreach (Dictionary<string, ParameterExpression> dic in localVariableStack)
+                if (dic.ContainsKey(var_name)) return dic[var_name];
+            return null;
+        }
+        public Expression GetReferredParameter(Type t, string name)
+        {
+            Expression exp = null;
+            // Parameter reference
+            foreach (ParameterExpression pe in referredParameterList)
+            {
+                if (pe.Type == t && pe.Name == name) { exp = pe; break; }
+            }
+            if (exp == null)
+            {
+                exp = Expression.Parameter(t, name);
+                referredParameterList.Add((ParameterExpression)exp);
+            }
+            return exp;
+        }
+    }
+
+    internal class JumpInfo
+    {
+        public LabelExpression breakLabel;
+        public LabelExpression continueLabel;
     }
 
     internal class TokenStore
@@ -1683,12 +1721,15 @@ namespace SampleParser.Parser
 
 
     }
+
     internal delegate Expression d1m(Expression exp, MethodInfo mi);
+
     internal delegate Expression d2(Expression exp1, Expression exp2);
+
     internal delegate Expression d2m(Expression exp1, Expression exp2, MethodInfo mi);
+
     internal delegate Expression d2bm(Expression exp1, Expression exp2, bool LiftToNull, MethodInfo mi);
 
-    internal enum RequiredOperandType { NONE, SAME }
     internal class AnOperator
     {
         //public OPERATOR_NAME op_name;
@@ -1715,6 +1756,7 @@ namespace SampleParser.Parser
         }
 
         internal static Dictionary<string, AnOperator> dicSystemOperator = GetSystemOperators();
+        
         internal static Dictionary<string, AnOperator> GetSystemOperators()
         {
             Dictionary<string, AnOperator> dic = new Dictionary<string, AnOperator>();
@@ -1785,10 +1827,5 @@ namespace SampleParser.Parser
             dic.Add("|=", new AnOperator(OPERATOR_TYPE.ASSIGN, 100, null, null, RequiredOperandType.SAME, (d2m)Expression.OrAssign, "op_BitwiseOrAssignment")); // BitOrAssign   //x|=y	140.OrAssign
             return dic;
         }
-    }
-
-    public class ExprException : ApplicationException
-    {
-        public ExprException(string message) : base(message) { }
     }
 }

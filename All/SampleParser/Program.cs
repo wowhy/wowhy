@@ -16,9 +16,20 @@ namespace SampleParser
         static void Main(string[] argv)
         {
             var parser = new ExprParser();
-            var exp = parser.Parse("(int k) => 2 * k");
+            var exp = parser.Parse(
+@"(int k) => 
+{
+    if(k > 10)
+    {
+        Console.WriteLine(k);
+    }
+    else
+    {
+        Console.WriteLine(k * 2);
+    }
+}");
             Console.WriteLine(exp.ToString());
-            Console.WriteLine(((Func<int, int>)exp.Compile())(10));
+            ((Action<int>)exp.Compile())(10);
         }
     }
 }
