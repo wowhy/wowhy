@@ -54,6 +54,15 @@
     <Compile Include="Language\Pinyin\PinyinHelper.cs" />
     <Compile Include="Parser\Calc\CalcParser.cs" />
     <Compile Include="Parser\Calc\Token.cs" />
+    <Compile Include="Parser\Expr2\ClassFactory.cs" />
+    <Compile Include="Parser\Expr2\DynamicClass.cs" />
+    <Compile Include="Parser\Expr2\ExpressionParserHelper.cs" />
+    <Compile Include="Parser\Expr2\DynamicOrdering.cs" />
+    <Compile Include="Parser\Expr2\DynamicProperty.cs" />
+    <Compile Include="Parser\Expr2\ExpressionParser.cs" />
+    <Compile Include="Parser\Expr2\ParseException.cs" />
+    <Compile Include="Parser\Expr2\Res.cs" />
+    <Compile Include="Parser\Expr2\Signature.cs" />
     <Compile Include="Parser\Expr\ExprException.cs" />
     <Compile Include="Parser\Expr\ExprParser.cs" />
     <Compile Include="Parser\Expr\Internal\AnOperator.cs" />
@@ -68,6 +77,11 @@
     <Compile Include="Parser\Expr\Using.cs" />
     <Compile Include="Parser\IParser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="Reflection\Emit\AssemblyBuilderHelper.cs" />
     <Compile Include="Reflection\Emit\EmitHelper.cs" />
     <Compile Include="Reflection\Emit\TypeBuilderHelper.cs" />
@@ -80,7 +94,12 @@
     <Compile Include="Reflection\TypeHelper.cs" />
     <Compile Include="Reflection\Types.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
