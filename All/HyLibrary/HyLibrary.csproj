@@ -54,6 +54,7 @@
     <Compile Include="Language\Pinyin\PinyinHelper.cs" />
     <Compile Include="Parser\Calc\CalcParser.cs" />
     <Compile Include="Parser\Calc\Token.cs" />
+    <Compile Include="Parser\Calc\TokenStore.cs" />
     <Compile Include="Parser\Expr2\ClassFactory.cs" />
     <Compile Include="Parser\Expr2\DynamicClass.cs" />
     <Compile Include="Parser\Expr2\ExpressionParserHelper.cs" />

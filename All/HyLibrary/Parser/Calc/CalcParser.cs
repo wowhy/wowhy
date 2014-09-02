@@ -7,60 +7,132 @@
     using System.Text;
     using System.Threading.Tasks;
 
-    public class Calc
+    public class CalcParser
     {
-        private StringReader reader;
+        private TokenStore store;
+        private int pos;
+        private decimal result;
 
-        public Calc(string input)
+        public CalcParser(string source)
         {
-            this.reader = new StringReader(input);
+            this.pos = 0;
+            this.store = new TokenStore(source);
         }
 
-        private Token GetToken()
+        internal Token CurrentToken
         {
-            int ch;
-            do
+            get
             {
-                if ((ch = this.reader.Peek()) == -1)
+                return this.store[this.pos];
+            }
+        }
+
+        public decimal Run()
+        {
+            if (!this.IsEnd())
+            {
+                this.result = this.Expr(false);
+            }
+
+            return this.result;
+        }
+
+        private decimal Expr(bool get)
+        {
+            var left = this.Term(get);
+            while (!this.IsEnd())
+            {
+                switch (this.CurrentToken.type)
                 {
-                    return Token.End;
+                    case TokenType.Plus:
+                        left += this.Term(true);
+                        break;
+
+                    case TokenType.Minus:
+                        left -= this.Term(true);
+                        break;
+
+                    default:
+                        return left;
                 }
-            } while (ch != '\n' && Char.IsWhiteSpace((char)ch));
+            }
 
-            switch (ch)
+            return left;
+        }
+
+        private decimal Term(bool get)
+        {
+            var left = Prim(get);
+            while (!this.IsEnd())
             {
-                case '\0':
-                    this.reader.Read();
-                    return Token.End;
+                switch (this.CurrentToken.type)
+                {
+                    case TokenType.Mul:
+                        left *= Prim(true);
+                        break;
 
-                case ';':
-                case '+':
-                case '-':
-                case '*':
-                case '/':
-                case '%':
-                case '(':
-                case ')':
-                case '=':
-                    return (Token)ch;
+                    case TokenType.Div:
+                        left /= Prim(true);
+                        break;
 
-                case '0':
-                case '1':
-                case '2':
-                case '3':
-                case '4':
-                case '5':
-                case '6':
-                case '7':
-                case '8':
-                case '9':
-                case '.':
-                    this.reader.Read();
-                    return Token.Number;
+                    default:
+                        return left;
+                }
+            }
+
+            return left;
+        }
+
+        private decimal Prim(bool get)
+        {
+            if (get)
+            {
+                this.Next();
+            }
+
+            decimal left;
+            switch (this.CurrentToken.type)
+            {
+                case TokenType.Number:
+                    left = decimal.Parse(this.CurrentToken.text);
+                    this.Next();
+                    return left;
+
+                case TokenType.Minus:
+                    return -Prim(true);
+
+                case TokenType.Name:
+                    left = this.Table(this.CurrentToken.text);
+                    return left;
+
+                case TokenType.LP:
+                    left = this.Expr(true);
+                    if (this.CurrentToken.type != TokenType.RP)
+                    {
+                        throw new AggregateException("无法识别的表达式");
+                    }
+
+                    this.Next();
+                    return left;
 
                 default:
-                    throw new NotSupportedException();
+                    throw new AggregateException("无法识别的表达式");
             }
+        }
+
+        private decimal Table(string name)
+        {
+            throw new NotImplementedException(name);
+        }
+
+        private void Next()
+        {
+            this.pos++;
+        }
+
+        private bool IsEnd()
+        {
+            return this.pos >= this.store.Count;
         }
     }
 } 

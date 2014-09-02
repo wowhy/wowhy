@@ -9,7 +9,7 @@
     /// <summary>
     /// 
     /// </summary>
-    public enum Token
+    internal enum TokenType
     {
         End = 0,
         Name,
@@ -25,5 +25,11 @@
         Assign = '=',
         LP = '(',
         RP = ')'
+    }
+
+    internal struct Token
+    {
+        public TokenType type;
+        public string text;
     }
 }
