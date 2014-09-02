@@ -15,6 +15,15 @@ namespace SampleParser
     public class Test
     {
         public int Id { get; set; }
+
+        public Test() { }
+
+        public Test(int id) { this.Id = id; }
+
+        public override string ToString()
+        {
+            return string.Format("{{ Id:{0} }}", this.Id);
+        }
     }
 
     public class Program
@@ -30,7 +39,7 @@ namespace SampleParser
     return k.Id > 1;
 }");
             Console.WriteLine(exp.ToString());
-
+            
             var list = new List<Test>() 
             {
                 new Test { Id = 1 },
@@ -41,6 +50,10 @@ namespace SampleParser
 
             var result = list.Where(exp.Compile()).Select(k => k.Id.ToString()).Join(',');
             Console.WriteLine(result);
+
+            var exp2 = parser.Parse<Func<int, Test>>(@"(int id)=> new Test(id)");
+            Console.WriteLine(exp2.ToString());
+            Console.WriteLine(exp2.Compile()(10));
         }
     }
 }
