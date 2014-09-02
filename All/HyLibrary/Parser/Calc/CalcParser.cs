@@ -1,4 +1,4 @@
-﻿namespace SampleParser.Parser
+﻿namespace HyLibrary.Parser.Calc
 {
     using System;
     using System.Collections.Generic;

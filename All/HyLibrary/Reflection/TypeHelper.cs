@@ -8,6 +8,14 @@
 
     public class TypeHelper
     {
+        public static bool IsPrimitiveType(Type type)
+        {
+            return type.IsPrimitive ||
+                type == Types.DateTime ||
+                type == Types.Decimal ||
+                type == Types.String;
+        }
+
         public static bool CompareParameterTypes(Type goal, Type probe)
         {
             if (goal == probe)

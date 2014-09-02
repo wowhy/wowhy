@@ -1,10 +1,4 @@
-﻿//-----------------------------------------------------------------------
-// <copyright file="Operator.cs" company="Howonder">
-//     Copyright © Howonder 2015. All rights reserved.
-// </copyright>
-// <summary></summary>
-//-----------------------------------------------------------------------
-namespace SampleParser.Parser
+﻿namespace HyLibrary.Parser.Calc
 {
     using System;
     using System.Collections.Generic;

@@ -1,4 +1,4 @@
-﻿namespace SampleParser.Parser
+﻿namespace HyLibrary.Parser
 {
     using System;
     using System.Collections.Generic;
@@ -9,8 +9,7 @@
     /// <summary>
     /// 
     /// </summary>
-    public interface IResult<out T>
-    { 
-        T Value { get; }
+    public interface IParser
+    {
     }
-} 
+}

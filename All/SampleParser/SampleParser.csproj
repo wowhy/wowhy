@@ -42,14 +42,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Parser\Calc.cs" />
-    <Compile Include="Parser\ExprParser.cs" />
-    <Compile Include="Parser\IResult.cs" />
-    <Compile Include="Parser\Token.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\HyLibrary\HyLibrary.csproj">
+      <Project>{2e335a2a-f45a-4cd8-b40f-04b7ea5cc068}</Project>
+      <Name>HyLibrary</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
