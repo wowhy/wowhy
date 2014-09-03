@@ -55,15 +55,6 @@
     <Compile Include="Parser\Calc\CalcParser.cs" />
     <Compile Include="Parser\Calc\Token.cs" />
     <Compile Include="Parser\Calc\TokenStore.cs" />
-    <Compile Include="Parser\Expr2\ClassFactory.cs" />
-    <Compile Include="Parser\Expr2\DynamicClass.cs" />
-    <Compile Include="Parser\Expr2\ExpressionParserHelper.cs" />
-    <Compile Include="Parser\Expr2\DynamicOrdering.cs" />
-    <Compile Include="Parser\Expr2\DynamicProperty.cs" />
-    <Compile Include="Parser\Expr2\ExpressionParser.cs" />
-    <Compile Include="Parser\Expr2\ParseException.cs" />
-    <Compile Include="Parser\Expr2\Res.cs" />
-    <Compile Include="Parser\Expr2\Signature.cs" />
     <Compile Include="Parser\Expr\ExprException.cs" />
     <Compile Include="Parser\Expr\ExprParser.cs" />
     <Compile Include="Parser\Expr\Internal\AnOperator.cs" />

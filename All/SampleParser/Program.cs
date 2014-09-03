@@ -8,7 +8,6 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using HyLibrary.ExtensionMethod;
-using HyLibrary.Parser.Expr2;
 using HyLibrary.Parser.Calc;
 
 namespace SampleParser
