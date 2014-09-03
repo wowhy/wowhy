@@ -11,7 +11,6 @@
     /// </summary>
     internal enum TokenType
     {
-        End = 0,
         Name,
         Number,
 
@@ -21,7 +20,7 @@
         Div = '/',
         Mod = '%',
 
-        Print = ';',
+        End = ';',
         Assign = '=',
         LP = '(',
         RP = ')'

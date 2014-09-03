@@ -13,54 +13,15 @@ using HyLibrary.Parser.Expr;
 
 namespace SampleParser
 {
-    public class Test
-    {
-        public int Id { get; set; }
-
-        public Test() { }
-
-        public Test(int id) { this.Id = id; }
-
-        public override string ToString()
-        {
-            return string.Format("{{ Id:{0} }}", this.Id);
-        }
-    }
-
-    public class Sample
-    {
-        public int a;
-        public int b;
-        public int c;
-    }
-
     public class Program
     {
-        public static void Fuck(Sample k)
-        {
-            Console.WriteLine("fuck " + k.a);
-        }
-
         static void Main(string[] argv)
         {
-            //var exp = ExpressionParserHelper.ParseLambda<Test, bool>("Id > 10");
-            //Console.WriteLine(exp.ToString());
+            var exp1 = "10 + 20 + 30 + 40 + 50";
+            Console.WriteLine(new CalcParser(exp1).Run());
 
-            ExprParser.Using.Add("SampleParser");
-            
-            var parser = new ExprParser();
-            var exp = parser.Parse(
-@"(Sample k) => 
-{
-    Sample x = new Sample();
-    x.a = 20;
-    Console.WriteLine(k.a + k.b + k.c + x.a);
-    Program.Fuck(x);
-    return 10;
-}");
-
-            Console.WriteLine(exp.ToString());
-            Console.WriteLine(((Func<Sample, int>)exp.Compile())(new Sample() { a = 10, b = 20, c = 30 }));
+            var exp2 = "(10 + 20) * 100 - 20/5 + 1.2";
+            Console.WriteLine(new CalcParser(exp2).Run());
         }
     }
 }
