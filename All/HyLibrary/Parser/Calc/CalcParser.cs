@@ -27,7 +27,7 @@
             }
         }
 
-        public decimal Run()
+        public decimal Compute()
         {
             if (!this.IsEnd())
             {
@@ -135,4 +135,4 @@
             return this.pos >= this.store.Count;
         }
     }
-} 
+}

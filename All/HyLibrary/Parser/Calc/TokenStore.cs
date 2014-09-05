@@ -130,45 +130,5 @@
 
             throw new NotImplementedException();
         }
-        
-        //private static TokenType GetTokenType(StringReader reader)
-        //{
-        //    char ch = '1';
-        //    switch (ch)
-        //    {
-        //        case ';':
-        //        case '+':
-        //        case '-':
-        //        case '*':
-        //        case '/':
-        //        case '%':
-        //        case '(':
-        //        case ')':
-        //        case '=':
-        //            return (TokenType)str[0];
-
-        //        case '0':
-        //        case '1':
-        //        case '2':
-        //        case '3':
-        //        case '4':
-        //        case '5':
-        //        case '6':
-        //        case '7':
-        //        case '8':
-        //        case '9':
-        //        case '.':
-        //            return TokenType.Number;
-
-        //        default:
-        //            if (char.IsLetter(str[0]) ||
-        //                str[0] == '_')
-        //            {
-        //                return TokenType.Name;
-        //            }
-
-        //            throw new NotSupportedException();
-        //    }
-        //}
     }
 }
