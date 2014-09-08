@@ -78,10 +78,7 @@ namespace SampleParser
     {
         static void Main(string[] argv)
         {
-            var lexer = new Lexer();
-            var token = lexer.Scan();
-
-            Console.WriteLine("token = {0}", token.ToString());
+            //Console.WriteLine(OutputFile);
         }
     }
 }
