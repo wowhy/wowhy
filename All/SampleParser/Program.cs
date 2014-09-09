@@ -78,7 +78,18 @@ namespace SampleParser
     {
         static void Main(string[] argv)
         {
-            //Console.WriteLine(OutputFile);
+            var lexer = new Lexer();
+            while (true)
+            {
+                var token = lexer.Scan();
+                Console.WriteLine(token.ToString());
+                if (token.Tag == (int)';')
+                {
+                    break;
+                }
+            }
+
+            Console.WriteLine("ending....");
         }
     }
 }

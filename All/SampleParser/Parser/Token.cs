@@ -19,11 +19,26 @@
         public string TagName()
         {
             if (Enum.IsDefined(typeof(KeyTag), this.Tag))
+            {
                 return ((KeyTag)this.Tag).ToString();
+            }
             else if (this.Tag < 256)
-                return ((char)this.Tag) + "";
+            {
+                if (this.Tag == ' ')
+                    return "space";
+                if (this.Tag == '\r')
+                    return "\\r";
+                else if (this.Tag == '\n')
+                    return "\\n";
+                else if (this.Tag == '\t')
+                    return "\\t";
+                else
+                    return ((char)this.Tag) + "";
+            }
             else
+            {
                 return this.Tag.ToString();
+            }
         }
     }
 }

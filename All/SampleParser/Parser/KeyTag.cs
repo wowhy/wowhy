@@ -11,6 +11,7 @@
         NUM = 256,
         ID,
         TRUE,
-        FALSE
+        FALSE,
+        OP, // + - * / %
     }
 }

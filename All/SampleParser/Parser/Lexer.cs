@@ -66,6 +66,13 @@
                 return word;
             }
 
+            if (Op.OpCodes.Contains(peek))
+            {
+                char code = peek;
+                peek = ' ';
+                return new Op(code);
+            }
+            
             var token = new Token(peek);
             peek = ' ';
             return token;

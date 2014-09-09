@@ -33,10 +33,6 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.Build" />
-    <Reference Include="Microsoft.Build.Framework" />
-    <Reference Include="Microsoft.Build.Tasks.v4.0" />
-    <Reference Include="Microsoft.Build.Utilities.v4.0" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -48,7 +44,8 @@
   <ItemGroup>
     <Compile Include="Parser\Lexer.cs" />
     <Compile Include="Parser\Num.cs" />
-    <Compile Include="Parser\Tag.cs" />
+    <Compile Include="Parser\Op.cs" />
+    <Compile Include="Parser\KeyTag.cs" />
     <Compile Include="Parser\Token.cs" />
     <Compile Include="Parser\Word.cs" />
     <Compile Include="Program.cs" />
