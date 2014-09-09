@@ -78,7 +78,6 @@ namespace SampleParser
     {
         static void Main(string[] argv)
         {
-            //Console.WriteLine(OutputFile);
         }
     }
 }
