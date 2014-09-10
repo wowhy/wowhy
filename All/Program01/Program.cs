@@ -7,10 +7,19 @@
     using System.Linq;
     using System.Linq.Expressions;
     using System.Reflection;
+    using HyLibrary;
 
-    public struct Test { public int id; }
+    public struct Test 
+    { 
+        public int id;
 
-    public interface IExecute { void Run(); }
+        public override string ToString()
+        {
+            return "id = " + id.ToString();
+        }
+    }
+
+    public interface IExecute { int Run(); }
 
     public class Program
     {
@@ -24,10 +33,18 @@ namespace Program01
 
     public class GenerateClass : IExecute
     {
-        public void Run()
+        public int Run()
         {
-            var list = new List<Test>();
-            Console.WriteLine(list.Where(k=> k.id == 10));
+            try
+            {
+                var list = new List<Test>();
+                Console.WriteLine(list.Where(k=> k.id == 10).FirstOrDefault());
+                return 1;
+            }
+            catch
+            {
+                return 0;
+            }
         }
     }
 }
@@ -36,7 +53,7 @@ namespace Program01
         static void Main(string[] args)
         {
             var provider = new CSharpCodeProvider();
-            var parameters = new CompilerParameters() 
+            var parameters = new CompilerParameters()
             {
                 GenerateInMemory = true
             };
@@ -51,7 +68,9 @@ namespace Program01
             var type = result.CompiledAssembly.GetTypes()[0];
             var instance = (IExecute)Activator.CreateInstance(type);
 
-            instance.Run();
+            var ret = instance.Run();
+
+            CodeCheck.IsTrue(ret == 1, "ret");
         }
 
         private static string[] GetExecuteAssemblies()
