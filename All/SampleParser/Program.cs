@@ -78,6 +78,8 @@ namespace SampleParser
     {
         static void Main(string[] argv)
         {
+            var lexer = new Lexer();
+            Console.WriteLine(lexer.Scan());
         }
     }
 }
