@@ -42,10 +42,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Parser\Env.cs" />
     <Compile Include="Parser\Lexer.cs" />
     <Compile Include="Parser\Num.cs" />
     <Compile Include="Parser\Op.cs" />
     <Compile Include="Parser\KeyTag.cs" />
+    <Compile Include="Parser\Symbol.cs" />
     <Compile Include="Parser\Token.cs" />
     <Compile Include="Parser\Word.cs" />
     <Compile Include="Program.cs" />
