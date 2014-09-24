@@ -11,7 +11,7 @@
         public int Value { get; protected set; }
 
         public Num(int v)
-            : base((int)Parser.KeyTag.NUM)
+            : base((int)KeyTag.NUM)
         {
             this.Value = v;
         }

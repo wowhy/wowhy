@@ -44,14 +44,14 @@
                 return new Num(int.Parse(builder.ToString()));
             }
 
-            if (char.IsLetter(peek))
+            if (char.IsLetter(peek) || peek == '_')
             {
                 var builder = new StringBuilder();
                 do
                 {
                     builder.Append(peek);
                     peek = (char)this.Read();
-                } while (char.IsLetterOrDigit(peek));
+                } while (char.IsLetterOrDigit(peek) || peek == '_');
 
                 var s = builder.ToString();
                 var word = default(Word);

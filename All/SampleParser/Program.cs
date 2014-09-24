@@ -1,6 +1,4 @@
-﻿using Microsoft.CSharp;
-using System;
-using System.CodeDom.Compiler;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -78,8 +76,9 @@ namespace SampleParser
     {
         static void Main(string[] argv)
         {
-            var lexer = new Lexer();
-            Console.WriteLine(lexer.Scan());
+            CodeParser parser = new CodeParser();
+
+            parser.Parser();
         }
     }
 }
