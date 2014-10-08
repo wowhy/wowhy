@@ -84,7 +84,7 @@
 
         #region Default
 
-        private class Default<Q> : IOperable<Q>
+        private class Default<Q> : IOperable<Q>, IOperable
         {
             public Q Addition(Q op1, Q op2) { throw new InvalidOperationException(); }
             public Q Subtraction(Q op1, Q op2) { throw new InvalidOperationException(); }
@@ -105,6 +105,26 @@
             public bool GreaterThanOrEqual(Q op1, Q op2) { throw new InvalidOperationException(); }
             public bool LessThan(Q op1, Q op2) { throw new InvalidOperationException(); }
             public bool LessThanOrEqual(Q op1, Q op2) { throw new InvalidOperationException(); }
+
+            object IOperable.Addition(object op1, object op2){ return this.Addition((Q)op1, (Q)op2); }
+            object IOperable.Subtraction(object op1, object op2) { return this.Subtraction((Q)op1, (Q)op2); }
+            object IOperable.Multiply(object op1, object op2) { return this.Multiply((Q)op1, (Q)op2); }
+            object IOperable.Division(object op1, object op2) { return this.Division((Q)op1, (Q)op2); }
+            object IOperable.Modulus(object op1, object op2) { return this.Modulus((Q)op1, (Q)op2); }
+
+            object IOperable.BitwiseAnd(object op1, object op2) { return this.BitwiseAnd((Q)op1, (Q)op2); }
+            object IOperable.BitwiseOr(object op1, object op2) { return this.BitwiseOr((Q)op1, (Q)op2); }
+            object IOperable.ExclusiveOr(object op1, object op2) { return this.ExclusiveOr((Q)op1, (Q)op2); }
+
+            object IOperable.UnaryNegation(object op) { return this.UnaryNegation((Q)op); }
+            object IOperable.OnesComplement(object op) { return this.OnesComplement((Q)op); }
+
+            bool IOperable.Equality(object op1, object op2) { return this.Equality((Q)op1, (Q)op2); }
+            bool IOperable.Inequality(object op1, object op2) { return this.Inequality((Q)op1, (Q)op2); }
+            bool IOperable.GreaterThan(object op1, object op2) { return this.GreaterThan((Q)op1, (Q)op2); }
+            bool IOperable.GreaterThanOrEqual(object op1, object op2) { return this.GreaterThanOrEqual((Q)op1, (Q)op2); }
+            bool IOperable.LessThan(object op1, object op2) { return this.LessThan((Q)op1, (Q)op2); }
+            bool IOperable.LessThanOrEqual(object op1, object op2) { return this.LessThanOrEqual((Q)op1, (Q)op2); }
         }
 
         #endregion
@@ -113,7 +133,7 @@
 
         #region String
 
-        private class S : IOperable<String>
+        private class S : IOperable<String>, IOperable
         {
             public String Addition(String op1, String op2) { return (op1 + op2); }
             public String Subtraction(String op1, String op2) { throw new InvalidOperationException(); }
@@ -134,13 +154,33 @@
             public bool GreaterThanOrEqual(String op1, String op2) { throw new InvalidOperationException(); }
             public bool LessThan(String op1, String op2) { throw new InvalidOperationException(); }
             public bool LessThanOrEqual(String op1, String op2) { throw new InvalidOperationException(); }
+
+            object IOperable.Addition(object op1, object op2) { return this.Addition((String)op1, (String)op2); }
+            object IOperable.Subtraction(object op1, object op2) { return this.Subtraction((String)op1, (String)op2); }
+            object IOperable.Multiply(object op1, object op2) { return this.Multiply((String)op1, (String)op2); }
+            object IOperable.Division(object op1, object op2) { return this.Division((String)op1, (String)op2); }
+            object IOperable.Modulus(object op1, object op2) { return this.Modulus((String)op1, (String)op2); }
+
+            object IOperable.BitwiseAnd(object op1, object op2) { return this.BitwiseAnd((String)op1, (String)op2); }
+            object IOperable.BitwiseOr(object op1, object op2) { return this.BitwiseOr((String)op1, (String)op2); }
+            object IOperable.ExclusiveOr(object op1, object op2) { return this.ExclusiveOr((String)op1, (String)op2); }
+
+            object IOperable.UnaryNegation(object op) { return this.UnaryNegation((String)op); }
+            object IOperable.OnesComplement(object op) { return this.OnesComplement((String)op); }
+
+            bool IOperable.Equality(object op1, object op2) { return this.Equality((String)op1, (String)op2); }
+            bool IOperable.Inequality(object op1, object op2) { return this.Inequality((String)op1, (String)op2); }
+            bool IOperable.GreaterThan(object op1, object op2) { return this.GreaterThan((String)op1, (String)op2); }
+            bool IOperable.GreaterThanOrEqual(object op1, object op2) { return this.GreaterThanOrEqual((String)op1, (String)op2); }
+            bool IOperable.LessThan(object op1, object op2) { return this.LessThan((String)op1, (String)op2); }
+            bool IOperable.LessThanOrEqual(object op1, object op2) { return this.LessThanOrEqual((String)op1, (String)op2); }
         }
 
         #endregion
 
         #region SByte
 
-        private class S8 : IOperable<SByte>
+        private class S8 : IOperable<SByte>, IOperable
         {
             public SByte Addition(SByte op1, SByte op2) { return (SByte)(op1 + op2); }
             public SByte Subtraction(SByte op1, SByte op2) { return (SByte)(op1 - op2); }
@@ -161,13 +201,33 @@
             public bool GreaterThanOrEqual(SByte op1, SByte op2) { return op1 >= op2; }
             public bool LessThan(SByte op1, SByte op2) { return op1 < op2; }
             public bool LessThanOrEqual(SByte op1, SByte op2) { return op1 <= op2; }
+
+            object IOperable.Addition(object op1, object op2) { return this.Addition((SByte)op1, (SByte)op2); }
+            object IOperable.Subtraction(object op1, object op2) { return this.Subtraction((SByte)op1, (SByte)op2); }
+            object IOperable.Multiply(object op1, object op2) { return this.Multiply((SByte)op1, (SByte)op2); }
+            object IOperable.Division(object op1, object op2) { return this.Division((SByte)op1, (SByte)op2); }
+            object IOperable.Modulus(object op1, object op2) { return this.Modulus((SByte)op1, (SByte)op2); }
+
+            object IOperable.BitwiseAnd(object op1, object op2) { return this.BitwiseAnd((SByte)op1, (SByte)op2); }
+            object IOperable.BitwiseOr(object op1, object op2) { return this.BitwiseOr((SByte)op1, (SByte)op2); }
+            object IOperable.ExclusiveOr(object op1, object op2) { return this.ExclusiveOr((SByte)op1, (SByte)op2); }
+
+            object IOperable.UnaryNegation(object op) { return this.UnaryNegation((SByte)op); }
+            object IOperable.OnesComplement(object op) { return this.OnesComplement((SByte)op); }
+
+            bool IOperable.Equality(object op1, object op2) { return this.Equality((SByte)op1, (SByte)op2); }
+            bool IOperable.Inequality(object op1, object op2) { return this.Inequality((SByte)op1, (SByte)op2); }
+            bool IOperable.GreaterThan(object op1, object op2) { return this.GreaterThan((SByte)op1, (SByte)op2); }
+            bool IOperable.GreaterThanOrEqual(object op1, object op2) { return this.GreaterThanOrEqual((SByte)op1, (SByte)op2); }
+            bool IOperable.LessThan(object op1, object op2) { return this.LessThan((SByte)op1, (SByte)op2); }
+            bool IOperable.LessThanOrEqual(object op1, object op2) { return this.LessThanOrEqual((SByte)op1, (SByte)op2); }
         }
 
         #endregion
 
         #region Int16
 
-        private class S16 : IOperable<Int16>
+        private class S16 : IOperable<Int16>, IOperable
         {
             public Int16 Addition(Int16 op1, Int16 op2) { return (Int16)(op1 + op2); }
             public Int16 Subtraction(Int16 op1, Int16 op2) { return (Int16)(op1 - op2); }
@@ -188,13 +248,33 @@
             public bool GreaterThanOrEqual(Int16 op1, Int16 op2) { return op1 >= op2; }
             public bool LessThan(Int16 op1, Int16 op2) { return op1 < op2; }
             public bool LessThanOrEqual(Int16 op1, Int16 op2) { return op1 <= op2; }
+
+            object IOperable.Addition(object op1, object op2) { return this.Addition((Int16)op1, (Int16)op2); }
+            object IOperable.Subtraction(object op1, object op2) { return this.Subtraction((Int16)op1, (Int16)op2); }
+            object IOperable.Multiply(object op1, object op2) { return this.Multiply((Int16)op1, (Int16)op2); }
+            object IOperable.Division(object op1, object op2) { return this.Division((Int16)op1, (Int16)op2); }
+            object IOperable.Modulus(object op1, object op2) { return this.Modulus((Int16)op1, (Int16)op2); }
+
+            object IOperable.BitwiseAnd(object op1, object op2) { return this.BitwiseAnd((Int16)op1, (Int16)op2); }
+            object IOperable.BitwiseOr(object op1, object op2) { return this.BitwiseOr((Int16)op1, (Int16)op2); }
+            object IOperable.ExclusiveOr(object op1, object op2) { return this.ExclusiveOr((Int16)op1, (Int16)op2); }
+
+            object IOperable.UnaryNegation(object op) { return this.UnaryNegation((Int16)op); }
+            object IOperable.OnesComplement(object op) { return this.OnesComplement((Int16)op); }
+
+            bool IOperable.Equality(object op1, object op2) { return this.Equality((Int16)op1, (Int16)op2); }
+            bool IOperable.Inequality(object op1, object op2) { return this.Inequality((Int16)op1, (Int16)op2); }
+            bool IOperable.GreaterThan(object op1, object op2) { return this.GreaterThan((Int16)op1, (Int16)op2); }
+            bool IOperable.GreaterThanOrEqual(object op1, object op2) { return this.GreaterThanOrEqual((Int16)op1, (Int16)op2); }
+            bool IOperable.LessThan(object op1, object op2) { return this.LessThan((Int16)op1, (Int16)op2); }
+            bool IOperable.LessThanOrEqual(object op1, object op2) { return this.LessThanOrEqual((Int16)op1, (Int16)op2); }
         }
 
         #endregion
 
         #region Int32
 
-        private class S32 : IOperable<Int32>
+        private class S32 : IOperable<Int32>, IOperable
         {
             public Int32 Addition(Int32 op1, Int32 op2) { return (op1 + op2); }
             public Int32 Subtraction(Int32 op1, Int32 op2) { return (op1 - op2); }
@@ -215,13 +295,33 @@
             public bool GreaterThanOrEqual(Int32 op1, Int32 op2) { return op1 >= op2; }
             public bool LessThan(Int32 op1, Int32 op2) { return op1 < op2; }
             public bool LessThanOrEqual(Int32 op1, Int32 op2) { return op1 <= op2; }
+
+            object IOperable.Addition(object op1, object op2) { return this.Addition((Int32)op1, (Int32)op2); }
+            object IOperable.Subtraction(object op1, object op2) { return this.Subtraction((Int32)op1, (Int32)op2); }
+            object IOperable.Multiply(object op1, object op2) { return this.Multiply((Int32)op1, (Int32)op2); }
+            object IOperable.Division(object op1, object op2) { return this.Division((Int32)op1, (Int32)op2); }
+            object IOperable.Modulus(object op1, object op2) { return this.Modulus((Int32)op1, (Int32)op2); }
+
+            object IOperable.BitwiseAnd(object op1, object op2) { return this.BitwiseAnd((Int32)op1, (Int32)op2); }
+            object IOperable.BitwiseOr(object op1, object op2) { return this.BitwiseOr((Int32)op1, (Int32)op2); }
+            object IOperable.ExclusiveOr(object op1, object op2) { return this.ExclusiveOr((Int32)op1, (Int32)op2); }
+
+            object IOperable.UnaryNegation(object op) { return this.UnaryNegation((Int32)op); }
+            object IOperable.OnesComplement(object op) { return this.OnesComplement((Int32)op); }
+
+            bool IOperable.Equality(object op1, object op2) { return this.Equality((Int32)op1, (Int32)op2); }
+            bool IOperable.Inequality(object op1, object op2) { return this.Inequality((Int32)op1, (Int32)op2); }
+            bool IOperable.GreaterThan(object op1, object op2) { return this.GreaterThan((Int32)op1, (Int32)op2); }
+            bool IOperable.GreaterThanOrEqual(object op1, object op2) { return this.GreaterThanOrEqual((Int32)op1, (Int32)op2); }
+            bool IOperable.LessThan(object op1, object op2) { return this.LessThan((Int32)op1, (Int32)op2); }
+            bool IOperable.LessThanOrEqual(object op1, object op2) { return this.LessThanOrEqual((Int32)op1, (Int32)op2); }
         }
 
         #endregion
 
         #region Int64
 
-        private class S64 : IOperable<Int64>
+        private class S64 : IOperable<Int64>, IOperable
         {
             public Int64 Addition(Int64 op1, Int64 op2) { return (op1 + op2); }
             public Int64 Subtraction(Int64 op1, Int64 op2) { return (op1 - op2); }
@@ -242,13 +342,33 @@
             public bool GreaterThanOrEqual(Int64 op1, Int64 op2) { return op1 >= op2; }
             public bool LessThan(Int64 op1, Int64 op2) { return op1 < op2; }
             public bool LessThanOrEqual(Int64 op1, Int64 op2) { return op1 <= op2; }
+
+            object IOperable.Addition(object op1, object op2) { return this.Addition((Int64)op1, (Int64)op2); }
+            object IOperable.Subtraction(object op1, object op2) { return this.Subtraction((Int64)op1, (Int64)op2); }
+            object IOperable.Multiply(object op1, object op2) { return this.Multiply((Int64)op1, (Int64)op2); }
+            object IOperable.Division(object op1, object op2) { return this.Division((Int64)op1, (Int64)op2); }
+            object IOperable.Modulus(object op1, object op2) { return this.Modulus((Int64)op1, (Int64)op2); }
+
+            object IOperable.BitwiseAnd(object op1, object op2) { return this.BitwiseAnd((Int64)op1, (Int64)op2); }
+            object IOperable.BitwiseOr(object op1, object op2) { return this.BitwiseOr((Int64)op1, (Int64)op2); }
+            object IOperable.ExclusiveOr(object op1, object op2) { return this.ExclusiveOr((Int64)op1, (Int64)op2); }
+
+            object IOperable.UnaryNegation(object op) { return this.UnaryNegation((Int64)op); }
+            object IOperable.OnesComplement(object op) { return this.OnesComplement((Int64)op); }
+
+            bool IOperable.Equality(object op1, object op2) { return this.Equality((Int64)op1, (Int64)op2); }
+            bool IOperable.Inequality(object op1, object op2) { return this.Inequality((Int64)op1, (Int64)op2); }
+            bool IOperable.GreaterThan(object op1, object op2) { return this.GreaterThan((Int64)op1, (Int64)op2); }
+            bool IOperable.GreaterThanOrEqual(object op1, object op2) { return this.GreaterThanOrEqual((Int64)op1, (Int64)op2); }
+            bool IOperable.LessThan(object op1, object op2) { return this.LessThan((Int64)op1, (Int64)op2); }
+            bool IOperable.LessThanOrEqual(object op1, object op2) { return this.LessThanOrEqual((Int64)op1, (Int64)op2); }
         }
 
         #endregion
 
         #region Byte
 
-        private class U8 : IOperable<Byte>
+        private class U8 : IOperable<Byte>, IOperable
         {
             public Byte Addition(Byte op1, Byte op2) { return (Byte)(op1 + op2); }
             public Byte Subtraction(Byte op1, Byte op2) { return (Byte)(op1 - op2); }
@@ -269,13 +389,33 @@
             public bool GreaterThanOrEqual(Byte op1, Byte op2) { return op1 >= op2; }
             public bool LessThan(Byte op1, Byte op2) { return op1 < op2; }
             public bool LessThanOrEqual(Byte op1, Byte op2) { return op1 <= op2; }
+
+            object IOperable.Addition(object op1, object op2) { return this.Addition((Byte)op1, (Byte)op2); }
+            object IOperable.Subtraction(object op1, object op2) { return this.Subtraction((Byte)op1, (Byte)op2); }
+            object IOperable.Multiply(object op1, object op2) { return this.Multiply((Byte)op1, (Byte)op2); }
+            object IOperable.Division(object op1, object op2) { return this.Division((Byte)op1, (Byte)op2); }
+            object IOperable.Modulus(object op1, object op2) { return this.Modulus((Byte)op1, (Byte)op2); }
+
+            object IOperable.BitwiseAnd(object op1, object op2) { return this.BitwiseAnd((Byte)op1, (Byte)op2); }
+            object IOperable.BitwiseOr(object op1, object op2) { return this.BitwiseOr((Byte)op1, (Byte)op2); }
+            object IOperable.ExclusiveOr(object op1, object op2) { return this.ExclusiveOr((Byte)op1, (Byte)op2); }
+
+            object IOperable.UnaryNegation(object op) { return this.UnaryNegation((Byte)op); }
+            object IOperable.OnesComplement(object op) { return this.OnesComplement((Byte)op); }
+
+            bool IOperable.Equality(object op1, object op2) { return this.Equality((Byte)op1, (Byte)op2); }
+            bool IOperable.Inequality(object op1, object op2) { return this.Inequality((Byte)op1, (Byte)op2); }
+            bool IOperable.GreaterThan(object op1, object op2) { return this.GreaterThan((Byte)op1, (Byte)op2); }
+            bool IOperable.GreaterThanOrEqual(object op1, object op2) { return this.GreaterThanOrEqual((Byte)op1, (Byte)op2); }
+            bool IOperable.LessThan(object op1, object op2) { return this.LessThan((Byte)op1, (Byte)op2); }
+            bool IOperable.LessThanOrEqual(object op1, object op2) { return this.LessThanOrEqual((Byte)op1, (Byte)op2); }
         }
 
         #endregion
 
         #region UInt16
 
-        private class U16 : IOperable<UInt16>
+        private class U16 : IOperable<UInt16>, IOperable
         {
             public UInt16 Addition(UInt16 op1, UInt16 op2) { return (UInt16)(op1 + op2); }
             public UInt16 Subtraction(UInt16 op1, UInt16 op2) { return (UInt16)(op1 - op2); }
@@ -296,13 +436,33 @@
             public bool GreaterThanOrEqual(UInt16 op1, UInt16 op2) { return op1 >= op2; }
             public bool LessThan(UInt16 op1, UInt16 op2) { return op1 < op2; }
             public bool LessThanOrEqual(UInt16 op1, UInt16 op2) { return op1 <= op2; }
+
+            object IOperable.Addition(object op1, object op2) { return this.Addition((UInt16)op1, (UInt16)op2); }
+            object IOperable.Subtraction(object op1, object op2) { return this.Subtraction((UInt16)op1, (UInt16)op2); }
+            object IOperable.Multiply(object op1, object op2) { return this.Multiply((UInt16)op1, (UInt16)op2); }
+            object IOperable.Division(object op1, object op2) { return this.Division((UInt16)op1, (UInt16)op2); }
+            object IOperable.Modulus(object op1, object op2) { return this.Modulus((UInt16)op1, (UInt16)op2); }
+
+            object IOperable.BitwiseAnd(object op1, object op2) { return this.BitwiseAnd((UInt16)op1, (UInt16)op2); }
+            object IOperable.BitwiseOr(object op1, object op2) { return this.BitwiseOr((UInt16)op1, (UInt16)op2); }
+            object IOperable.ExclusiveOr(object op1, object op2) { return this.ExclusiveOr((UInt16)op1, (UInt16)op2); }
+
+            object IOperable.UnaryNegation(object op) { return this.UnaryNegation((UInt16)op); }
+            object IOperable.OnesComplement(object op) { return this.OnesComplement((UInt16)op); }
+
+            bool IOperable.Equality(object op1, object op2) { return this.Equality((UInt16)op1, (UInt16)op2); }
+            bool IOperable.Inequality(object op1, object op2) { return this.Inequality((UInt16)op1, (UInt16)op2); }
+            bool IOperable.GreaterThan(object op1, object op2) { return this.GreaterThan((UInt16)op1, (UInt16)op2); }
+            bool IOperable.GreaterThanOrEqual(object op1, object op2) { return this.GreaterThanOrEqual((UInt16)op1, (UInt16)op2); }
+            bool IOperable.LessThan(object op1, object op2) { return this.LessThan((UInt16)op1, (UInt16)op2); }
+            bool IOperable.LessThanOrEqual(object op1, object op2) { return this.LessThanOrEqual((UInt16)op1, (UInt16)op2); }
         }
 
         #endregion
 
         #region UInt32
 
-        private class U32 : IOperable<UInt32>
+        private class U32 : IOperable<UInt32>, IOperable
         {
             public UInt32 Addition(UInt32 op1, UInt32 op2) { return (op1 + op2); }
             public UInt32 Subtraction(UInt32 op1, UInt32 op2) { return (op1 - op2); }
@@ -323,13 +483,33 @@
             public bool GreaterThanOrEqual(UInt32 op1, UInt32 op2) { return op1 >= op2; }
             public bool LessThan(UInt32 op1, UInt32 op2) { return op1 < op2; }
             public bool LessThanOrEqual(UInt32 op1, UInt32 op2) { return op1 <= op2; }
+
+            object IOperable.Addition(object op1, object op2) { return this.Addition((UInt32)op1, (UInt32)op2); }
+            object IOperable.Subtraction(object op1, object op2) { return this.Subtraction((UInt32)op1, (UInt32)op2); }
+            object IOperable.Multiply(object op1, object op2) { return this.Multiply((UInt32)op1, (UInt32)op2); }
+            object IOperable.Division(object op1, object op2) { return this.Division((UInt32)op1, (UInt32)op2); }
+            object IOperable.Modulus(object op1, object op2) { return this.Modulus((UInt32)op1, (UInt32)op2); }
+
+            object IOperable.BitwiseAnd(object op1, object op2) { return this.BitwiseAnd((UInt32)op1, (UInt32)op2); }
+            object IOperable.BitwiseOr(object op1, object op2) { return this.BitwiseOr((UInt32)op1, (UInt32)op2); }
+            object IOperable.ExclusiveOr(object op1, object op2) { return this.ExclusiveOr((UInt32)op1, (UInt32)op2); }
+
+            object IOperable.UnaryNegation(object op) { return this.UnaryNegation((UInt32)op); }
+            object IOperable.OnesComplement(object op) { return this.OnesComplement((UInt32)op); }
+
+            bool IOperable.Equality(object op1, object op2) { return this.Equality((UInt32)op1, (UInt32)op2); }
+            bool IOperable.Inequality(object op1, object op2) { return this.Inequality((UInt32)op1, (UInt32)op2); }
+            bool IOperable.GreaterThan(object op1, object op2) { return this.GreaterThan((UInt32)op1, (UInt32)op2); }
+            bool IOperable.GreaterThanOrEqual(object op1, object op2) { return this.GreaterThanOrEqual((UInt32)op1, (UInt32)op2); }
+            bool IOperable.LessThan(object op1, object op2) { return this.LessThan((UInt32)op1, (UInt32)op2); }
+            bool IOperable.LessThanOrEqual(object op1, object op2) { return this.LessThanOrEqual((UInt32)op1, (UInt32)op2); }
         }
 
         #endregion
 
         #region UInt64
 
-        private class U64 : IOperable<UInt64>
+        private class U64 : IOperable<UInt64>, IOperable
         {
             public UInt64 Addition(UInt64 op1, UInt64 op2) { return (op1 + op2); }
             public UInt64 Subtraction(UInt64 op1, UInt64 op2) { return (op1 - op2); }
@@ -350,13 +530,33 @@
             public bool GreaterThanOrEqual(UInt64 op1, UInt64 op2) { return op1 >= op2; }
             public bool LessThan(UInt64 op1, UInt64 op2) { return op1 < op2; }
             public bool LessThanOrEqual(UInt64 op1, UInt64 op2) { return op1 <= op2; }
+
+            object IOperable.Addition(object op1, object op2) { return this.Addition((UInt64)op1, (UInt64)op2); }
+            object IOperable.Subtraction(object op1, object op2) { return this.Subtraction((UInt64)op1, (UInt64)op2); }
+            object IOperable.Multiply(object op1, object op2) { return this.Multiply((UInt64)op1, (UInt64)op2); }
+            object IOperable.Division(object op1, object op2) { return this.Division((UInt64)op1, (UInt64)op2); }
+            object IOperable.Modulus(object op1, object op2) { return this.Modulus((UInt64)op1, (UInt64)op2); }
+
+            object IOperable.BitwiseAnd(object op1, object op2) { return this.BitwiseAnd((UInt64)op1, (UInt64)op2); }
+            object IOperable.BitwiseOr(object op1, object op2) { return this.BitwiseOr((UInt64)op1, (UInt64)op2); }
+            object IOperable.ExclusiveOr(object op1, object op2) { return this.ExclusiveOr((UInt64)op1, (UInt64)op2); }
+
+            object IOperable.UnaryNegation(object op) { return this.UnaryNegation((UInt64)op); }
+            object IOperable.OnesComplement(object op) { return this.OnesComplement((UInt64)op); }
+
+            bool IOperable.Equality(object op1, object op2) { return this.Equality((UInt64)op1, (UInt64)op2); }
+            bool IOperable.Inequality(object op1, object op2) { return this.Inequality((UInt64)op1, (UInt64)op2); }
+            bool IOperable.GreaterThan(object op1, object op2) { return this.GreaterThan((UInt64)op1, (UInt64)op2); }
+            bool IOperable.GreaterThanOrEqual(object op1, object op2) { return this.GreaterThanOrEqual((UInt64)op1, (UInt64)op2); }
+            bool IOperable.LessThan(object op1, object op2) { return this.LessThan((UInt64)op1, (UInt64)op2); }
+            bool IOperable.LessThanOrEqual(object op1, object op2) { return this.LessThanOrEqual((UInt64)op1, (UInt64)op2); }
         }
 
         #endregion
 
         #region Boolean
 
-        private class B : IOperable<Boolean>
+        private class B : IOperable<Boolean>, IOperable
         {
             public Boolean Addition(Boolean op1, Boolean op2) { throw new InvalidOperationException(); }
             public Boolean Subtraction(Boolean op1, Boolean op2) { throw new InvalidOperationException(); }
@@ -377,13 +577,33 @@
             public bool GreaterThanOrEqual(Boolean op1, Boolean op2) { throw new InvalidOperationException(); }
             public bool LessThan(Boolean op1, Boolean op2) { throw new InvalidOperationException(); }
             public bool LessThanOrEqual(Boolean op1, Boolean op2) { throw new InvalidOperationException(); }
+
+            object IOperable.Addition(object op1, object op2) { return this.Addition((Boolean)op1, (Boolean)op2); }
+            object IOperable.Subtraction(object op1, object op2) { return this.Subtraction((Boolean)op1, (Boolean)op2); }
+            object IOperable.Multiply(object op1, object op2) { return this.Multiply((Boolean)op1, (Boolean)op2); }
+            object IOperable.Division(object op1, object op2) { return this.Division((Boolean)op1, (Boolean)op2); }
+            object IOperable.Modulus(object op1, object op2) { return this.Modulus((Boolean)op1, (Boolean)op2); }
+
+            object IOperable.BitwiseAnd(object op1, object op2) { return this.BitwiseAnd((Boolean)op1, (Boolean)op2); }
+            object IOperable.BitwiseOr(object op1, object op2) { return this.BitwiseOr((Boolean)op1, (Boolean)op2); }
+            object IOperable.ExclusiveOr(object op1, object op2) { return this.ExclusiveOr((Boolean)op1, (Boolean)op2); }
+
+            object IOperable.UnaryNegation(object op) { return this.UnaryNegation((Boolean)op); }
+            object IOperable.OnesComplement(object op) { return this.OnesComplement((Boolean)op); }
+
+            bool IOperable.Equality(object op1, object op2) { return this.Equality((Boolean)op1, (Boolean)op2); }
+            bool IOperable.Inequality(object op1, object op2) { return this.Inequality((Boolean)op1, (Boolean)op2); }
+            bool IOperable.GreaterThan(object op1, object op2) { return this.GreaterThan((Boolean)op1, (Boolean)op2); }
+            bool IOperable.GreaterThanOrEqual(object op1, object op2) { return this.GreaterThanOrEqual((Boolean)op1, (Boolean)op2); }
+            bool IOperable.LessThan(object op1, object op2) { return this.LessThan((Boolean)op1, (Boolean)op2); }
+            bool IOperable.LessThanOrEqual(object op1, object op2) { return this.LessThanOrEqual((Boolean)op1, (Boolean)op2); }
         }
 
         #endregion
 
         #region Char
 
-        private class C : IOperable<Char>
+        private class C : IOperable<Char>, IOperable
         {
             public Char Addition(Char op1, Char op2) { return (Char)(op1 + op2); }
             public Char Subtraction(Char op1, Char op2) { return (Char)(op1 - op2); }
@@ -404,13 +624,33 @@
             public bool GreaterThanOrEqual(Char op1, Char op2) { return op1 >= op2; }
             public bool LessThan(Char op1, Char op2) { return op1 < op2; }
             public bool LessThanOrEqual(Char op1, Char op2) { return op1 <= op2; }
+
+            object IOperable.Addition(object op1, object op2) { return this.Addition((Char)op1, (Char)op2); }
+            object IOperable.Subtraction(object op1, object op2) { return this.Subtraction((Char)op1, (Char)op2); }
+            object IOperable.Multiply(object op1, object op2) { return this.Multiply((Char)op1, (Char)op2); }
+            object IOperable.Division(object op1, object op2) { return this.Division((Char)op1, (Char)op2); }
+            object IOperable.Modulus(object op1, object op2) { return this.Modulus((Char)op1, (Char)op2); }
+
+            object IOperable.BitwiseAnd(object op1, object op2) { return this.BitwiseAnd((Char)op1, (Char)op2); }
+            object IOperable.BitwiseOr(object op1, object op2) { return this.BitwiseOr((Char)op1, (Char)op2); }
+            object IOperable.ExclusiveOr(object op1, object op2) { return this.ExclusiveOr((Char)op1, (Char)op2); }
+
+            object IOperable.UnaryNegation(object op) { return this.UnaryNegation((Char)op); }
+            object IOperable.OnesComplement(object op) { return this.OnesComplement((Char)op); }
+
+            bool IOperable.Equality(object op1, object op2) { return this.Equality((Char)op1, (Char)op2); }
+            bool IOperable.Inequality(object op1, object op2) { return this.Inequality((Char)op1, (Char)op2); }
+            bool IOperable.GreaterThan(object op1, object op2) { return this.GreaterThan((Char)op1, (Char)op2); }
+            bool IOperable.GreaterThanOrEqual(object op1, object op2) { return this.GreaterThanOrEqual((Char)op1, (Char)op2); }
+            bool IOperable.LessThan(object op1, object op2) { return this.LessThan((Char)op1, (Char)op2); }
+            bool IOperable.LessThanOrEqual(object op1, object op2) { return this.LessThanOrEqual((Char)op1, (Char)op2); }
         }
 
         #endregion
 
         #region Single
 
-        private class R4 : IOperable<Single>
+        private class R4 : IOperable<Single>, IOperable
         {
             public Single Addition(Single op1, Single op2) { return (op1 + op2); }
             public Single Subtraction(Single op1, Single op2) { return (op1 - op2); }
@@ -431,13 +671,33 @@
             public bool GreaterThanOrEqual(Single op1, Single op2) { return op1 >= op2; }
             public bool LessThan(Single op1, Single op2) { return op1 < op2; }
             public bool LessThanOrEqual(Single op1, Single op2) { return op1 <= op2; }
+
+            object IOperable.Addition(object op1, object op2) { return this.Addition((Single)op1, (Single)op2); }
+            object IOperable.Subtraction(object op1, object op2) { return this.Subtraction((Single)op1, (Single)op2); }
+            object IOperable.Multiply(object op1, object op2) { return this.Multiply((Single)op1, (Single)op2); }
+            object IOperable.Division(object op1, object op2) { return this.Division((Single)op1, (Single)op2); }
+            object IOperable.Modulus(object op1, object op2) { return this.Modulus((Single)op1, (Single)op2); }
+
+            object IOperable.BitwiseAnd(object op1, object op2) { return this.BitwiseAnd((Single)op1, (Single)op2); }
+            object IOperable.BitwiseOr(object op1, object op2) { return this.BitwiseOr((Single)op1, (Single)op2); }
+            object IOperable.ExclusiveOr(object op1, object op2) { return this.ExclusiveOr((Single)op1, (Single)op2); }
+
+            object IOperable.UnaryNegation(object op) { return this.UnaryNegation((Single)op); }
+            object IOperable.OnesComplement(object op) { return this.OnesComplement((Single)op); }
+
+            bool IOperable.Equality(object op1, object op2) { return this.Equality((Single)op1, (Single)op2); }
+            bool IOperable.Inequality(object op1, object op2) { return this.Inequality((Single)op1, (Single)op2); }
+            bool IOperable.GreaterThan(object op1, object op2) { return this.GreaterThan((Single)op1, (Single)op2); }
+            bool IOperable.GreaterThanOrEqual(object op1, object op2) { return this.GreaterThanOrEqual((Single)op1, (Single)op2); }
+            bool IOperable.LessThan(object op1, object op2) { return this.LessThan((Single)op1, (Single)op2); }
+            bool IOperable.LessThanOrEqual(object op1, object op2) { return this.LessThanOrEqual((Single)op1, (Single)op2); }
         }
 
         #endregion
 
         #region Double
 
-        private class R8 : IOperable<Double>
+        private class R8 : IOperable<Double>, IOperable
         {
             public Double Addition(Double op1, Double op2) { return (op1 + op2); }
             public Double Subtraction(Double op1, Double op2) { return (op1 - op2); }
@@ -458,13 +718,33 @@
             public bool GreaterThanOrEqual(Double op1, Double op2) { return op1 >= op2; }
             public bool LessThan(Double op1, Double op2) { return op1 < op2; }
             public bool LessThanOrEqual(Double op1, Double op2) { return op1 <= op2; }
+
+            object IOperable.Addition(object op1, object op2) { return this.Addition((Double)op1, (Double)op2); }
+            object IOperable.Subtraction(object op1, object op2) { return this.Subtraction((Double)op1, (Double)op2); }
+            object IOperable.Multiply(object op1, object op2) { return this.Multiply((Double)op1, (Double)op2); }
+            object IOperable.Division(object op1, object op2) { return this.Division((Double)op1, (Double)op2); }
+            object IOperable.Modulus(object op1, object op2) { return this.Modulus((Double)op1, (Double)op2); }
+
+            object IOperable.BitwiseAnd(object op1, object op2) { return this.BitwiseAnd((Double)op1, (Double)op2); }
+            object IOperable.BitwiseOr(object op1, object op2) { return this.BitwiseOr((Double)op1, (Double)op2); }
+            object IOperable.ExclusiveOr(object op1, object op2) { return this.ExclusiveOr((Double)op1, (Double)op2); }
+
+            object IOperable.UnaryNegation(object op) { return this.UnaryNegation((Double)op); }
+            object IOperable.OnesComplement(object op) { return this.OnesComplement((Double)op); }
+
+            bool IOperable.Equality(object op1, object op2) { return this.Equality((Double)op1, (Double)op2); }
+            bool IOperable.Inequality(object op1, object op2) { return this.Inequality((Double)op1, (Double)op2); }
+            bool IOperable.GreaterThan(object op1, object op2) { return this.GreaterThan((Double)op1, (Double)op2); }
+            bool IOperable.GreaterThanOrEqual(object op1, object op2) { return this.GreaterThanOrEqual((Double)op1, (Double)op2); }
+            bool IOperable.LessThan(object op1, object op2) { return this.LessThan((Double)op1, (Double)op2); }
+            bool IOperable.LessThanOrEqual(object op1, object op2) { return this.LessThanOrEqual((Double)op1, (Double)op2); }
         }
 
         #endregion
 
         #region Decimal
 
-        private class D : IOperable<Decimal>
+        private class D : IOperable<Decimal>, IOperable
         {
             public Decimal Addition(Decimal op1, Decimal op2) { return (op1 + op2); }
             public Decimal Subtraction(Decimal op1, Decimal op2) { return (op1 - op2); }
@@ -485,13 +765,33 @@
             public bool GreaterThanOrEqual(Decimal op1, Decimal op2) { return op1 >= op2; }
             public bool LessThan(Decimal op1, Decimal op2) { return op1 < op2; }
             public bool LessThanOrEqual(Decimal op1, Decimal op2) { return op1 <= op2; }
+
+            object IOperable.Addition(object op1, object op2) { return this.Addition((Decimal)op1, (Decimal)op2); }
+            object IOperable.Subtraction(object op1, object op2) { return this.Subtraction((Decimal)op1, (Decimal)op2); }
+            object IOperable.Multiply(object op1, object op2) { return this.Multiply((Decimal)op1, (Decimal)op2); }
+            object IOperable.Division(object op1, object op2) { return this.Division((Decimal)op1, (Decimal)op2); }
+            object IOperable.Modulus(object op1, object op2) { return this.Modulus((Decimal)op1, (Decimal)op2); }
+
+            object IOperable.BitwiseAnd(object op1, object op2) { return this.BitwiseAnd((Decimal)op1, (Decimal)op2); }
+            object IOperable.BitwiseOr(object op1, object op2) { return this.BitwiseOr((Decimal)op1, (Decimal)op2); }
+            object IOperable.ExclusiveOr(object op1, object op2) { return this.ExclusiveOr((Decimal)op1, (Decimal)op2); }
+
+            object IOperable.UnaryNegation(object op) { return this.UnaryNegation((Decimal)op); }
+            object IOperable.OnesComplement(object op) { return this.OnesComplement((Decimal)op); }
+
+            bool IOperable.Equality(object op1, object op2) { return this.Equality((Decimal)op1, (Decimal)op2); }
+            bool IOperable.Inequality(object op1, object op2) { return this.Inequality((Decimal)op1, (Decimal)op2); }
+            bool IOperable.GreaterThan(object op1, object op2) { return this.GreaterThan((Decimal)op1, (Decimal)op2); }
+            bool IOperable.GreaterThanOrEqual(object op1, object op2) { return this.GreaterThanOrEqual((Decimal)op1, (Decimal)op2); }
+            bool IOperable.LessThan(object op1, object op2) { return this.LessThan((Decimal)op1, (Decimal)op2); }
+            bool IOperable.LessThanOrEqual(object op1, object op2) { return this.LessThanOrEqual((Decimal)op1, (Decimal)op2); }
         }
 
         #endregion
 
         #region DateTime
 
-        private class DT : IOperable<DateTime>
+        private class DT : IOperable<DateTime>, IOperable
         {
             public DateTime Addition(DateTime op1, DateTime op2) { throw new InvalidOperationException(); }
             public DateTime Subtraction(DateTime op1, DateTime op2) { throw new InvalidOperationException(); }
@@ -512,13 +812,33 @@
             public bool GreaterThanOrEqual(DateTime op1, DateTime op2) { return op1 >= op2; }
             public bool LessThan(DateTime op1, DateTime op2) { return op1 < op2; }
             public bool LessThanOrEqual(DateTime op1, DateTime op2) { return op1 <= op2; }
+
+            object IOperable.Addition(object op1, object op2) { return this.Addition((DateTime)op1, (DateTime)op2); }
+            object IOperable.Subtraction(object op1, object op2) { return this.Subtraction((DateTime)op1, (DateTime)op2); }
+            object IOperable.Multiply(object op1, object op2) { return this.Multiply((DateTime)op1, (DateTime)op2); }
+            object IOperable.Division(object op1, object op2) { return this.Division((DateTime)op1, (DateTime)op2); }
+            object IOperable.Modulus(object op1, object op2) { return this.Modulus((DateTime)op1, (DateTime)op2); }
+
+            object IOperable.BitwiseAnd(object op1, object op2) { return this.BitwiseAnd((DateTime)op1, (DateTime)op2); }
+            object IOperable.BitwiseOr(object op1, object op2) { return this.BitwiseOr((DateTime)op1, (DateTime)op2); }
+            object IOperable.ExclusiveOr(object op1, object op2) { return this.ExclusiveOr((DateTime)op1, (DateTime)op2); }
+
+            object IOperable.UnaryNegation(object op) { return this.UnaryNegation((DateTime)op); }
+            object IOperable.OnesComplement(object op) { return this.OnesComplement((DateTime)op); }
+
+            bool IOperable.Equality(object op1, object op2) { return this.Equality((DateTime)op1, (DateTime)op2); }
+            bool IOperable.Inequality(object op1, object op2) { return this.Inequality((DateTime)op1, (DateTime)op2); }
+            bool IOperable.GreaterThan(object op1, object op2) { return this.GreaterThan((DateTime)op1, (DateTime)op2); }
+            bool IOperable.GreaterThanOrEqual(object op1, object op2) { return this.GreaterThanOrEqual((DateTime)op1, (DateTime)op2); }
+            bool IOperable.LessThan(object op1, object op2) { return this.LessThan((DateTime)op1, (DateTime)op2); }
+            bool IOperable.LessThanOrEqual(object op1, object op2) { return this.LessThanOrEqual((DateTime)op1, (DateTime)op2); }
         }
 
         #endregion
 
         #region TimeSpan
 
-        private class TS : IOperable<TimeSpan>
+        private class TS : IOperable<TimeSpan>, IOperable
         {
             public TimeSpan Addition(TimeSpan op1, TimeSpan op2) { return (op1 + op2); }
             public TimeSpan Subtraction(TimeSpan op1, TimeSpan op2) { return (op1 - op2); }
@@ -539,13 +859,33 @@
             public bool GreaterThanOrEqual(TimeSpan op1, TimeSpan op2) { return op1 >= op2; }
             public bool LessThan(TimeSpan op1, TimeSpan op2) { return op1 < op2; }
             public bool LessThanOrEqual(TimeSpan op1, TimeSpan op2) { return op1 <= op2; }
+
+            object IOperable.Addition(object op1, object op2) { return this.Addition((TimeSpan)op1, (TimeSpan)op2); }
+            object IOperable.Subtraction(object op1, object op2) { return this.Subtraction((TimeSpan)op1, (TimeSpan)op2); }
+            object IOperable.Multiply(object op1, object op2) { return this.Multiply((TimeSpan)op1, (TimeSpan)op2); }
+            object IOperable.Division(object op1, object op2) { return this.Division((TimeSpan)op1, (TimeSpan)op2); }
+            object IOperable.Modulus(object op1, object op2) { return this.Modulus((TimeSpan)op1, (TimeSpan)op2); }
+
+            object IOperable.BitwiseAnd(object op1, object op2) { return this.BitwiseAnd((TimeSpan)op1, (TimeSpan)op2); }
+            object IOperable.BitwiseOr(object op1, object op2) { return this.BitwiseOr((TimeSpan)op1, (TimeSpan)op2); }
+            object IOperable.ExclusiveOr(object op1, object op2) { return this.ExclusiveOr((TimeSpan)op1, (TimeSpan)op2); }
+
+            object IOperable.UnaryNegation(object op) { return this.UnaryNegation((TimeSpan)op); }
+            object IOperable.OnesComplement(object op) { return this.OnesComplement((TimeSpan)op); }
+
+            bool IOperable.Equality(object op1, object op2) { return this.Equality((TimeSpan)op1, (TimeSpan)op2); }
+            bool IOperable.Inequality(object op1, object op2) { return this.Inequality((TimeSpan)op1, (TimeSpan)op2); }
+            bool IOperable.GreaterThan(object op1, object op2) { return this.GreaterThan((TimeSpan)op1, (TimeSpan)op2); }
+            bool IOperable.GreaterThanOrEqual(object op1, object op2) { return this.GreaterThanOrEqual((TimeSpan)op1, (TimeSpan)op2); }
+            bool IOperable.LessThan(object op1, object op2) { return this.LessThan((TimeSpan)op1, (TimeSpan)op2); }
+            bool IOperable.LessThanOrEqual(object op1, object op2) { return this.LessThanOrEqual((TimeSpan)op1, (TimeSpan)op2); }
         }
 
         #endregion
 
         #region Guid
 
-        private class G : IOperable<Guid>
+        private class G : IOperable<Guid>, IOperable
         {
             public Guid Addition(Guid op1, Guid op2) { throw new InvalidOperationException(); }
             public Guid Subtraction(Guid op1, Guid op2) { throw new InvalidOperationException(); }
@@ -566,6 +906,26 @@
             public bool GreaterThanOrEqual(Guid op1, Guid op2) { throw new InvalidOperationException(); }
             public bool LessThan(Guid op1, Guid op2) { throw new InvalidOperationException(); }
             public bool LessThanOrEqual(Guid op1, Guid op2) { throw new InvalidOperationException(); }
+
+            object IOperable.Addition(object op1, object op2) { return this.Addition((Guid)op1, (Guid)op2); }
+            object IOperable.Subtraction(object op1, object op2) { return this.Subtraction((Guid)op1, (Guid)op2); }
+            object IOperable.Multiply(object op1, object op2) { return this.Multiply((Guid)op1, (Guid)op2); }
+            object IOperable.Division(object op1, object op2) { return this.Division((Guid)op1, (Guid)op2); }
+            object IOperable.Modulus(object op1, object op2) { return this.Modulus((Guid)op1, (Guid)op2); }
+
+            object IOperable.BitwiseAnd(object op1, object op2) { return this.BitwiseAnd((Guid)op1, (Guid)op2); }
+            object IOperable.BitwiseOr(object op1, object op2) { return this.BitwiseOr((Guid)op1, (Guid)op2); }
+            object IOperable.ExclusiveOr(object op1, object op2) { return this.ExclusiveOr((Guid)op1, (Guid)op2); }
+
+            object IOperable.UnaryNegation(object op) { return this.UnaryNegation((Guid)op); }
+            object IOperable.OnesComplement(object op) { return this.OnesComplement((Guid)op); }
+
+            bool IOperable.Equality(object op1, object op2) { return this.Equality((Guid)op1, (Guid)op2); }
+            bool IOperable.Inequality(object op1, object op2) { return this.Inequality((Guid)op1, (Guid)op2); }
+            bool IOperable.GreaterThan(object op1, object op2) { return this.GreaterThan((Guid)op1, (Guid)op2); }
+            bool IOperable.GreaterThanOrEqual(object op1, object op2) { return this.GreaterThanOrEqual((Guid)op1, (Guid)op2); }
+            bool IOperable.LessThan(object op1, object op2) { return this.LessThan((Guid)op1, (Guid)op2); }
+            bool IOperable.LessThanOrEqual(object op1, object op2) { return this.LessThanOrEqual((Guid)op1, (Guid)op2); }
         }
 
         #endregion
@@ -576,7 +936,7 @@
 
         #region SByte
 
-        private class NS8 : IOperable<SByte?>
+        private class NS8 : IOperable<SByte?>, IOperable
         {
             public SByte? Addition(SByte? op1, SByte? op2) { return (SByte?)(op1 + op2); }
             public SByte? Subtraction(SByte? op1, SByte? op2) { return (SByte?)(op1 - op2); }
@@ -597,13 +957,33 @@
             public bool GreaterThanOrEqual(SByte? op1, SByte? op2) { return op1 >= op2; }
             public bool LessThan(SByte? op1, SByte? op2) { return op1 < op2; }
             public bool LessThanOrEqual(SByte? op1, SByte? op2) { return op1 <= op2; }
+
+            object IOperable.Addition(object op1, object op2) { return this.Addition((SByte?)op1, (SByte?)op2); }
+            object IOperable.Subtraction(object op1, object op2) { return this.Subtraction((SByte?)op1, (SByte?)op2); }
+            object IOperable.Multiply(object op1, object op2) { return this.Multiply((SByte?)op1, (SByte?)op2); }
+            object IOperable.Division(object op1, object op2) { return this.Division((SByte?)op1, (SByte?)op2); }
+            object IOperable.Modulus(object op1, object op2) { return this.Modulus((SByte?)op1, (SByte?)op2); }
+
+            object IOperable.BitwiseAnd(object op1, object op2) { return this.BitwiseAnd((SByte?)op1, (SByte?)op2); }
+            object IOperable.BitwiseOr(object op1, object op2) { return this.BitwiseOr((SByte?)op1, (SByte?)op2); }
+            object IOperable.ExclusiveOr(object op1, object op2) { return this.ExclusiveOr((SByte?)op1, (SByte?)op2); }
+
+            object IOperable.UnaryNegation(object op) { return this.UnaryNegation((SByte?)op); }
+            object IOperable.OnesComplement(object op) { return this.OnesComplement((SByte?)op); }
+
+            bool IOperable.Equality(object op1, object op2) { return this.Equality((SByte?)op1, (SByte?)op2); }
+            bool IOperable.Inequality(object op1, object op2) { return this.Inequality((SByte?)op1, (SByte?)op2); }
+            bool IOperable.GreaterThan(object op1, object op2) { return this.GreaterThan((SByte?)op1, (SByte?)op2); }
+            bool IOperable.GreaterThanOrEqual(object op1, object op2) { return this.GreaterThanOrEqual((SByte?)op1, (SByte?)op2); }
+            bool IOperable.LessThan(object op1, object op2) { return this.LessThan((SByte?)op1, (SByte?)op2); }
+            bool IOperable.LessThanOrEqual(object op1, object op2) { return this.LessThanOrEqual((SByte?)op1, (SByte?)op2); }
         }
 
         #endregion
 
         #region Int16
 
-        private class NS16 : IOperable<Int16?>
+        private class NS16 : IOperable<Int16?>, IOperable
         {
             public Int16? Addition(Int16? op1, Int16? op2) { return (Int16?)(op1 + op2); }
             public Int16? Subtraction(Int16? op1, Int16? op2) { return (Int16?)(op1 - op2); }
@@ -624,13 +1004,33 @@
             public bool GreaterThanOrEqual(Int16? op1, Int16? op2) { return op1 >= op2; }
             public bool LessThan(Int16? op1, Int16? op2) { return op1 < op2; }
             public bool LessThanOrEqual(Int16? op1, Int16? op2) { return op1 <= op2; }
+
+            object IOperable.Addition(object op1, object op2) { return this.Addition((Int16?)op1, (Int16?)op2); }
+            object IOperable.Subtraction(object op1, object op2) { return this.Subtraction((Int16?)op1, (Int16?)op2); }
+            object IOperable.Multiply(object op1, object op2) { return this.Multiply((Int16?)op1, (Int16?)op2); }
+            object IOperable.Division(object op1, object op2) { return this.Division((Int16?)op1, (Int16?)op2); }
+            object IOperable.Modulus(object op1, object op2) { return this.Modulus((Int16?)op1, (Int16?)op2); }
+
+            object IOperable.BitwiseAnd(object op1, object op2) { return this.BitwiseAnd((Int16?)op1, (Int16?)op2); }
+            object IOperable.BitwiseOr(object op1, object op2) { return this.BitwiseOr((Int16?)op1, (Int16?)op2); }
+            object IOperable.ExclusiveOr(object op1, object op2) { return this.ExclusiveOr((Int16?)op1, (Int16?)op2); }
+
+            object IOperable.UnaryNegation(object op) { return this.UnaryNegation((Int16?)op); }
+            object IOperable.OnesComplement(object op) { return this.OnesComplement((Int16?)op); }
+
+            bool IOperable.Equality(object op1, object op2) { return this.Equality((Int16?)op1, (Int16?)op2); }
+            bool IOperable.Inequality(object op1, object op2) { return this.Inequality((Int16?)op1, (Int16?)op2); }
+            bool IOperable.GreaterThan(object op1, object op2) { return this.GreaterThan((Int16?)op1, (Int16?)op2); }
+            bool IOperable.GreaterThanOrEqual(object op1, object op2) { return this.GreaterThanOrEqual((Int16?)op1, (Int16?)op2); }
+            bool IOperable.LessThan(object op1, object op2) { return this.LessThan((Int16?)op1, (Int16?)op2); }
+            bool IOperable.LessThanOrEqual(object op1, object op2) { return this.LessThanOrEqual((Int16?)op1, (Int16?)op2); }
         }
 
         #endregion
 
         #region Int32
 
-        private class NS32 : IOperable<Int32?>
+        private class NS32 : IOperable<Int32?>, IOperable
         {
             public Int32? Addition(Int32? op1, Int32? op2) { return (op1 + op2); }
             public Int32? Subtraction(Int32? op1, Int32? op2) { return (op1 - op2); }
@@ -651,13 +1051,33 @@
             public bool GreaterThanOrEqual(Int32? op1, Int32? op2) { return op1 >= op2; }
             public bool LessThan(Int32? op1, Int32? op2) { return op1 < op2; }
             public bool LessThanOrEqual(Int32? op1, Int32? op2) { return op1 <= op2; }
+
+            object IOperable.Addition(object op1, object op2) { return this.Addition((Int32?)op1, (Int32?)op2); }
+            object IOperable.Subtraction(object op1, object op2) { return this.Subtraction((Int32?)op1, (Int32?)op2); }
+            object IOperable.Multiply(object op1, object op2) { return this.Multiply((Int32?)op1, (Int32?)op2); }
+            object IOperable.Division(object op1, object op2) { return this.Division((Int32?)op1, (Int32?)op2); }
+            object IOperable.Modulus(object op1, object op2) { return this.Modulus((Int32?)op1, (Int32?)op2); }
+
+            object IOperable.BitwiseAnd(object op1, object op2) { return this.BitwiseAnd((Int32?)op1, (Int32?)op2); }
+            object IOperable.BitwiseOr(object op1, object op2) { return this.BitwiseOr((Int32?)op1, (Int32?)op2); }
+            object IOperable.ExclusiveOr(object op1, object op2) { return this.ExclusiveOr((Int32?)op1, (Int32?)op2); }
+
+            object IOperable.UnaryNegation(object op) { return this.UnaryNegation((Int32?)op); }
+            object IOperable.OnesComplement(object op) { return this.OnesComplement((Int32?)op); }
+
+            bool IOperable.Equality(object op1, object op2) { return this.Equality((Int32?)op1, (Int32?)op2); }
+            bool IOperable.Inequality(object op1, object op2) { return this.Inequality((Int32?)op1, (Int32?)op2); }
+            bool IOperable.GreaterThan(object op1, object op2) { return this.GreaterThan((Int32?)op1, (Int32?)op2); }
+            bool IOperable.GreaterThanOrEqual(object op1, object op2) { return this.GreaterThanOrEqual((Int32?)op1, (Int32?)op2); }
+            bool IOperable.LessThan(object op1, object op2) { return this.LessThan((Int32?)op1, (Int32?)op2); }
+            bool IOperable.LessThanOrEqual(object op1, object op2) { return this.LessThanOrEqual((Int32?)op1, (Int32?)op2); }
         }
 
         #endregion
 
         #region Int64
 
-        private class NS64 : IOperable<Int64?>
+        private class NS64 : IOperable<Int64?>, IOperable
         {
             public Int64? Addition(Int64? op1, Int64? op2) { return (op1 + op2); }
             public Int64? Subtraction(Int64? op1, Int64? op2) { return (op1 - op2); }
@@ -678,13 +1098,33 @@
             public bool GreaterThanOrEqual(Int64? op1, Int64? op2) { return op1 >= op2; }
             public bool LessThan(Int64? op1, Int64? op2) { return op1 < op2; }
             public bool LessThanOrEqual(Int64? op1, Int64? op2) { return op1 <= op2; }
+
+            object IOperable.Addition(object op1, object op2) { return this.Addition((Int64?)op1, (Int64?)op2); }
+            object IOperable.Subtraction(object op1, object op2) { return this.Subtraction((Int64?)op1, (Int64?)op2); }
+            object IOperable.Multiply(object op1, object op2) { return this.Multiply((Int64?)op1, (Int64?)op2); }
+            object IOperable.Division(object op1, object op2) { return this.Division((Int64?)op1, (Int64?)op2); }
+            object IOperable.Modulus(object op1, object op2) { return this.Modulus((Int64?)op1, (Int64?)op2); }
+
+            object IOperable.BitwiseAnd(object op1, object op2) { return this.BitwiseAnd((Int64?)op1, (Int64?)op2); }
+            object IOperable.BitwiseOr(object op1, object op2) { return this.BitwiseOr((Int64?)op1, (Int64?)op2); }
+            object IOperable.ExclusiveOr(object op1, object op2) { return this.ExclusiveOr((Int64?)op1, (Int64?)op2); }
+
+            object IOperable.UnaryNegation(object op) { return this.UnaryNegation((Int64?)op); }
+            object IOperable.OnesComplement(object op) { return this.OnesComplement((Int64?)op); }
+
+            bool IOperable.Equality(object op1, object op2) { return this.Equality((Int64?)op1, (Int64?)op2); }
+            bool IOperable.Inequality(object op1, object op2) { return this.Inequality((Int64?)op1, (Int64?)op2); }
+            bool IOperable.GreaterThan(object op1, object op2) { return this.GreaterThan((Int64?)op1, (Int64?)op2); }
+            bool IOperable.GreaterThanOrEqual(object op1, object op2) { return this.GreaterThanOrEqual((Int64?)op1, (Int64?)op2); }
+            bool IOperable.LessThan(object op1, object op2) { return this.LessThan((Int64?)op1, (Int64?)op2); }
+            bool IOperable.LessThanOrEqual(object op1, object op2) { return this.LessThanOrEqual((Int64?)op1, (Int64?)op2); }
         }
 
         #endregion
 
         #region Byte
 
-        private class NU8 : IOperable<Byte?>
+        private class NU8 : IOperable<Byte?>, IOperable
         {
             public Byte? Addition(Byte? op1, Byte? op2) { return (Byte?)(op1 + op2); }
             public Byte? Subtraction(Byte? op1, Byte? op2) { return (Byte?)(op1 - op2); }
@@ -705,13 +1145,33 @@
             public bool GreaterThanOrEqual(Byte? op1, Byte? op2) { return op1 >= op2; }
             public bool LessThan(Byte? op1, Byte? op2) { return op1 < op2; }
             public bool LessThanOrEqual(Byte? op1, Byte? op2) { return op1 <= op2; }
+
+            object IOperable.Addition(object op1, object op2) { return this.Addition((Byte?)op1, (Byte?)op2); }
+            object IOperable.Subtraction(object op1, object op2) { return this.Subtraction((Byte?)op1, (Byte?)op2); }
+            object IOperable.Multiply(object op1, object op2) { return this.Multiply((Byte?)op1, (Byte?)op2); }
+            object IOperable.Division(object op1, object op2) { return this.Division((Byte?)op1, (Byte?)op2); }
+            object IOperable.Modulus(object op1, object op2) { return this.Modulus((Byte?)op1, (Byte?)op2); }
+
+            object IOperable.BitwiseAnd(object op1, object op2) { return this.BitwiseAnd((Byte?)op1, (Byte?)op2); }
+            object IOperable.BitwiseOr(object op1, object op2) { return this.BitwiseOr((Byte?)op1, (Byte?)op2); }
+            object IOperable.ExclusiveOr(object op1, object op2) { return this.ExclusiveOr((Byte?)op1, (Byte?)op2); }
+
+            object IOperable.UnaryNegation(object op) { return this.UnaryNegation((Byte?)op); }
+            object IOperable.OnesComplement(object op) { return this.OnesComplement((Byte?)op); }
+
+            bool IOperable.Equality(object op1, object op2) { return this.Equality((Byte?)op1, (Byte?)op2); }
+            bool IOperable.Inequality(object op1, object op2) { return this.Inequality((Byte?)op1, (Byte?)op2); }
+            bool IOperable.GreaterThan(object op1, object op2) { return this.GreaterThan((Byte?)op1, (Byte?)op2); }
+            bool IOperable.GreaterThanOrEqual(object op1, object op2) { return this.GreaterThanOrEqual((Byte?)op1, (Byte?)op2); }
+            bool IOperable.LessThan(object op1, object op2) { return this.LessThan((Byte?)op1, (Byte?)op2); }
+            bool IOperable.LessThanOrEqual(object op1, object op2) { return this.LessThanOrEqual((Byte?)op1, (Byte?)op2); }
         }
 
         #endregion
 
         #region UInt16
 
-        private class NU16 : IOperable<UInt16?>
+        private class NU16 : IOperable<UInt16?>, IOperable
         {
             public UInt16? Addition(UInt16? op1, UInt16? op2) { return (UInt16?)(op1 + op2); }
             public UInt16? Subtraction(UInt16? op1, UInt16? op2) { return (UInt16?)(op1 - op2); }
@@ -732,13 +1192,33 @@
             public bool GreaterThanOrEqual(UInt16? op1, UInt16? op2) { return op1 >= op2; }
             public bool LessThan(UInt16? op1, UInt16? op2) { return op1 < op2; }
             public bool LessThanOrEqual(UInt16? op1, UInt16? op2) { return op1 <= op2; }
+
+            object IOperable.Addition(object op1, object op2) { return this.Addition((UInt16?)op1, (UInt16?)op2); }
+            object IOperable.Subtraction(object op1, object op2) { return this.Subtraction((UInt16?)op1, (UInt16?)op2); }
+            object IOperable.Multiply(object op1, object op2) { return this.Multiply((UInt16?)op1, (UInt16?)op2); }
+            object IOperable.Division(object op1, object op2) { return this.Division((UInt16?)op1, (UInt16?)op2); }
+            object IOperable.Modulus(object op1, object op2) { return this.Modulus((UInt16?)op1, (UInt16?)op2); }
+
+            object IOperable.BitwiseAnd(object op1, object op2) { return this.BitwiseAnd((UInt16?)op1, (UInt16?)op2); }
+            object IOperable.BitwiseOr(object op1, object op2) { return this.BitwiseOr((UInt16?)op1, (UInt16?)op2); }
+            object IOperable.ExclusiveOr(object op1, object op2) { return this.ExclusiveOr((UInt16?)op1, (UInt16?)op2); }
+
+            object IOperable.UnaryNegation(object op) { return this.UnaryNegation((UInt16?)op); }
+            object IOperable.OnesComplement(object op) { return this.OnesComplement((UInt16?)op); }
+
+            bool IOperable.Equality(object op1, object op2) { return this.Equality((UInt16?)op1, (UInt16?)op2); }
+            bool IOperable.Inequality(object op1, object op2) { return this.Inequality((UInt16?)op1, (UInt16?)op2); }
+            bool IOperable.GreaterThan(object op1, object op2) { return this.GreaterThan((UInt16?)op1, (UInt16?)op2); }
+            bool IOperable.GreaterThanOrEqual(object op1, object op2) { return this.GreaterThanOrEqual((UInt16?)op1, (UInt16?)op2); }
+            bool IOperable.LessThan(object op1, object op2) { return this.LessThan((UInt16?)op1, (UInt16?)op2); }
+            bool IOperable.LessThanOrEqual(object op1, object op2) { return this.LessThanOrEqual((UInt16?)op1, (UInt16?)op2); }
         }
 
         #endregion
 
         #region UInt32
 
-        private class NU32 : IOperable<UInt32?>
+        private class NU32 : IOperable<UInt32?>, IOperable
         {
             public UInt32? Addition(UInt32? op1, UInt32? op2) { return (op1 + op2); }
             public UInt32? Subtraction(UInt32? op1, UInt32? op2) { return (op1 - op2); }
@@ -759,13 +1239,33 @@
             public bool GreaterThanOrEqual(UInt32? op1, UInt32? op2) { return op1 >= op2; }
             public bool LessThan(UInt32? op1, UInt32? op2) { return op1 < op2; }
             public bool LessThanOrEqual(UInt32? op1, UInt32? op2) { return op1 <= op2; }
+
+            object IOperable.Addition(object op1, object op2) { return this.Addition((UInt32?)op1, (UInt32?)op2); }
+            object IOperable.Subtraction(object op1, object op2) { return this.Subtraction((UInt32?)op1, (UInt32?)op2); }
+            object IOperable.Multiply(object op1, object op2) { return this.Multiply((UInt32?)op1, (UInt32?)op2); }
+            object IOperable.Division(object op1, object op2) { return this.Division((UInt32?)op1, (UInt32?)op2); }
+            object IOperable.Modulus(object op1, object op2) { return this.Modulus((UInt32?)op1, (UInt32?)op2); }
+
+            object IOperable.BitwiseAnd(object op1, object op2) { return this.BitwiseAnd((UInt32?)op1, (UInt32?)op2); }
+            object IOperable.BitwiseOr(object op1, object op2) { return this.BitwiseOr((UInt32?)op1, (UInt32?)op2); }
+            object IOperable.ExclusiveOr(object op1, object op2) { return this.ExclusiveOr((UInt32?)op1, (UInt32?)op2); }
+
+            object IOperable.UnaryNegation(object op) { return this.UnaryNegation((UInt32?)op); }
+            object IOperable.OnesComplement(object op) { return this.OnesComplement((UInt32?)op); }
+
+            bool IOperable.Equality(object op1, object op2) { return this.Equality((UInt32?)op1, (UInt32?)op2); }
+            bool IOperable.Inequality(object op1, object op2) { return this.Inequality((UInt32?)op1, (UInt32?)op2); }
+            bool IOperable.GreaterThan(object op1, object op2) { return this.GreaterThan((UInt32?)op1, (UInt32?)op2); }
+            bool IOperable.GreaterThanOrEqual(object op1, object op2) { return this.GreaterThanOrEqual((UInt32?)op1, (UInt32?)op2); }
+            bool IOperable.LessThan(object op1, object op2) { return this.LessThan((UInt32?)op1, (UInt32?)op2); }
+            bool IOperable.LessThanOrEqual(object op1, object op2) { return this.LessThanOrEqual((UInt32?)op1, (UInt32?)op2); }
         }
 
         #endregion
 
         #region UInt64
 
-        private class NU64 : IOperable<UInt64?>
+        private class NU64 : IOperable<UInt64?>, IOperable
         {
             public UInt64? Addition(UInt64? op1, UInt64? op2) { return (op1 + op2); }
             public UInt64? Subtraction(UInt64? op1, UInt64? op2) { return (op1 - op2); }
@@ -786,13 +1286,33 @@
             public bool GreaterThanOrEqual(UInt64? op1, UInt64? op2) { return op1 >= op2; }
             public bool LessThan(UInt64? op1, UInt64? op2) { return op1 < op2; }
             public bool LessThanOrEqual(UInt64? op1, UInt64? op2) { return op1 <= op2; }
+
+            object IOperable.Addition(object op1, object op2) { return this.Addition((UInt64?)op1, (UInt64?)op2); }
+            object IOperable.Subtraction(object op1, object op2) { return this.Subtraction((UInt64?)op1, (UInt64?)op2); }
+            object IOperable.Multiply(object op1, object op2) { return this.Multiply((UInt64?)op1, (UInt64?)op2); }
+            object IOperable.Division(object op1, object op2) { return this.Division((UInt64?)op1, (UInt64?)op2); }
+            object IOperable.Modulus(object op1, object op2) { return this.Modulus((UInt64?)op1, (UInt64?)op2); }
+
+            object IOperable.BitwiseAnd(object op1, object op2) { return this.BitwiseAnd((UInt64?)op1, (UInt64?)op2); }
+            object IOperable.BitwiseOr(object op1, object op2) { return this.BitwiseOr((UInt64?)op1, (UInt64?)op2); }
+            object IOperable.ExclusiveOr(object op1, object op2) { return this.ExclusiveOr((UInt64?)op1, (UInt64?)op2); }
+
+            object IOperable.UnaryNegation(object op) { return this.UnaryNegation((UInt64?)op); }
+            object IOperable.OnesComplement(object op) { return this.OnesComplement((UInt64?)op); }
+
+            bool IOperable.Equality(object op1, object op2) { return this.Equality((UInt64?)op1, (UInt64?)op2); }
+            bool IOperable.Inequality(object op1, object op2) { return this.Inequality((UInt64?)op1, (UInt64?)op2); }
+            bool IOperable.GreaterThan(object op1, object op2) { return this.GreaterThan((UInt64?)op1, (UInt64?)op2); }
+            bool IOperable.GreaterThanOrEqual(object op1, object op2) { return this.GreaterThanOrEqual((UInt64?)op1, (UInt64?)op2); }
+            bool IOperable.LessThan(object op1, object op2) { return this.LessThan((UInt64?)op1, (UInt64?)op2); }
+            bool IOperable.LessThanOrEqual(object op1, object op2) { return this.LessThanOrEqual((UInt64?)op1, (UInt64?)op2); }
         }
 
         #endregion
 
         #region Boolean
 
-        private class NB : IOperable<Boolean?>
+        private class NB : IOperable<Boolean?>, IOperable
         {
             public Boolean? Addition(Boolean? op1, Boolean? op2) { throw new InvalidOperationException(); }
             public Boolean? Subtraction(Boolean? op1, Boolean? op2) { throw new InvalidOperationException(); }
@@ -813,13 +1333,33 @@
             public bool GreaterThanOrEqual(Boolean? op1, Boolean? op2) { throw new InvalidOperationException(); }
             public bool LessThan(Boolean? op1, Boolean? op2) { throw new InvalidOperationException(); }
             public bool LessThanOrEqual(Boolean? op1, Boolean? op2) { throw new InvalidOperationException(); }
+
+            object IOperable.Addition(object op1, object op2) { return this.Addition((Boolean?)op1, (Boolean?)op2); }
+            object IOperable.Subtraction(object op1, object op2) { return this.Subtraction((Boolean?)op1, (Boolean?)op2); }
+            object IOperable.Multiply(object op1, object op2) { return this.Multiply((Boolean?)op1, (Boolean?)op2); }
+            object IOperable.Division(object op1, object op2) { return this.Division((Boolean?)op1, (Boolean?)op2); }
+            object IOperable.Modulus(object op1, object op2) { return this.Modulus((Boolean?)op1, (Boolean?)op2); }
+
+            object IOperable.BitwiseAnd(object op1, object op2) { return this.BitwiseAnd((Boolean?)op1, (Boolean?)op2); }
+            object IOperable.BitwiseOr(object op1, object op2) { return this.BitwiseOr((Boolean?)op1, (Boolean?)op2); }
+            object IOperable.ExclusiveOr(object op1, object op2) { return this.ExclusiveOr((Boolean?)op1, (Boolean?)op2); }
+
+            object IOperable.UnaryNegation(object op) { return this.UnaryNegation((Boolean?)op); }
+            object IOperable.OnesComplement(object op) { return this.OnesComplement((Boolean?)op); }
+
+            bool IOperable.Equality(object op1, object op2) { return this.Equality((Boolean?)op1, (Boolean?)op2); }
+            bool IOperable.Inequality(object op1, object op2) { return this.Inequality((Boolean?)op1, (Boolean?)op2); }
+            bool IOperable.GreaterThan(object op1, object op2) { return this.GreaterThan((Boolean?)op1, (Boolean?)op2); }
+            bool IOperable.GreaterThanOrEqual(object op1, object op2) { return this.GreaterThanOrEqual((Boolean?)op1, (Boolean?)op2); }
+            bool IOperable.LessThan(object op1, object op2) { return this.LessThan((Boolean?)op1, (Boolean?)op2); }
+            bool IOperable.LessThanOrEqual(object op1, object op2) { return this.LessThanOrEqual((Boolean?)op1, (Boolean?)op2); }
         }
 
         #endregion
 
         #region Char
 
-        private class NC : IOperable<Char?>
+        private class NC : IOperable<Char?>, IOperable
         {
             public Char? Addition(Char? op1, Char? op2) { return (Char?)(op1 + op2); }
             public Char? Subtraction(Char? op1, Char? op2) { return (Char?)(op1 - op2); }
@@ -840,13 +1380,33 @@
             public bool GreaterThanOrEqual(Char? op1, Char? op2) { return op1 >= op2; }
             public bool LessThan(Char? op1, Char? op2) { return op1 < op2; }
             public bool LessThanOrEqual(Char? op1, Char? op2) { return op1 <= op2; }
+
+            object IOperable.Addition(object op1, object op2) { return this.Addition((Char?)op1, (Char?)op2); }
+            object IOperable.Subtraction(object op1, object op2) { return this.Subtraction((Char?)op1, (Char?)op2); }
+            object IOperable.Multiply(object op1, object op2) { return this.Multiply((Char?)op1, (Char?)op2); }
+            object IOperable.Division(object op1, object op2) { return this.Division((Char?)op1, (Char?)op2); }
+            object IOperable.Modulus(object op1, object op2) { return this.Modulus((Char?)op1, (Char?)op2); }
+
+            object IOperable.BitwiseAnd(object op1, object op2) { return this.BitwiseAnd((Char?)op1, (Char?)op2); }
+            object IOperable.BitwiseOr(object op1, object op2) { return this.BitwiseOr((Char?)op1, (Char?)op2); }
+            object IOperable.ExclusiveOr(object op1, object op2) { return this.ExclusiveOr((Char?)op1, (Char?)op2); }
+
+            object IOperable.UnaryNegation(object op) { return this.UnaryNegation((Char?)op); }
+            object IOperable.OnesComplement(object op) { return this.OnesComplement((Char?)op); }
+
+            bool IOperable.Equality(object op1, object op2) { return this.Equality((Char?)op1, (Char?)op2); }
+            bool IOperable.Inequality(object op1, object op2) { return this.Inequality((Char?)op1, (Char?)op2); }
+            bool IOperable.GreaterThan(object op1, object op2) { return this.GreaterThan((Char?)op1, (Char?)op2); }
+            bool IOperable.GreaterThanOrEqual(object op1, object op2) { return this.GreaterThanOrEqual((Char?)op1, (Char?)op2); }
+            bool IOperable.LessThan(object op1, object op2) { return this.LessThan((Char?)op1, (Char?)op2); }
+            bool IOperable.LessThanOrEqual(object op1, object op2) { return this.LessThanOrEqual((Char?)op1, (Char?)op2); }
         }
 
         #endregion
 
         #region Single
 
-        private class NR4 : IOperable<Single?>
+        private class NR4 : IOperable<Single?>, IOperable
         {
             public Single? Addition(Single? op1, Single? op2) { return (op1 + op2); }
             public Single? Subtraction(Single? op1, Single? op2) { return (op1 - op2); }
@@ -867,13 +1427,33 @@
             public bool GreaterThanOrEqual(Single? op1, Single? op2) { return op1 >= op2; }
             public bool LessThan(Single? op1, Single? op2) { return op1 < op2; }
             public bool LessThanOrEqual(Single? op1, Single? op2) { return op1 <= op2; }
+
+            object IOperable.Addition(object op1, object op2) { return this.Addition((Single?)op1, (Single?)op2); }
+            object IOperable.Subtraction(object op1, object op2) { return this.Subtraction((Single?)op1, (Single?)op2); }
+            object IOperable.Multiply(object op1, object op2) { return this.Multiply((Single?)op1, (Single?)op2); }
+            object IOperable.Division(object op1, object op2) { return this.Division((Single?)op1, (Single?)op2); }
+            object IOperable.Modulus(object op1, object op2) { return this.Modulus((Single?)op1, (Single?)op2); }
+
+            object IOperable.BitwiseAnd(object op1, object op2) { return this.BitwiseAnd((Single?)op1, (Single?)op2); }
+            object IOperable.BitwiseOr(object op1, object op2) { return this.BitwiseOr((Single?)op1, (Single?)op2); }
+            object IOperable.ExclusiveOr(object op1, object op2) { return this.ExclusiveOr((Single?)op1, (Single?)op2); }
+
+            object IOperable.UnaryNegation(object op) { return this.UnaryNegation((Single?)op); }
+            object IOperable.OnesComplement(object op) { return this.OnesComplement((Single?)op); }
+
+            bool IOperable.Equality(object op1, object op2) { return this.Equality((Single?)op1, (Single?)op2); }
+            bool IOperable.Inequality(object op1, object op2) { return this.Inequality((Single?)op1, (Single?)op2); }
+            bool IOperable.GreaterThan(object op1, object op2) { return this.GreaterThan((Single?)op1, (Single?)op2); }
+            bool IOperable.GreaterThanOrEqual(object op1, object op2) { return this.GreaterThanOrEqual((Single?)op1, (Single?)op2); }
+            bool IOperable.LessThan(object op1, object op2) { return this.LessThan((Single?)op1, (Single?)op2); }
+            bool IOperable.LessThanOrEqual(object op1, object op2) { return this.LessThanOrEqual((Single?)op1, (Single?)op2); }
         }
 
         #endregion
 
         #region Double
 
-        private class NR8 : IOperable<Double?>
+        private class NR8 : IOperable<Double?>, IOperable
         {
             public Double? Addition(Double? op1, Double? op2) { return (op1 + op2); }
             public Double? Subtraction(Double? op1, Double? op2) { return (op1 - op2); }
@@ -894,13 +1474,33 @@
             public bool GreaterThanOrEqual(Double? op1, Double? op2) { return op1 >= op2; }
             public bool LessThan(Double? op1, Double? op2) { return op1 < op2; }
             public bool LessThanOrEqual(Double? op1, Double? op2) { return op1 <= op2; }
+
+            object IOperable.Addition(object op1, object op2) { return this.Addition((Double?)op1, (Double?)op2); }
+            object IOperable.Subtraction(object op1, object op2) { return this.Subtraction((Double?)op1, (Double?)op2); }
+            object IOperable.Multiply(object op1, object op2) { return this.Multiply((Double?)op1, (Double?)op2); }
+            object IOperable.Division(object op1, object op2) { return this.Division((Double?)op1, (Double?)op2); }
+            object IOperable.Modulus(object op1, object op2) { return this.Modulus((Double?)op1, (Double?)op2); }
+
+            object IOperable.BitwiseAnd(object op1, object op2) { return this.BitwiseAnd((Double?)op1, (Double?)op2); }
+            object IOperable.BitwiseOr(object op1, object op2) { return this.BitwiseOr((Double?)op1, (Double?)op2); }
+            object IOperable.ExclusiveOr(object op1, object op2) { return this.ExclusiveOr((Double?)op1, (Double?)op2); }
+
+            object IOperable.UnaryNegation(object op) { return this.UnaryNegation((Double?)op); }
+            object IOperable.OnesComplement(object op) { return this.OnesComplement((Double?)op); }
+
+            bool IOperable.Equality(object op1, object op2) { return this.Equality((Double?)op1, (Double?)op2); }
+            bool IOperable.Inequality(object op1, object op2) { return this.Inequality((Double?)op1, (Double?)op2); }
+            bool IOperable.GreaterThan(object op1, object op2) { return this.GreaterThan((Double?)op1, (Double?)op2); }
+            bool IOperable.GreaterThanOrEqual(object op1, object op2) { return this.GreaterThanOrEqual((Double?)op1, (Double?)op2); }
+            bool IOperable.LessThan(object op1, object op2) { return this.LessThan((Double?)op1, (Double?)op2); }
+            bool IOperable.LessThanOrEqual(object op1, object op2) { return this.LessThanOrEqual((Double?)op1, (Double?)op2); }
         }
 
         #endregion
 
         #region Decimal
 
-        private class ND : IOperable<Decimal?>
+        private class ND : IOperable<Decimal?>, IOperable
         {
             public Decimal? Addition(Decimal? op1, Decimal? op2) { return (op1 + op2); }
             public Decimal? Subtraction(Decimal? op1, Decimal? op2) { return (op1 - op2); }
@@ -921,13 +1521,33 @@
             public bool GreaterThanOrEqual(Decimal? op1, Decimal? op2) { return op1 >= op2; }
             public bool LessThan(Decimal? op1, Decimal? op2) { return op1 < op2; }
             public bool LessThanOrEqual(Decimal? op1, Decimal? op2) { return op1 <= op2; }
+
+            object IOperable.Addition(object op1, object op2) { return this.Addition((Decimal?)op1, (Decimal?)op2); }
+            object IOperable.Subtraction(object op1, object op2) { return this.Subtraction((Decimal?)op1, (Decimal?)op2); }
+            object IOperable.Multiply(object op1, object op2) { return this.Multiply((Decimal?)op1, (Decimal?)op2); }
+            object IOperable.Division(object op1, object op2) { return this.Division((Decimal?)op1, (Decimal?)op2); }
+            object IOperable.Modulus(object op1, object op2) { return this.Modulus((Decimal?)op1, (Decimal?)op2); }
+
+            object IOperable.BitwiseAnd(object op1, object op2) { return this.BitwiseAnd((Decimal?)op1, (Decimal?)op2); }
+            object IOperable.BitwiseOr(object op1, object op2) { return this.BitwiseOr((Decimal?)op1, (Decimal?)op2); }
+            object IOperable.ExclusiveOr(object op1, object op2) { return this.ExclusiveOr((Decimal?)op1, (Decimal?)op2); }
+
+            object IOperable.UnaryNegation(object op) { return this.UnaryNegation((Decimal?)op); }
+            object IOperable.OnesComplement(object op) { return this.OnesComplement((Decimal?)op); }
+
+            bool IOperable.Equality(object op1, object op2) { return this.Equality((Decimal?)op1, (Decimal?)op2); }
+            bool IOperable.Inequality(object op1, object op2) { return this.Inequality((Decimal?)op1, (Decimal?)op2); }
+            bool IOperable.GreaterThan(object op1, object op2) { return this.GreaterThan((Decimal?)op1, (Decimal?)op2); }
+            bool IOperable.GreaterThanOrEqual(object op1, object op2) { return this.GreaterThanOrEqual((Decimal?)op1, (Decimal?)op2); }
+            bool IOperable.LessThan(object op1, object op2) { return this.LessThan((Decimal?)op1, (Decimal?)op2); }
+            bool IOperable.LessThanOrEqual(object op1, object op2) { return this.LessThanOrEqual((Decimal?)op1, (Decimal?)op2); }
         }
 
         #endregion
 
         #region DateTime
 
-        private class NDT : IOperable<DateTime?>
+        private class NDT : IOperable<DateTime?>, IOperable
         {
             public DateTime? Addition(DateTime? op1, DateTime? op2) { throw new InvalidOperationException(); }
             public DateTime? Subtraction(DateTime? op1, DateTime? op2) { throw new InvalidOperationException(); }
@@ -948,13 +1568,33 @@
             public bool GreaterThanOrEqual(DateTime? op1, DateTime? op2) { return op1 >= op2; }
             public bool LessThan(DateTime? op1, DateTime? op2) { return op1 < op2; }
             public bool LessThanOrEqual(DateTime? op1, DateTime? op2) { return op1 <= op2; }
+
+            object IOperable.Addition(object op1, object op2) { return this.Addition((DateTime?)op1, (DateTime?)op2); }
+            object IOperable.Subtraction(object op1, object op2) { return this.Subtraction((DateTime?)op1, (DateTime?)op2); }
+            object IOperable.Multiply(object op1, object op2) { return this.Multiply((DateTime?)op1, (DateTime?)op2); }
+            object IOperable.Division(object op1, object op2) { return this.Division((DateTime?)op1, (DateTime?)op2); }
+            object IOperable.Modulus(object op1, object op2) { return this.Modulus((DateTime?)op1, (DateTime?)op2); }
+
+            object IOperable.BitwiseAnd(object op1, object op2) { return this.BitwiseAnd((DateTime?)op1, (DateTime?)op2); }
+            object IOperable.BitwiseOr(object op1, object op2) { return this.BitwiseOr((DateTime?)op1, (DateTime?)op2); }
+            object IOperable.ExclusiveOr(object op1, object op2) { return this.ExclusiveOr((DateTime?)op1, (DateTime?)op2); }
+
+            object IOperable.UnaryNegation(object op) { return this.UnaryNegation((DateTime?)op); }
+            object IOperable.OnesComplement(object op) { return this.OnesComplement((DateTime?)op); }
+
+            bool IOperable.Equality(object op1, object op2) { return this.Equality((DateTime?)op1, (DateTime?)op2); }
+            bool IOperable.Inequality(object op1, object op2) { return this.Inequality((DateTime?)op1, (DateTime?)op2); }
+            bool IOperable.GreaterThan(object op1, object op2) { return this.GreaterThan((DateTime?)op1, (DateTime?)op2); }
+            bool IOperable.GreaterThanOrEqual(object op1, object op2) { return this.GreaterThanOrEqual((DateTime?)op1, (DateTime?)op2); }
+            bool IOperable.LessThan(object op1, object op2) { return this.LessThan((DateTime?)op1, (DateTime?)op2); }
+            bool IOperable.LessThanOrEqual(object op1, object op2) { return this.LessThanOrEqual((DateTime?)op1, (DateTime?)op2); }
         }
 
         #endregion
 
         #region TimeSpan
 
-        private class NTS : IOperable<TimeSpan?>
+        private class NTS : IOperable<TimeSpan?>, IOperable
         {
             public TimeSpan? Addition(TimeSpan? op1, TimeSpan? op2) { return (op1 + op2); }
             public TimeSpan? Subtraction(TimeSpan? op1, TimeSpan? op2) { return (op1 - op2); }
@@ -975,13 +1615,33 @@
             public bool GreaterThanOrEqual(TimeSpan? op1, TimeSpan? op2) { return op1 >= op2; }
             public bool LessThan(TimeSpan? op1, TimeSpan? op2) { return op1 < op2; }
             public bool LessThanOrEqual(TimeSpan? op1, TimeSpan? op2) { return op1 <= op2; }
+
+            object IOperable.Addition(object op1, object op2) { return this.Addition((TimeSpan?)op1, (TimeSpan?)op2); }
+            object IOperable.Subtraction(object op1, object op2) { return this.Subtraction((TimeSpan?)op1, (TimeSpan?)op2); }
+            object IOperable.Multiply(object op1, object op2) { return this.Multiply((TimeSpan?)op1, (TimeSpan?)op2); }
+            object IOperable.Division(object op1, object op2) { return this.Division((TimeSpan?)op1, (TimeSpan?)op2); }
+            object IOperable.Modulus(object op1, object op2) { return this.Modulus((TimeSpan?)op1, (TimeSpan?)op2); }
+
+            object IOperable.BitwiseAnd(object op1, object op2) { return this.BitwiseAnd((TimeSpan?)op1, (TimeSpan?)op2); }
+            object IOperable.BitwiseOr(object op1, object op2) { return this.BitwiseOr((TimeSpan?)op1, (TimeSpan?)op2); }
+            object IOperable.ExclusiveOr(object op1, object op2) { return this.ExclusiveOr((TimeSpan?)op1, (TimeSpan?)op2); }
+
+            object IOperable.UnaryNegation(object op) { return this.UnaryNegation((TimeSpan?)op); }
+            object IOperable.OnesComplement(object op) { return this.OnesComplement((TimeSpan?)op); }
+
+            bool IOperable.Equality(object op1, object op2) { return this.Equality((TimeSpan?)op1, (TimeSpan?)op2); }
+            bool IOperable.Inequality(object op1, object op2) { return this.Inequality((TimeSpan?)op1, (TimeSpan?)op2); }
+            bool IOperable.GreaterThan(object op1, object op2) { return this.GreaterThan((TimeSpan?)op1, (TimeSpan?)op2); }
+            bool IOperable.GreaterThanOrEqual(object op1, object op2) { return this.GreaterThanOrEqual((TimeSpan?)op1, (TimeSpan?)op2); }
+            bool IOperable.LessThan(object op1, object op2) { return this.LessThan((TimeSpan?)op1, (TimeSpan?)op2); }
+            bool IOperable.LessThanOrEqual(object op1, object op2) { return this.LessThanOrEqual((TimeSpan?)op1, (TimeSpan?)op2); }
         }
 
         #endregion
 
         #region Guid?
 
-        private class NG : IOperable<Guid?>
+        private class NG : IOperable<Guid?>, IOperable
         {
             public Guid? Addition(Guid? op1, Guid? op2) { throw new InvalidOperationException(); }
             public Guid? Subtraction(Guid? op1, Guid? op2) { throw new InvalidOperationException(); }
@@ -1002,6 +1662,26 @@
             public bool GreaterThanOrEqual(Guid? op1, Guid? op2) { throw new InvalidOperationException(); }
             public bool LessThan(Guid? op1, Guid? op2) { throw new InvalidOperationException(); }
             public bool LessThanOrEqual(Guid? op1, Guid? op2) { throw new InvalidOperationException(); }
+
+            object IOperable.Addition(object op1, object op2) { return this.Addition((Guid?)op1, (Guid?)op2); }
+            object IOperable.Subtraction(object op1, object op2) { return this.Subtraction((Guid?)op1, (Guid?)op2); }
+            object IOperable.Multiply(object op1, object op2) { return this.Multiply((Guid?)op1, (Guid?)op2); }
+            object IOperable.Division(object op1, object op2) { return this.Division((Guid?)op1, (Guid?)op2); }
+            object IOperable.Modulus(object op1, object op2) { return this.Modulus((Guid?)op1, (Guid?)op2); }
+
+            object IOperable.BitwiseAnd(object op1, object op2) { return this.BitwiseAnd((Guid?)op1, (Guid?)op2); }
+            object IOperable.BitwiseOr(object op1, object op2) { return this.BitwiseOr((Guid?)op1, (Guid?)op2); }
+            object IOperable.ExclusiveOr(object op1, object op2) { return this.ExclusiveOr((Guid?)op1, (Guid?)op2); }
+
+            object IOperable.UnaryNegation(object op) { return this.UnaryNegation((Guid?)op); }
+            object IOperable.OnesComplement(object op) { return this.OnesComplement((Guid?)op); }
+
+            bool IOperable.Equality(object op1, object op2) { return this.Equality((Guid?)op1, (Guid?)op2); }
+            bool IOperable.Inequality(object op1, object op2) { return this.Inequality((Guid?)op1, (Guid?)op2); }
+            bool IOperable.GreaterThan(object op1, object op2) { return this.GreaterThan((Guid?)op1, (Guid?)op2); }
+            bool IOperable.GreaterThanOrEqual(object op1, object op2) { return this.GreaterThanOrEqual((Guid?)op1, (Guid?)op2); }
+            bool IOperable.LessThan(object op1, object op2) { return this.LessThan((Guid?)op1, (Guid?)op2); }
+            bool IOperable.LessThanOrEqual(object op1, object op2) { return this.LessThanOrEqual((Guid?)op1, (Guid?)op2); }
         }
 
         #endregion

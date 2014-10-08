@@ -8,77 +8,73 @@
     using System.Linq.Expressions;
     using System.Reflection;
     using HyLibrary;
+    using System.Diagnostics.Contracts;
+    using System.Collections;
 
-    public struct Test 
-    { 
-        public int id;
-
-        public override string ToString()
-        {
-            return "id = " + id.ToString();
-        }
+    public class A
+    {
+        public Guid Id { get; set; }
+        public string Code { get; set; }
+        public string Name { get; set; }
+        public DateTime JoinDate { get; set; }
+        public int Count { get; set; }
     }
 
-    public interface IExecute { int Run(); }
+    public class ChangeValue
+    {
+    }
+
+    public class ChangeTracker <T> : IEnumerable<KeyValuePair<string, ChangeValue>>
+        where T : class
+    {
+        #region Static
+        #endregion
+
+        public ChangeTracker(T origin, T changed)
+        {
+            Contract.Assert(origin != null, "origin");
+            Contract.Assert(changed != null, "changed");
+
+            this.Origin = origin;
+            this.Changed = changed;
+        }
+
+        public ChangeValue this[string property]
+        {
+            get
+            {
+                return this.ChangeValues[property];
+            }
+        }
+
+        public T Origin { get; protected set; }
+        public T Changed { get; protected set; }
+
+        public int Counts { get; protected set; }
+        public List<string> Properties { get; protected set; }
+
+        protected Dictionary<string, ChangeValue> ChangeValues { get; set; }
+
+        public IEnumerator<KeyValuePair<string, ChangeValue>> GetEnumerator()
+        {
+            return this.ChangeValues.GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return this.ChangeValues.GetEnumerator();
+        }
+
+        protected virtual void Init()
+        {
+
+        }
+    }
 
     public class Program
     {
-        private static string source =
-@"
-namespace Program01
-{
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-
-    public class GenerateClass : IExecute
-    {
-        public int Run()
-        {
-            try
-            {
-                var list = new List<Test>();
-                Console.WriteLine(list.Where(k=> k.id == 10).FirstOrDefault());
-                return 1;
-            }
-            catch
-            {
-                return 0;
-            }
-        }
-    }
-}
-";
-
         static void Main(string[] args)
         {
-            var provider = new CSharpCodeProvider();
-            var parameters = new CompilerParameters()
-            {
-                GenerateInMemory = true
-            };
-
-            parameters.ReferencedAssemblies.AddRange(GetExecuteAssemblies());
-            parameters.ReferencedAssemblies.Add("Program01.exe");
-
-            var result = provider.CompileAssemblyFromSource(
-                parameters,
-                source);
-
-            var type = result.CompiledAssembly.GetTypes()[0];
-            var instance = (IExecute)Activator.CreateInstance(type);
-
-            var ret = instance.Run();
-
-            CodeCheck.IsTrue(ret == 1, "ret");
-        }
-
-        private static string[] GetExecuteAssemblies()
-        {
-            return Assembly.GetExecutingAssembly()
-                .GetReferencedAssemblies()
-                .Select(k => k.Name + ".dll")
-                .ToArray();
         }
     }
 }

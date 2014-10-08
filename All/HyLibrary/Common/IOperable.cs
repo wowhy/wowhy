@@ -22,4 +22,27 @@
         bool LessThan(T op1, T op2);
         bool LessThanOrEqual(T op1, T op2);
     }
+
+    public interface IOperable
+    {
+        object Addition(object op1, object op2);
+        object Subtraction(object op1, object op2);
+        object Multiply(object op1, object op2);
+        object Division(object op1, object op2);
+        object Modulus(object op1, object op2);
+
+        object BitwiseAnd(object op1, object op2);
+        object BitwiseOr(object op1, object op2);
+        object ExclusiveOr(object op1, object op2);
+
+        object UnaryNegation(object op);
+        object OnesComplement(object op);
+
+        bool Equality(object op1, object op2);
+        bool Inequality(object op1, object op2);
+        bool GreaterThan(object op1, object op2);
+        bool GreaterThanOrEqual(object op1, object op2);
+        bool LessThan(object op1, object op2);
+        bool LessThanOrEqual(object op1, object op2);
+    }
 }
