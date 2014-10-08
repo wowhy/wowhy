@@ -10,6 +10,7 @@
     using HyLibrary;
     using System.Diagnostics.Contracts;
     using System.Collections;
+    using System.Diagnostics;
 
     public class A
     {
@@ -54,6 +55,13 @@
                 | BindingFlags.SetProperty)
                 .Where(k => Support(k.PropertyType));
 
+            var lambda = properties.Select(k => 
+            {
+                var method = k.GetGetMethod();
+                var param = Expression.Parameter(type, "k");
+                var getter = Expression.Property(param, method);
+                return new object { };
+            });
 
             ChangeTracker<T>.TrackType = type;
             ChangeTracker<T>.Caches = properties.ToDictionary(k => k.Name);
@@ -146,17 +154,30 @@
     {
         static void Main(string[] args)
         {
+            Expression<Func<A,Guid>> lambda = (A k) => k.Id;
+
+
             A a1 = new A { Id = Guid.Empty, Code = "XX", Name = "测试1", Count = 10, JoinDate = new DateTime(1999, 1, 1) };
             A a2 = new A { Id = Guid.Empty, Code = "XX", Name = "测试2", Count = 20, JoinDate = new DateTime(2000, 1, 1) };
 
-            ChangeTracker<A> tracker = new ChangeTracker<A>(a1, a2);
-            tracker.TrackValueChanged();
 
-            foreach (var value in tracker)
+            int count = 100000;
+            Stopwatch watch = new Stopwatch();
+            watch.Start();
+
+            for (int i = 0; i < count; i++)
             {
-                Console.WriteLine("{0}: {1} ====> {2}",
-                    value.Key, value.Value.Origin, value.Value.Value);
+                ChangeTracker<A> tracker = new ChangeTracker<A>(a1, a2);
+                tracker.TrackValueChanged();
             }
+
+            Console.WriteLine(watch.ElapsedMilliseconds);
+
+            //foreach (var value in tracker)
+            //{
+            //    Console.WriteLine("{0}: {1} ====> {2}",
+            //        value.Key, value.Value.Origin, value.Value.Value);
+            //}
         }
     }
 }
