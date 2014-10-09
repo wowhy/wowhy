@@ -11,6 +11,7 @@
     using System.Diagnostics.Contracts;
     using System.Collections;
     using System.Diagnostics;
+    using System.Threading.Tasks;
 
     public class A
     {
@@ -21,19 +22,24 @@
         public int Count { get; set; }
     }
 
+    public class B
+    {
+        public string Name { get; set; }
+    }
+
     public class ChangeValue
     {
         public object Origin { get; private set; }
 
         public object Value { get; private set; }
 
-        public Type ValueType { get; private set; }
+        public PropertyInfo PropertyInfo { get; private set; }
 
-        public ChangeValue(object origin, object value, Type valueType)
+        public ChangeValue(object origin, object value, PropertyInfo propertyInfo)
         {
             this.Origin = origin;
             this.Value = value;
-            this.ValueType = valueType;
+            this.PropertyInfo = propertyInfo;
         }
     }
 
@@ -43,7 +49,7 @@
         #region Static
         public static Type TrackType { get; private set; }
 
-        public static Dictionary<string, PropertyInfo> Caches { get; private set; }
+        public static Dictionary<string, Tuple<PropertyInfo, Func<T, object>>> Caches { get; private set; }
 
         static ChangeTracker()
         {
@@ -55,16 +61,22 @@
                 | BindingFlags.SetProperty)
                 .Where(k => Support(k.PropertyType));
 
-            var lambda = properties.Select(k => 
+            var lambda = properties.Select(k =>
             {
                 var method = k.GetGetMethod();
                 var param = Expression.Parameter(type, "k");
                 var getter = Expression.Property(param, method);
-                return new object { };
+                var cast = Expression.Convert(getter, typeof(object));
+                return new Tuple<string, PropertyInfo, Func<T, object>>(
+                    k.Name,
+                    k,
+                    Expression.Lambda<Func<T, object>>(cast, param).Compile());
             });
 
             ChangeTracker<T>.TrackType = type;
-            ChangeTracker<T>.Caches = properties.ToDictionary(k => k.Name);
+            ChangeTracker<T>.Caches = lambda.ToDictionary(
+                k => k.Item1,
+                k => new Tuple<PropertyInfo, Func<T, object>>(k.Item2, k.Item3));
         }
 
         private static bool Support(Type type)
@@ -113,7 +125,7 @@
         public T Origin { get; protected set; }
         public T Changed { get; protected set; }
 
-        public int Counts { get { return this.Properties.Count; } }
+        public int Count { get { return this.Properties.Count; } }
         public List<string> Properties { get; protected set; }
 
         protected Dictionary<string, ChangeValue> ChangeValues { get; set; }
@@ -136,15 +148,19 @@
             foreach (var cache in Caches)
             {
                 var name = cache.Key;
-                var property = cache.Value;
+                var property = cache.Value.Item1;
 
-                var v1 = property.GetValue(Origin);
-                var v2 = property.GetValue(Changed);
+                var method = cache.Value.Item2;
+                var v1 = method(this.Origin);
+                var v2 = method(this.Changed);
+
+                //var v1 = property.GetValue(this.Origin);
+                //var v2 = property.GetValue(this.Changed);
 
                 if (!object.Equals(v1, v2))
                 {
                     this.Properties.Add(name);
-                    this.ChangeValues[name] = new ChangeValue(v1, v2, property.PropertyType);
+                    this.ChangeValues[name] = new ChangeValue(v1, v2, property);
                 }
             }
         }
@@ -154,30 +170,46 @@
     {
         static void Main(string[] args)
         {
-            Expression<Func<A,Guid>> lambda = (A k) => k.Id;
-
-
             A a1 = new A { Id = Guid.Empty, Code = "XX", Name = "测试1", Count = 10, JoinDate = new DateTime(1999, 1, 1) };
             A a2 = new A { Id = Guid.Empty, Code = "XX", Name = "测试2", Count = 20, JoinDate = new DateTime(2000, 1, 1) };
-
 
             int count = 100000;
             Stopwatch watch = new Stopwatch();
             watch.Start();
 
-            for (int i = 0; i < count; i++)
-            {
-                ChangeTracker<A> tracker = new ChangeTracker<A>(a1, a2);
-                tracker.TrackValueChanged();
-            }
+            //for (int i = 0; i < count; i++)
+            //{
+            //    ChangeTracker<A> tracker = new ChangeTracker<A>(a1, a2);
+            //    tracker.TrackValueChanged();
+            //}
+
+            Parallel.Invoke(
+                () =>
+                {
+                    var tracker = new ChangeTracker<A>(new A() { Count = 1 }, new A() { Count = 2 });
+                    tracker.TrackValueChanged();
+                    Print(tracker);
+                },
+                () =>
+                {
+                    var tracker = new ChangeTracker<B>(new B() { Name = "321" }, new B() { Name = "123" });
+                    tracker.TrackValueChanged();
+                    Print(tracker);
+                });
 
             Console.WriteLine(watch.ElapsedMilliseconds);
 
-            //foreach (var value in tracker)
-            //{
-            //    Console.WriteLine("{0}: {1} ====> {2}",
-            //        value.Key, value.Value.Origin, value.Value.Value);
-            //}
+            // Print(tracker);
+        }
+
+        static void Print<T>(ChangeTracker<T> tracker)
+            where T : class
+        {
+            foreach (var value in tracker)
+            {
+                Console.WriteLine("{0}: {1} ====> {2}",
+                    value.Key, value.Value.Origin, value.Value.Value);
+            }
         }
     }
 }
