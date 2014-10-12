@@ -68,18 +68,34 @@ public:
 
 #pragma endregion
 
+static inline void get_cpuid(unsigned int i, unsigned int *buf)
+{
+    unsigned int _eax,
+        _ebx,
+        _ecx,
+        _edx;
+    _asm
+    {
+        mov eax, i;
+        cpuid;
+        mov _eax, eax;
+        mov _ebx, ebx;
+        mov _ecx, ecx;
+        mov _edx, edx;
+    }
+
+    buf[0] = _eax;
+    buf[1] = _ebx;
+    buf[2] = _ecx;
+    buf[3] = _edx;
+}
+
 int main()
 {
-    Person *p = new Person("Jack");
-    Shirt *s = new Shirt(p);
-    Tie *t = new Tie(s);
+    unsigned int buffer[4];
+    get_cpuid(1, buffer);
 
-    t->Show();
-    s->Show();
-
-    delete t;
-    delete s;
-    delete p;
+    printf("%x%x%x%x", buffer[0], buffer[1], buffer[2], buffer[3]);
 
     return 0;
 }
