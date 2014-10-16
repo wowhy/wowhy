@@ -11,7 +11,7 @@
     public class DataWraper<TSource> : Dictionary<string, object>
     {
         private static readonly Type SourceType = typeof(TSource);
-        private static List<Tuple<string, Func<TSource, object>>> Getters;
+        private static Dictionary<string, Func<TSource, object>> Getters;
 
         static DataWraper()
         {
@@ -23,15 +23,17 @@
 
             var param = Expression.Parameter(SourceType, "k");
 
-            Getters = properties.Select(k =>
+            Getters = new Dictionary<string, Func<TSource, object>>();
+
+            foreach (var property in properties)
             {
-                return new Tuple<string, Func<TSource, object>>(
-                    k.Name,
-                    Expression.Lambda<Func<TSource, object>>(
-                        Expression.Convert(
-                            Expression.PropertyOrField(param, k.Name),
-                            typeof(object))).Compile());
-            }).ToList();
+                var func = Expression.Lambda<Func<TSource, object>>(
+                            Expression.Convert(
+                                Expression.PropertyOrField(param, property.Name),
+                                typeof(object))).Compile();
+
+                Getters.Add(property.Name, func);
+            }
         }
 
         public DataWraper(TSource source)
@@ -47,7 +49,7 @@
             var dic = new Dictionary<string, object>();
             foreach (var getter in Getters)
             {
-                dic.Add(getter.Item1, getter.Item2(source));
+                dic.Add(getter.Key, getter.Value(source));
             }
 
             return dic;
@@ -57,7 +59,7 @@
         {
             foreach (var getter in Getters)
             {
-                yield return new KeyValuePair<string, object>(getter.Item1, getter.Item2(source));
+                yield return new KeyValuePair<string, object>(getter.Key, getter.Value(source));
             }
         }
     }
