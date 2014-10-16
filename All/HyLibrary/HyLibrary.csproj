@@ -94,6 +94,9 @@
     <Compile Include="Reflection\ReflectionHelper.cs" />
     <Compile Include="Reflection\TypeHelper.cs" />
     <Compile Include="Reflection\Types.cs" />
+    <Compile Include="Utility\ChangeTracker.cs" />
+    <Compile Include="Utility\ChangeValue.cs" />
+    <Compile Include="Utility\DataWraper.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -101,6 +104,7 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
