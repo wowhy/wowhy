@@ -30,7 +30,8 @@
                 var func = Expression.Lambda<Func<TSource, object>>(
                             Expression.Convert(
                                 Expression.PropertyOrField(param, property.Name),
-                                typeof(object))).Compile();
+                                typeof(object)),
+                            param).Compile();
 
                 Getters.Add(property.Name, func);
             }
