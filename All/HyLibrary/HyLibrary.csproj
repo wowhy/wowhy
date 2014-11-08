@@ -96,7 +96,7 @@
     <Compile Include="Reflection\Types.cs" />
     <Compile Include="Utility\ChangeTracker.cs" />
     <Compile Include="Utility\ChangeValue.cs" />
-    <Compile Include="Utility\DataWraper.cs" />
+    <Compile Include="Utility\DictionaryWraper.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">

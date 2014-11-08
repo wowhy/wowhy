@@ -8,12 +8,12 @@
     using System.Text;
     using System.Threading.Tasks;
 
-    public class DataWraper<TSource> : Dictionary<string, object>
+    public class DictionaryWraper<TSource> : Dictionary<string, object>
     {
         private static readonly Type SourceType = typeof(TSource);
         private static Dictionary<string, Func<TSource, object>> Getters;
 
-        static DataWraper()
+        static DictionaryWraper()
         {
             var properties = SourceType.GetProperties(
                         BindingFlags.Instance
@@ -37,7 +37,7 @@
             }
         }
 
-        public DataWraper(TSource source)
+        public DictionaryWraper(TSource source)
         {
             foreach (var item in Query(source))
             {
