@@ -1,0 +1,137 @@
+﻿<#@ template debug="false" hostspecific="true" language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ output extension=".cs" #>
+<#
+    var className = "Estate";
+    var classComment = "楼盘信息";
+    var isAggregateRoot = true;
+    var content = 
+@"楼盘代码									Code									string					
+楼盘名称									Name									string					
+楼盘分期									PeriodName									string					
+楼盘类别									EstateType									EstateType?					
+所在城市									City									Guid					
+所属城区									Districts									int					
+所属地理范围									GeographicAreaId									Guid					
+所属管理范围									ManageAreaId									Guid					
+楼盘用途									BuildingUseType									int					
+用途明细									BuildingUseTypeDetail									int					
+规划日期									PlanningDate									DateTime?					
+开工日期									BuildStartDate									DateTime?					
+竣工日期									BuildEndDate									DateTime?					
+入住日期									CheckInDate									DateTime?					
+建筑类型									BuildingType									string					
+销售许可证号									SalesNo									string					
+权属									Ownership									string					
+土地级别									LandLevel									int?					
+使用方式									UseWay									int?					
+使用年限									UseYears									int?					
+楼盘状态									EstateStatus									EstateStatus?					
+项目地址									EstateAddress									string					
+占地面积									LandArea									double?					
+建筑面积									BuildArea									double?					
+建筑结构									BuildingStructure									string					
+容积率									VolumeRate									double?					
+绿化率									GreeningRate									double?					
+规划栋数									PlanBuildingNumber									int?					
+实际栋数									BuildingNumber									int?					
+住宅栋数									ResidentialBuildingNumber									int?					
+商用栋数									CommercialBuildingNumber									int?					
+规划户数									PlanHouseNumber									int?					
+实际户数									HouseNumber									int?					
+住宅户数									ResidentialHouseNumber									int?					
+商用户数									CommercialHouseNumber									int?					
+车库总数									GarageNumber									int?					
+地上车库数									OverGroundGarageNumber									int?					
+地下车库数									UnderGroundGarageNumber									int?					
+车位总数									ParkingNumber									int?					
+地上车位数									OverGroundParkingNumber									int?					
+地下车位数									UnderGroundParkingNumber									int?					
+大堂装饰									Lobby									string					
+电梯品牌									Elevator									string					
+装修程度									Renovation									int					
+外墙面									OutWall									string					
+门材质									DoorMaterial									string					
+外窗材质									OutWallMaterial									string					
+供电方式									ElectricMethod									string					
+供水方式									WaterMethod									string					
+供气方式									GasMethod									string					
+供气种类									GasCategory									string					
+供暖方式									SupplyHeatingMethod									string					
+采暖方式									HeatingMethod									string					
+通讯配置									Communication									string					
+楼盘安全配备									Safety									string					
+小学学区归属									PrimarySchoolDistrict									string					
+初中学区归属									MiddleSchoolDistrict									string					
+电梯费									ElevatorCost									double?					
+物业费									PropertyCost									double?					
+参考计税价									ReferenceTaxPrice									double?					
+入住率									OccupancyRate									double?					
+在售楼号									SalingBuildingNo									string					
+面积区间									AreaInterval									string					
+单价区间									SinglePriceInterval									string					
+总价区间									TotalPriceInterval									string					
+三分钟呈现									ThreeMinutes									string					
+卖点									SellingPoint									string					
+缺点									Weakness									string					
+动态									Dynamic									string					
+人口构成									Population									string					
+治安情况									PublicSecurity									string					
+公交信息									TraficLines									List<TraficLine>															
+配套信息									SupportingInstallations									List<SupportingInstallation>															
+嫌恶设施									TraficLines									List<TraficLine>															
+户型信息									EstateRoomStyles									List<EstateRoomStyle>															
+责任单位信息									EstateUnits									List<EstateUnit>															
+价格信息									EstatePrices									List<EstatePrice>															
+附件信息									EstateFiles									List<EstateFile>															
+";
+#>
+//-----------------------------------------------------------------------
+// <copyright file="<#=className#>.cs" company="Howonder">
+//     Copyright © Howonder 2015. All rights reserved.
+// </copyright>
+//-----------------------------------------------------------------------
+namespace HSNet.Domain.CRM.Entity
+{
+    using System;
+    using System.ComponentModel;
+    using System.ComponentModel.DataAnnotations;
+    using HSNet.Domain.CRM.Meta;
+    using HSNet.Domain.CRM.Enum;
+    using System.Collections.Generic;
+
+    /// <summary>
+    /// <#=classComment#>
+    /// </summary>
+    [MetadataType(typeof(<#=className#>Metadata))]
+    public class <#=className#> : <#= isAggregateRoot ? "CommonAggregateRoot, ICommonEntity" : "CommonEntityBase" #>
+    {
+<#
+    var properties = content.Split("\r\n".ToCharArray());
+    var formatPropertyType = new Func<string, string>(value => 
+    {
+        if(value.StartsWith("List<"))
+        {
+            return "virtual " + value;
+        }
+         
+        return value; 
+    });
+
+    foreach(var property in properties.Where(k => !string.IsNullOrWhiteSpace(k)))
+    {
+        var attrs = property.Split('\t').Where(k => !string.IsNullOrWhiteSpace(k)).ToList();
+#>
+        /// <summary>
+        /// <#=attrs[0]#>
+        /// </summary>
+        public <#=formatPropertyType(attrs[2])#> <#=attrs[1]#> { get; set; }
+
+<#
+    }
+#>
+    }
+}
