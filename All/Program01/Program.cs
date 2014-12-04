@@ -18,6 +18,7 @@
             [Key]
             public int Id { get; set; }
 
+            [Required]
             public string Name { get; set; }
 
             public override string ToString()
@@ -64,20 +65,27 @@
 
         static void Main(string[] args)
         {
-            Context.Database.CreateIfNotExists();
-
-            Parallel.For(1, 20,
-                (i) =>
-                {
-                    Console.WriteLine("Thread: " + Thread.CurrentThread.ManagedThreadId);
-                    Context.Tests.Add(new Test { Name = "test" + i });
-                    Context.SaveChanges();
-                });
-
-            Parallel.For(1, 5, (i) => 
+            Task task = Task.Factory.StartNew(() => 
             {
-                Format(Context.Tests.ToList());
-            });
+                Console.WriteLine("ThreadId: " + Thread.CurrentThread.ManagedThreadId);
+                try
+                {
+                    var test = Context.Tests.Where(k => k.Id == 1).FirstOrDefault();
+                    Console.WriteLine("before: Name = " + test.Name);
+                    test.Name = null;
+                    Context.SaveChanges();
+                }
+                catch
+                {
+                    Console.WriteLine("Save Failed");
+                }
+            }).ContinueWith(t => 
+            {
+                Console.WriteLine("ThreadId: " + Thread.CurrentThread.ManagedThreadId);
+                Console.WriteLine("Cache Name = " + Context.Tests.Where(k => k.Id == 1).FirstOrDefault().Name);
+            }, TaskContinuationOptions.ExecuteSynchronously);
+
+            task.Wait();
         }
 
         static object state = new object();
