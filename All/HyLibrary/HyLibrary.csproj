@@ -45,9 +45,13 @@
     <Compile Include="Common\Operator.cs" />
     <Compile Include="ExtensionMethod\BytesExtension.cs" />
     <Compile Include="ExtensionMethod\FlagExtension.cs" />
+    <Compile Include="ExtensionMethod\QueryableExtension.cs" />
     <Compile Include="ExtensionMethod\ReflectionExtension.cs" />
     <Compile Include="ExtensionMethod\StringExtension.cs" />
     <Compile Include="ExtensionMethod\TypeExtension.cs" />
+    <Compile Include="Lambda\ProjectionEnumerable.cs" />
+    <Compile Include="Lambda\ProjectionExpression.cs" />
+    <Compile Include="Lambda\ProjectionQueryable.cs" />
     <Compile Include="Lambda\Recursion.cs" />
     <Compile Include="Language\Pinyin\Internal\PyCode.cs" />
     <Compile Include="Language\Pinyin\Internal\PyHash.cs" />
@@ -61,10 +65,8 @@
     <Compile Include="Parser\Expr2\DynamicProperty.cs" />
     <Compile Include="Parser\Expr2\ExpressionParser.cs" />
     <Compile Include="Parser\Expr2\ExpressionParserHelper.cs" />
-    <Compile Include="Parser\Expr2\ParseException.cs" />
     <Compile Include="Parser\Expr2\Res.cs" />
     <Compile Include="Parser\Expr2\Signature.cs" />
-    <Compile Include="Parser\Expr\ExprException.cs" />
     <Compile Include="Parser\Expr\ExprParser.cs" />
     <Compile Include="Parser\Expr\Internal\AnOperator.cs" />
     <Compile Include="Parser\Expr\Internal\AToken.cs" />
