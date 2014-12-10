@@ -9,11 +9,6 @@
 
     public static class QueryableExtension
     {
-        public static IEnumerable<TDest> Projection<TSource, TDest>(this IEnumerable<TSource> source)
-        {
-            return ProjectionExpression<TSource, TDest>.To(source);
-        }
-
         public static IQueryable<TDest> Projection<TSource, TDest>(this IQueryable<TSource> source)
         {
             return ProjectionExpression<TSource, TDest>.To(source);

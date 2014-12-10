@@ -44,6 +44,7 @@
     <Compile Include="Common\IOperable.cs" />
     <Compile Include="Common\Operator.cs" />
     <Compile Include="ExtensionMethod\BytesExtension.cs" />
+    <Compile Include="ExtensionMethod\EnumerableExtension.cs" />
     <Compile Include="ExtensionMethod\FlagExtension.cs" />
     <Compile Include="ExtensionMethod\QueryableExtension.cs" />
     <Compile Include="ExtensionMethod\ReflectionExtension.cs" />
