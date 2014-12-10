@@ -1,4 +1,4 @@
-﻿namespace HyLibrary.Utility
+﻿namespace HyLibrary.Data
 {
     using System;
     using System.Collections;
