@@ -66,8 +66,10 @@
     <Compile Include="Parser\Expr2\DynamicProperty.cs" />
     <Compile Include="Parser\Expr2\ExpressionParser.cs" />
     <Compile Include="Parser\Expr2\ExpressionParserHelper.cs" />
+    <Compile Include="Parser\Expr2\ParseException.cs" />
     <Compile Include="Parser\Expr2\Res.cs" />
     <Compile Include="Parser\Expr2\Signature.cs" />
+    <Compile Include="Parser\Expr\ExprException.cs" />
     <Compile Include="Parser\Expr\ExprParser.cs" />
     <Compile Include="Parser\Expr\Internal\AnOperator.cs" />
     <Compile Include="Parser\Expr\Internal\AToken.cs" />
@@ -97,9 +99,9 @@
     <Compile Include="Reflection\ReflectionHelper.cs" />
     <Compile Include="Reflection\TypeHelper.cs" />
     <Compile Include="Reflection\Types.cs" />
-    <Compile Include="Utility\ChangeTracker.cs" />
-    <Compile Include="Utility\ChangeValue.cs" />
-    <Compile Include="Utility\DictionaryWraper.cs" />
+    <Compile Include="Data\ChangeTracker.cs" />
+    <Compile Include="Data\ChangeValue.cs" />
+    <Compile Include="Data\DictionaryWraper.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">
