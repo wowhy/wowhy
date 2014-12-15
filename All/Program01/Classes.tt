@@ -5,55 +5,28 @@
 <#@ import namespace="System.Collections.Generic" #>
 <#@ output extension=".cs" #>
 <#
-    var className = "Estate";
+    var className = "Building";
     var classComment = "楼盘信息";
     var isAggregateRoot = true;
     var content = 
-@"楼盘代码									Code									string					
-楼盘名称									Name									string					
-楼盘分期									PeriodName									string					
-楼盘类别									EstateType									EstateType?					
+@"栋座代码									Code									string					
+所属楼盘									EstateId									Guid					
+建筑街号									AdministrationNo									string					
+行政街号									BuildingNo									string					
 所在城市									City									Guid					
 所属城区									Districts									int					
-所属地理范围									GeographicAreaId									Guid					
-所属管理范围									ManageAreaId									Guid					
 楼盘用途									BuildingUseType									int					
 用途明细									BuildingUseTypeDetail									int					
-规划日期									PlanningDate									DateTime?					
-开工日期									BuildStartDate									DateTime?					
-竣工日期									BuildEndDate									DateTime?					
-入住日期									CheckInDate									DateTime?					
 建筑类型									BuildingType									string					
-销售许可证号									SalesNo									string					
-权属									Ownership									string					
-土地级别									LandLevel									int?					
-使用方式									UseWay									int?					
-使用年限									UseYears									int?					
-楼盘状态									EstateStatus									EstateStatus?					
-项目地址									EstateAddress									string					
-占地面积									LandArea									double?					
-建筑面积									BuildArea									double?					
 建筑结构									BuildingStructure									string					
-容积率									VolumeRate									double?					
-绿化率									GreeningRate									double?					
-规划栋数									PlanBuildingNumber									int?					
-实际栋数									BuildingNumber									int?					
-住宅栋数									ResidentialBuildingNumber									int?					
-商用栋数									CommercialBuildingNumber									int?					
-规划户数									PlanHouseNumber									int?					
-实际户数									HouseNumber									int?					
-住宅户数									ResidentialHouseNumber									int?					
-商用户数									CommercialHouseNumber									int?					
-车库总数									GarageNumber									int?					
-地上车库数									OverGroundGarageNumber									int?					
-地下车库数									UnderGroundGarageNumber									int?					
-车位总数									ParkingNumber									int?					
-地上车位数									OverGroundParkingNumber									int?					
-地下车位数									UnderGroundParkingNumber									int?					
+销售许可证号									SalesNo									string					
+土地级别									LandLevel									int?					
+是否在售									SalingStatus									bool?					
+栋座状态									BuildingStatus									BuildingStatus?					
+外墙面									OutWall									string					
 大堂装饰									Lobby									string					
 电梯品牌									Elevator									string					
 装修程度									Renovation									int					
-外墙面									OutWall									string					
 门材质									DoorMaterial									string					
 外窗材质									OutWallMaterial									string					
 供电方式									ElectricMethod									string					
@@ -70,23 +43,24 @@
 物业费									PropertyCost									double?					
 参考计税价									ReferenceTaxPrice									double?					
 入住率									OccupancyRate									double?					
-在售楼号									SalingBuildingNo									string					
 面积区间									AreaInterval									string					
 单价区间									SinglePriceInterval									string					
 总价区间									TotalPriceInterval									string					
-三分钟呈现									ThreeMinutes									string					
-卖点									SellingPoint									string					
-缺点									Weakness									string					
-动态									Dynamic									string					
-人口构成									Population									string					
-治安情况									PublicSecurity									string					
-公交信息									TraficLines									List<TraficLine>															
-配套信息									SupportingInstallations									List<SupportingInstallation>															
-嫌恶设施									TraficLines									List<TraficLine>															
-户型信息									EstateRoomStyles									List<EstateRoomStyle>															
-责任单位信息									EstateUnits									List<EstateUnit>															
-价格信息									EstatePrices									List<EstatePrice>															
-附件信息									EstateFiles									List<EstateFile>															
+总户数									HouseNumber									int?					
+住宅户数									ResidentialHouseNumber									int?					
+商用户数									CommercialHouseNumber									int?					
+单元数量									UnitNumber									int?					
+总层数									AllFloorNumber									int?					
+地上层数									OverGroundFloorNumber									int?					
+地下层数									UnderGroundFloorNumber									double?					
+物理楼层									FloorBuildingNumber									int?					
+标号楼层									FloorNumber									double?					
+楼间距									BuildingDistance									double?					
+位置									Position									BuildingPosition?					
+户型信息									BuildingRoomStyles									List<BuildingRoomStyle>															
+责任单位信息									BuildingUnits									List<BuildingUnit>															
+价格信息									BuildingPrices									List<BuildingPrice>															
+附件信息									BuildingFiles									List<EstateFile>															
 ";
 #>
 //-----------------------------------------------------------------------
