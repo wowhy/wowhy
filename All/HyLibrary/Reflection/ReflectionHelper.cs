@@ -5,7 +5,7 @@
     using System.Reflection;
     using System.Reflection.Emit;
 
-    public class ReflectionHelper
+    public partial class ReflectionHelper
     {
         public readonly static ReflectionHelper Instance = new ReflectionHelper();
 

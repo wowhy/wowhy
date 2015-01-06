@@ -120,5 +120,29 @@ namespace UnitTestProject1
                 Assert.IsTrue(i.ToString() == list[i].Name);
             }
         }
+
+        public class TestA
+        {
+            public int Id { get; set; }
+
+            public string Name { get; set; }
+
+            public DateTime Time;
+        }
+
+        [TestMethod]
+        public void TestMethod6()
+        {
+            var time = DateTime.Now;
+
+            var accector = new FastDataAccector(typeof(TestA));
+            accector["Id"] = 10;
+            accector["Name"] = "Hello";
+            accector["Time"] = time;
+
+            Assert.AreEqual(accector["Id"], 10);
+            Assert.AreEqual(accector["Name"], "Hello");
+            Assert.AreEqual(accector["Time"], time);
+        }
     }
 }
