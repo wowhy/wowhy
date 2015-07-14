@@ -12,6 +12,7 @@
     using System.Threading;
     using System.Threading.Tasks;
     using HyLibrary.Lambda;
+    using HyLibrary.Profiler;
 
     public enum HSDataSortDirection
     {
@@ -123,13 +124,13 @@
     {
         static void Main(string[] args)
         {
-            //using (var context = new TestDbContext())
-            //{
-            //    context.Tests.AsQueryable().HSOrderBy(
-            //        new HSDataSorter { Property = "Id", Direction = HSDataSortDirection.ASC },
-            //        new HSDataSorter { Property = "Name", Direction = HSDataSortDirection.DESC })
-            //           .ToList();
-            //}
+            int iteration = 100 * 1000;
+
+            string s = "";
+            CodeTimer.Time("String Concat", iteration, () => { s += "a"; }).TraceLog();
+
+            StringBuilder sb = new StringBuilder();
+            CodeTimer.Time("StringBuilder", iteration, () => { sb.Append("a"); }).TraceLog();
         }
     }
 }
