@@ -54,7 +54,7 @@
 
     public class Test
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
 
         public string Name { get; set; } 
     }
@@ -124,13 +124,24 @@
     {
         static void Main(string[] args)
         {
-            int iteration = 100 * 1000;
+            CodeTimer.Initialize();
 
-            string s = "";
-            CodeTimer.Time("String Concat", iteration, () => { s += "a"; }).TraceLog();
+            using (var context = new TestDbContext())
+            {
+                context.Database.CreateIfNotExists();
 
-            StringBuilder sb = new StringBuilder();
-            CodeTimer.Time("StringBuilder", iteration, () => { sb.Append("a"); }).TraceLog();
+                var i = 0;
+                CodeTimer.Time("TestDbContext", 10000, () => 
+                {
+                    context.Tests.Add(new Test
+                    {
+                        Id = Guid.NewGuid(),
+                        Name = "Test" + (++i).ToString()
+                    });
+                }).TraceLog();
+
+                context.SaveChanges();
+            }
         }
     }
 }
