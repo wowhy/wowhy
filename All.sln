@@ -22,6 +22,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "UDiskScan", "Source\UDiskSc
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HY.Utility", "Source\HY.Utility\HY.Utility.csproj", "{2E335A2A-F45A-4CD8-B40F-04B7EA5CC068}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HY.Domain", "Source\HY.Domain\HY.Domain.csproj", "{D4196E55-7E19-4D0F-9DF1-56FFE6BEBABC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -62,6 +64,16 @@ Global
 		{2E335A2A-F45A-4CD8-B40F-04B7EA5CC068}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{2E335A2A-F45A-4CD8-B40F-04B7EA5CC068}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{2E335A2A-F45A-4CD8-B40F-04B7EA5CC068}.Release|Win32.ActiveCfg = Release|Any CPU
+		{D4196E55-7E19-4D0F-9DF1-56FFE6BEBABC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D4196E55-7E19-4D0F-9DF1-56FFE6BEBABC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D4196E55-7E19-4D0F-9DF1-56FFE6BEBABC}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{D4196E55-7E19-4D0F-9DF1-56FFE6BEBABC}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{D4196E55-7E19-4D0F-9DF1-56FFE6BEBABC}.Debug|Win32.ActiveCfg = Debug|Any CPU
+		{D4196E55-7E19-4D0F-9DF1-56FFE6BEBABC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D4196E55-7E19-4D0F-9DF1-56FFE6BEBABC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D4196E55-7E19-4D0F-9DF1-56FFE6BEBABC}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{D4196E55-7E19-4D0F-9DF1-56FFE6BEBABC}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{D4196E55-7E19-4D0F-9DF1-56FFE6BEBABC}.Release|Win32.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -70,5 +82,6 @@ Global
 		{36AC7BDB-E140-4982-859D-3254590F2F27} = {769B7576-19F9-48E0-A4F4-96782813A443}
 		{93749456-D291-4FA9-A635-3E9C8366AC4F} = {515A6BC5-51DF-44FC-933A-FF162B35945F}
 		{2E335A2A-F45A-4CD8-B40F-04B7EA5CC068} = {37F61CE7-ADD3-439B-B278-8DFD48EF602A}
+		{D4196E55-7E19-4D0F-9DF1-56FFE6BEBABC} = {37F61CE7-ADD3-439B-B278-8DFD48EF602A}
 	EndGlobalSection
 EndGlobal
