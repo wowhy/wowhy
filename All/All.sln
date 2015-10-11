@@ -16,11 +16,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Client", "Client", "{515A6B
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{769B7576-19F9-48E0-A4F4-96782813A443}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTestProject1", "UnitTestProject1\UnitTestProject1.csproj", "{36AC7BDB-E140-4982-859D-3254590F2F27}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTestProject1", "Source\UnitTestProject1\UnitTestProject1.csproj", "{36AC7BDB-E140-4982-859D-3254590F2F27}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "UDiskScan", "UDiskScan\UDiskScan.vcxproj", "{93749456-D291-4FA9-A635-3E9C8366AC4F}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "UDiskScan", "Source\UDiskScan\UDiskScan.vcxproj", "{93749456-D291-4FA9-A635-3E9C8366AC4F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HY.Utility", "HY.Utility\HY.Utility.csproj", "{2E335A2A-F45A-4CD8-B40F-04B7EA5CC068}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HY.Utility", "Source\HY.Utility\HY.Utility.csproj", "{2E335A2A-F45A-4CD8-B40F-04B7EA5CC068}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
