@@ -13,7 +13,7 @@
 * VB.NET [使用]
 * Java [使用]
 * Javascript [精通]
-* Typescript [使用]
+* Typescript [精通]
 * Python [学习]
 * F# [学习]
 * Objective-C [使用]
@@ -33,15 +33,29 @@
 * 装饰
 * 适配器
 * Moment
+* 观察者
+* 策略模式
 
 ## 系统分析与设计
 * 领域驱动设计(DDD)
+* UML
 
 ## 工程化
 版本管理
 单元测试
 持续集成
 
+## 运维部署
+Docker容器化部署
+Docker Swarm编排部署
+Kubernetes编排部署
+Rancher2.0
+...以上均在生产环境实际操作，集群规模3-5台。
+
+## 微服务
+在项目中实践NodeJs微服务架构
+Serivice Mesh [学习]
+Istio [学习]
 
 ## 框架与工具
 
