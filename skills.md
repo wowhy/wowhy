@@ -45,17 +45,17 @@
 单元测试
 持续集成
 
-## 运维部署
-Docker容器化部署
-Docker Swarm编排部署
-Kubernetes编排部署
-Rancher2.0
+## 运维部署  
+Docker容器化部署  
+Docker Swarm编排部署  
+Kubernetes编排部署  
+Rancher2.0  
 ...以上均在生产环境实际操作，集群规模3-5台。
 
-## 微服务
-在项目中实践NodeJs微服务架构
-Serivice Mesh [学习]
-Istio [学习]
+## 微服务  
+在项目中实践NodeJs微服务架构  
+Serivice Mesh [学习]  
+Istio [学习]  
 
 ## 框架与工具
 
